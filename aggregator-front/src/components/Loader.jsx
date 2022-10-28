@@ -3,10 +3,10 @@ import { Triangle } from 'react-loader-spinner'
 
 export default function Loader(props) {
   return (
-    <div className='w-full h-full flex flex-col text-secondary-color justify-center items-center'>
+    <div className={'w-full ' + (props.isOnFullScreen ? 'h-screen' : 'h-full')  + ' h-full flex flex-col text-secondary-color justify-center items-center'}>
       <Triangle
-        height={props.height}
-        width={props.width || props.height}
+        height={props.height || props.size}
+        width={props.width || props.size}
         color={props.color}
         ariaLabel="triangle-loading"
         wrapperStyle={{}}
