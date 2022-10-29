@@ -6,10 +6,10 @@ import Loader from '../components/Loader';
 import axios from 'axios';
 import "../css/index.css";
 import "swiper/swiper-bundle.min.css";
-import hairWomanPicture from "../static/pictures/hair_woman.jpg";
-import hairManPicture from "../static/pictures/hair_man.jpg";
-import manicurePicture from "../static/pictures/manicure.jpg";
-import makeupPicture from "../static/pictures/makeup.jpg";
+import hairWomanPictureUrl from "../static/pictures/hair_woman.jpg";
+import hairManPictureUrl from "../static/pictures/hair_man.jpg";
+import manicurePictureUrl from "../static/pictures/manicure.jpg";
+import makeupPictureUrl from "../static/pictures/makeup.jpg";
 import SwiperElement from '../components/special/SwiperElement';
 import ServiceSublist from '../components/ServiceSublist';
 
@@ -17,16 +17,35 @@ export default class Services extends Component {
   static propTypes = {
     isLoading: PropTypes.bool,
     services: PropTypes.array,
-    chosenService: PropTypes.number
+    chosenService: PropTypes.object,
+    subservices: PropTypes.array
   }
 
   constructor(props) {
     super(props);
 
     this.state = {
-      chosenServiceId: -1,
-      isLoading: false,
-      services: []
+      isLoading: true,
+      isSublistLoading: true,
+      chosenService: {},
+      services: [{
+        id: 1, 
+        title: "Женские стрижки",
+        iconPictureUrl: hairWomanPictureUrl
+      },{
+        id: 2, 
+        title: "Мужские стрижки",
+        iconPictureUrl: hairManPictureUrl
+      },{
+        id: 3, 
+        title: "Маникюр",
+        iconPictureUrl: manicurePictureUrl
+      },{
+        id: 4, 
+        title: "Макияж",
+        iconPictureUrl: makeupPictureUrl
+      }],
+      subservices: []
     }
   }
 
@@ -39,6 +58,7 @@ export default class Services extends Component {
     })
       .then(
         (response) => {
+          // add filling the services list
           console.log(response);
         }
       ).catch(
@@ -52,8 +72,46 @@ export default class Services extends Component {
       })
   }
 
+  getServiceById(id) {
+    if (id > -1) {
+      this.setState(() => ({
+        isSublistLoading: true
+      }))
+
+      axios.get("https://jsonplaceholder.typicode.com/todos/" + id)
+        .then(() => {
+          console.log("Response: " + id)
+          this.setState(() => ({
+            chosenService: this.state.services[id],
+            subservices : [
+              {
+                subserviceTitle: "Стрижка 1",
+                subserviceDescription: "Описание стрижки 1",
+                lowerPrice: 100,
+                topPrice: 200,
+              },
+              {
+                subserviceTitle: "Стрижка 2",
+                subserviceDescription: "Описание стрижки 2",
+                lowerPrice: 100,
+                topPrice: 200,
+              }
+            ]
+          }));
+        })
+        .catch(error => {
+          console.log("Error: " + error)
+        }) 
+        .finally(
+          this.setState(() =>( {
+            isSublistLoading: false
+          }))
+        )
+    }
+  }
+
   componentDidMount() {
-    // this.getSimpleData()
+    this.getSimpleData()
   }
 
   render() {
@@ -75,40 +133,28 @@ export default class Services extends Component {
                       slidesPerView={1}
                       loop={true}
                       modules={[EffectCards]}
-                      className='xl:w-[30vw] lg:w-[49vw] sm:w-[55vw] w-[65vw] min-w-[30vw] min-h-[20vh] max-h-[80vh] rounded-lg overflow-hidden'
+                      className='xl:w-[28vw] lg:w-[32vw] sm:w-[45vw] w-[65vw] min-w-[30vw] min-h-[20vh] max-h-[80vh] rounded-lg overflow-hidden'
                     >
-                      <SwiperSlide>
-                        <SwiperElement 
-                          picture={<img src={hairWomanPicture} alt="men's haircuts" className='z-[-1] object-cover overflow-hidden' />}
-                          elementTitle={<p>Стрижки женские</p>}
-                          agreeHandler={() => {this.setState({chosenServiceId: 1})}}
-                        />
-                      </SwiperSlide>
-                      <SwiperSlide>
-                        <SwiperElement 
-                          picture={<img src={hairManPicture} alt="men's haircuts" className='z-[-1] object-center overflow-hidden' />}
-                          elementTitle={<p>Стрижки мужские</p>}
-                          agreeHandler={() => {this.setState({chosenServiceId: 2})}}
-                        />
-                      </SwiperSlide>
-                      <SwiperSlide>
-                        <SwiperElement
-                          picture={<img src={manicurePicture} alt="manicure" className='z-[-1] object-center object-contain overflow-hidden' />}
-                          elementTitle={<p>Маникюр</p>}
-                          agreeHandler={() => {this.setState({chosenServiceId: 3})}}
-                        />
-                      </SwiperSlide>
-                      <SwiperSlide>
-                        <SwiperElement
-                          picture={<img src={makeupPicture} alt="makeup" className='z-[-1] object-center overflow-hidden' />}
-                          elementTitle={<p>Макияж</p>}
-                          agreeHandler={() => {this.setState({chosenServiceId: 4})}}
-                        />
-                      </SwiperSlide>
+                      { this.state.services.map( 
+                        service => (
+                          <SwiperSlide key={service.id}>
+                            <SwiperElement 
+                              picture={<img src={service.iconPictureUrl} alt="men's haircuts" className='z-[-1] object-cover overflow-hidden' />}
+                              elementTitle={<p>{service.title}</p>}
+                              agreeHandler={() => {this.getServiceById(service.id)}}
+                            />
+                          </SwiperSlide>
+                        ))
+                      }
                     </Swiper>
                   </div>
               </div>
-              <ServiceSublist chosenServiceId={this.state.chosenServiceId}/>
+              <ServiceSublist
+                chosenServiceTitle={this.state.chosenService.title}
+                subservices={this.state.subservices} 
+                chosenService={this.state.chosenService} 
+                isLoading={this.state.isSublistLoading}
+              />
             </>
           }
         </div>
