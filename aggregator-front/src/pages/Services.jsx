@@ -15,41 +15,38 @@ import ServiceSublist from '../components/ServiceSublist';
 
 export default class Services extends Component {
   static propTypes = {
-    isLoading: PropTypes.bool,
     services: PropTypes.array,
     chosenService: PropTypes.object,
-    subservices: PropTypes.array
   }
 
   constructor(props) {
     super(props);
 
+    this.sublistChild = React.createRef()
     this.state = {
       isLoading: true,
-      isSublistLoading: true,
       chosenService: {},
       services: [{
-        id: 1, 
+        id: 0, 
         title: "Женские стрижки",
         iconPictureUrl: hairWomanPictureUrl
       },{
-        id: 2, 
+        id: 1, 
         title: "Мужские стрижки",
         iconPictureUrl: hairManPictureUrl
       },{
-        id: 3, 
+        id: 2, 
         title: "Маникюр",
         iconPictureUrl: manicurePictureUrl
       },{
-        id: 4, 
+        id: 3, 
         title: "Макияж",
         iconPictureUrl: makeupPictureUrl
       }],
-      subservices: []
     }
   }
 
-  getSimpleData() {
+  getAllServices() {
     axios.get("https://www.google.com/", {
       headers: {
         Accept: "application/json",
@@ -72,46 +69,12 @@ export default class Services extends Component {
       })
   }
 
-  getServiceById(id) {
-    if (id > -1) {
-      this.setState(() => ({
-        isSublistLoading: true
-      }))
-
-      axios.get("https://jsonplaceholder.typicode.com/todos/" + id)
-        .then(() => {
-          console.log("Response: " + id)
-          this.setState(() => ({
-            chosenService: this.state.services[id],
-            subservices : [
-              {
-                subserviceTitle: "Стрижка 1",
-                subserviceDescription: "Описание стрижки 1",
-                lowerPrice: 100,
-                topPrice: 200,
-              },
-              {
-                subserviceTitle: "Стрижка 2",
-                subserviceDescription: "Описание стрижки 2",
-                lowerPrice: 100,
-                topPrice: 200,
-              }
-            ]
-          }));
-        })
-        .catch(error => {
-          console.log("Error: " + error)
-        }) 
-        .finally(
-          this.setState(() =>( {
-            isSublistLoading: false
-          }))
-        )
-    }
+  componentDidMount() {
+    this.getAllServices()
   }
 
-  componentDidMount() {
-    this.getSimpleData()
+  componentDidUpdate() {
+    console.log(this.state)
   }
 
   render() {
@@ -119,7 +82,7 @@ export default class Services extends Component {
       <div className='min-h-screen text-white flex justify-center'>
         <div className='w-11/12 px-4 mt-20 h-full'>
           {
-            this.state.isLoading ? <Loader color="#111827" height={100}/> : 
+            this.state.isLoading ? <Loader color="#111827" height={100} isOnFullScreen={true}/> : 
             <>
               <div className='flex flex-col lg:flex-row justify-around items-center gap-8 mb-20'>
                   <div className='text-center md:text-left lg:w-2/5 w-full'>
@@ -141,7 +104,12 @@ export default class Services extends Component {
                             <SwiperElement 
                               picture={<img src={service.iconPictureUrl} alt="men's haircuts" className='z-[-1] object-cover overflow-hidden' />}
                               elementTitle={<p>{service.title}</p>}
-                              agreeHandler={() => {this.getServiceById(service.id)}}
+                              agreeHandler={() => {
+                                this.sublistChild.current.getServiceById(service.id);
+                                this.setState(() => ({
+                                  chosenService: service
+                                }))
+                              }}
                             />
                           </SwiperSlide>
                         ))
@@ -150,10 +118,8 @@ export default class Services extends Component {
                   </div>
               </div>
               <ServiceSublist
-                chosenServiceTitle={this.state.chosenService.title}
-                subservices={this.state.subservices} 
-                chosenService={this.state.chosenService} 
-                isLoading={this.state.isSublistLoading}
+                ref={this.sublistChild}
+                chosenService={this.state.chosenService}
               />
             </>
           }
