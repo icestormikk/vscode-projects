@@ -81,7 +81,7 @@ export default class ServiceSublist extends Component {
   render() {
     return (
       <div className='flex justify-center'>
-        <div className={'bg-gray-700 shadow-xl shadow-gray-500 p-6 mb-10 sm:w-11/12 w-full transition-all duration-100 overflow-hidden rounded-xl ' + (this.state.isOpen ? 'h-max' : 'h-20')}>
+        <div className={'bg-gray-700 shadow-xl shadow-gray-500 p-6 mb-10 sm:w-3/4 w-full transition-all duration-100 overflow-hidden rounded-xl ' + (this.state.isOpen ? 'h-max' : 'h-20')}>
             { 
               this.state.isLoading ? <Loader size={40} color="#ffffff"/> : (
                 <>
