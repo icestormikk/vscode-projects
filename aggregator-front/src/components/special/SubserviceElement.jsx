@@ -22,9 +22,9 @@ export default class SubserviceElement extends Component {
             <div>
                 <h2>{this.state.subservice.title}</h2>
                 <p className='font-light max-w-3xl break-words'>{this.state.subservice.description}</p>
-                <div className='flex flex-col sm:flex-row gap-2 sm:text-base xl:text-xl'>
-                    <p>{ this.state.subservice.lowerPrice === this.state.subservice.topPrice ? '' : this.state.subservice.lowerPrice + ' - '}
-                    {this.state.subservice.topPrice}<FaRubleSign/> • </p>
+                <div className='flex flex-row justify-start items-center gap-2 sm:text-base xl:text-xl'>
+                    <p className='h-max'>{ this.state.subservice.lowerPrice === this.state.subservice.topPrice ? '' : this.state.subservice.lowerPrice + ' - '}{this.state.subservice.topPrice} RUB</p>
+                    <p className='text-2xl text-gray-300'> &#x2022; </p>
                     <p>{ parseInt(this.state.subservice.duration / MINUTES_IN_HOUR) > 0 ? parseInt(this.state.subservice.duration / MINUTES_IN_HOUR) + ' ч ': ''} 
                     {parseInt(this.state.subservice.duration % MINUTES_IN_HOUR)} мин</p>
                 </div>
