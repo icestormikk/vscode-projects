@@ -96,7 +96,7 @@ export default class Services extends Component {
                       slidesPerView={1}
                       loop={true}
                       modules={[EffectCards]}
-                      className='xl:w-[28vw] lg:w-[32vw] sm:w-[45vw] w-[65vw] min-w-[30vw] min-h-[20vh] max-h-[80vh] rounded-lg overflow-hidden'
+                      className='xl:w-[23vw] lg:w-[25vw] sm:w-[38vw] w-[65vw] min-w-[18vw] min-h-[10vh] max-h-[80vh] rounded-lg overflow-hidden'
                     >
                       { this.state.services.map( 
                         service => (
