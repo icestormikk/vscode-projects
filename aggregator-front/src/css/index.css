@@ -27,7 +27,10 @@
     
 }
 
-@layer components {    
+@layer components {   
+    .swiper-slide-active .choise-button {
+        @apply visible
+    } 
     .navbar-buttons {
         @apply text-secondary-color text-3xl absolute right-8 top-6 cursor-pointer lg:hidden
     }
