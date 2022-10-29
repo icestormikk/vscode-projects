@@ -1,11 +1,9 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { AiOutlineDown } from 'react-icons/ai'
-import { FaRubleSign } from 'react-icons/fa'
 import Loader from './Loader';
 import axios from 'axios';
-
-const MINUTES_IN_HOUR = 60;
+import SubserviceElement from './special/SubserviceElement';
 
 export default class ServiceSublist extends Component {
   static propTypes = {
@@ -101,19 +99,7 @@ export default class ServiceSublist extends Component {
                       <div className='flex flex-col gap-4'>
                         {
                           this.state.subservices.map(subservice => (
-                            <div key={subservice.id} className='text-xl flex justify-between items-center hover:bg-gray-500 bg-gray-600 duration-100 p-2 rounded-lg h-max transition-all'>
-                              <div>
-                                <h2>{subservice.title}</h2>
-                                <p className='font-light max-w-3xl break-words'>{subservice.description}</p>
-                                <div className='flex flex-col sm:flex-row gap-2 sm:text-base xl:text-xl'>
-                                  <p>{ subservice.lowerPrice === subservice.topPrice ? '' : subservice.lowerPrice + ' - '}
-                                  {subservice.topPrice}<FaRubleSign/> • </p>
-                                  <p>{ parseInt(subservice.duration / MINUTES_IN_HOUR) > 0 ? parseInt(subservice.duration / MINUTES_IN_HOUR) + ' ч ': ''} 
-                                  {parseInt(subservice.duration % MINUTES_IN_HOUR)} мин</p>
-                                </div>
-                              </div>
-                              <button className='bg-green-600 h-full p-2 text-md rounded-lg'>Выбрать</button>
-                            </div>
+                            <SubserviceElement subservice={subservice}/>
                           ))
                         }
                       </div>
