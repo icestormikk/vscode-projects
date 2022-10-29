@@ -13,7 +13,7 @@ export default function Loader(props) {
         wrapperClassName=""
         visible={true}
       />
-      <h1 className={'text-xl text-[' + props.color + ']'}>Загружаем данные. Подождите минутку..</h1>
+      <h1 className='text-xl' style={{color: props.color}}>Загружаем данные. Подождите минутку..</h1>
     </div>
   )
 }
