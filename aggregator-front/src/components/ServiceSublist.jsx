@@ -5,6 +5,8 @@ import { FaRubleSign } from 'react-icons/fa'
 import Loader from './Loader';
 import axios from 'axios';
 
+const MINUTES_IN_HOUR = 60;
+
 export default class ServiceSublist extends Component {
   static propTypes = {
     chosenServiceInfoObject: PropTypes.object,
@@ -45,13 +47,18 @@ export default class ServiceSublist extends Component {
                 id: 0,
                 title: "Стрижка 1",
                 description: "Описание стрижки 1",
+                // in minutes (?)
+                duration: 40,
+                // in rubles
                 lowerPrice: 100,
+                // in rubles
                 topPrice: 200,
               },
               {
                 id: 1,
                 title: "Стрижка 2",
                 description: "Описание стрижки 2",
+                duration: 122,
                 lowerPrice: 200,
                 topPrice: 200,
               }
@@ -99,13 +106,11 @@ export default class ServiceSublist extends Component {
                                 <h2>{subservice.title}</h2>
                                 <p className='font-light max-w-3xl break-words'>{subservice.description}</p>
                               </div>
-                              <div>
-                                {
-                                  subservice.lowerPrice === subservice.topPrice ? 
-                                  <p className='flex gap-1 items-center'>{subservice.lowerPrice}<FaRubleSign/></p> 
-                                  : 
-                                  <p className='flex gap-1 items-center'>{subservice.lowerPrice} - {subservice.topPrice}<FaRubleSign/></p>
-                                }
+                              <div className='flex flex-col sm:flex-row gap-2'>
+                                <p className='flex gap-1 items-center'>{ subservice.lowerPrice === subservice.topPrice ? '' : subservice.lowerPrice + ' - '}
+                                {subservice.topPrice}<FaRubleSign/> • </p>
+                                <p>{ parseInt(subservice.duration / MINUTES_IN_HOUR) > 0 ? parseInt(subservice.duration / MINUTES_IN_HOUR) + ' ч ': ''} 
+                                {parseInt(subservice.duration % MINUTES_IN_HOUR)} мин</p>
                               </div>
                             </div>
                           ))
