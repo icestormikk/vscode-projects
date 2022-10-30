@@ -43,7 +43,7 @@ export default class Home extends Component {
               время как мастера оказывают им профессиональные
               услуги.
             </p>
-                      )}
+          )}
           button={(
             <button type="button" className="flex gap-1.5 justify-center items-center text-xl text-gray-100 w-max py-4 px-8 rounded-md shadow-2xl bg-[#e00d7c] hover:bg-[#ca0a71]  duration-200 ease-in transition-all font-bolder tracking-wide">
               <span>Записаться</span>

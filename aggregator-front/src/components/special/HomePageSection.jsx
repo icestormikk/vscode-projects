@@ -27,6 +27,7 @@ export default function HomePageSection(props) {
         <div className="lg:w-1/2 w-full flex flex-col gap-4 justify-center">
           {props.sectionTitle}
           {props.description}
+          {props.button}
         </div>
       </div>
     </div>
@@ -43,5 +44,5 @@ HomePageSection.propTypes = {
 };
 
 HomePageSection.defaultProps = {
-  button: {},
+  button: undefined,
 };
