@@ -1,7 +1,5 @@
-import React, { Component } from "react";
+import React from 'react';
 
-export default class Sertificates extends Component {
-    render() {
-        return <h1>Sertificates Page</h1>;
-    }
+export default function Sertificates() {
+  return <h1>Sertificates Page</h1>;
 }

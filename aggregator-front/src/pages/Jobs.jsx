@@ -1,7 +1,5 @@
-import React, { Component } from "react";
+import React from 'react';
 
-export default class Jobs extends Component {
-    render() {
-        return <h1>Jobs Page</h1>;
-    }
+export default function Jobs() {
+  return <h1>Jobs Page</h1>;
 }
