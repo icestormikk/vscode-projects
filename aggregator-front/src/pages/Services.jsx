@@ -62,6 +62,7 @@ export default class Services extends Component {
     return (
       <div className="min-h-screen text-white flex justify-center">
         <div className="w-11/12 px-4 mt-20 h-full">
+          <ShoppingСart />
           {componentState.isLoading ? (
             <Loader
               colorCode="#111827"
@@ -120,7 +121,6 @@ export default class Services extends Component {
                 ref={this.sublistChild}
                 chosenService={componentState.chosenService}
               />
-              <ShoppingСart selectedServices={[]} />
             </>
           )}
         </div>
