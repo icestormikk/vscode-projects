@@ -14,7 +14,7 @@ export default function SubserviceElement({ subservice }) {
   const currentSubserviceCount = allSubservices.filter((elem) => elem.id === subservice.id).length;
 
   return (
-    <div className="text-xl flex justify-between items-center bg-gray-600 duration-100 p-2 rounded-lg h-max transition-all">
+    <div className="text-xl flex flex-col sm:flex-row justify-between items-center bg-gray-600 duration-100 p-2 rounded-lg h-max transition-all">
       <div>
         <h2>{subservice.title}</h2>
         <p className="font-light max-w-3xl break-words">
