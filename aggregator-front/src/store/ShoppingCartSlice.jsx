@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
 import { createSlice } from '@reduxjs/toolkit';
 
 const shoppingCartSlice = createSlice({
@@ -10,11 +9,18 @@ const shoppingCartSlice = createSlice({
   reducers: {
     addSubserviceToCart(state, action) {
       state.selectedSubservices.push(action.payload.subservice);
-      console.log(state.selectedSubservices);
     },
-    removeSubserviceFromCart(state, action) { },
+    removeSubserviceFromCart(state, action) {
+      const index = state.selectedSubservices.map(
+        (elem) => elem.id,
+      ).indexOf(action.payload.subserviceId);
+
+      if (index > -1) { state.selectedSubservices.splice(index, 1); }
+    },
   },
 });
 
-export const { addSubserviceToCart, removeSubserviceFromCart } = shoppingCartSlice.actions;
+export const {
+  addSubserviceToCart, removeSubserviceFromCart,
+} = shoppingCartSlice.actions;
 export default shoppingCartSlice.reducer;
