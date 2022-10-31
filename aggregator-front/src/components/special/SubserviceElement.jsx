@@ -1,12 +1,17 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-console */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addSubserviceToCart } from '../../store/ShoppingCartSlice';
+import SubserviceCounter from './SubserviceCounter';
 
 const MINUTES_IN_HOUR = 60;
 
 export default function SubserviceElement({ subservice }) {
   const dispatch = useDispatch();
+  const allSubservices = useSelector((state) => state.shoppingCart.selectedSubservices);
+  const currentSubserviceCount = allSubservices.filter((elem) => elem.id === subservice.id).length;
 
   return (
     <div className="text-xl flex justify-between items-center bg-gray-600 duration-100 p-2 rounded-lg h-max transition-all">
@@ -18,8 +23,7 @@ export default function SubserviceElement({ subservice }) {
         <div className="flex flex-row justify-start items-center gap-2 sm:text-base xl:text-xl">
           <p className="h-max">
             {subservice.lowerPrice === subservice.topPrice
-              ? ''
-              : `${subservice.lowerPrice} - `}
+              ? '' : `${subservice.lowerPrice} - `}
             {subservice.topPrice}
             {' '}
             RUB
@@ -44,13 +48,19 @@ export default function SubserviceElement({ subservice }) {
           </p>
         </div>
       </div>
-      <button
-        type="button"
-        className="bg-gray-500 font-normal hover:bg-gray-400 transition-colors duration-100 h-full p-2 text-md rounded-lg"
-        onClick={() => dispatch(addSubserviceToCart({ subservice }))}
-      >
-        Выбрать
-      </button>
+      <div>
+        {currentSubserviceCount > 0
+          ? <SubserviceCounter subservice={subservice} count={currentSubserviceCount} />
+          : (
+            <button
+              type="button"
+              className="bg-gray-500 hover:bg-green-500 transition-colors duration-100 py-2 px-4 rounded-lg"
+              onClick={() => { dispatch(addSubserviceToCart({ subservice })); }}
+            >
+              Выбрать
+            </button>
+          )}
+      </div>
     </div>
   );
 }
