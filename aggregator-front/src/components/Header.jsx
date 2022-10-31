@@ -55,20 +55,16 @@ export default class Header extends Component {
           <div className="absolute z-10 left-0 lg:static w-full lg:w-max">
             <ul
               className={
-                `text-3xl lg:flex lg:items-center bg-gray-100 lg:gap-10 lg:static lg:w-auto lg:px-0 lg:pb-0 text-secondary-color px-9 pb-4 transition-all duration-75 ease-in ${
-                  headerState.isOpen
-                    ? 'top-20 opacity-100'
-                    : 'top-[-490px] lg:opacity-100 opacity-0'}`
+                `text-3xl lg:flex lg:items-center bg-gray-100 lg:gap-10 lg:static lg:w-auto lg:px-0 lg:pb-0 text-secondary-color px-9 pb-4 transition-all duration-75 ease-in ${headerState.isOpen
+                  ? 'top-20 opacity-100'
+                  : 'top-[-490px] lg:opacity-100 opacity-0'}`
               }
             >
               {headerState.links.map((link) => (
                 <li
                   key={link.name}
                   className={
-                    `cursor-pointer my-4 lg:my-0 before:content-[""] before:h-[2px] before:w-0 hover:before:w-full relative before:absolute before:right-0 hover:before:left-0 hover:before:right-auto before:bottom-0 before:bg-gray-800 before:transition-all before:duration-200 ${
-                      headerState.isOpen
-                        ? 'text-2xl'
-                        : 'text-xl'}`
+                    'cursor-pointer my-4 lg:my-0 before:content-[""] before:h-[2px] before:w-0 hover:before:w-full relative before:absolute before:right-0 hover:before:left-0 hover:before:right-auto before:bottom-0 before:bg-gray-800 before:transition-all before:duration-200 text-[0.8em]'
                   }
                 >
                   <Link
