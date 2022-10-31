@@ -120,7 +120,7 @@ export default class Services extends Component {
                 ref={this.sublistChild}
                 chosenService={componentState.chosenService}
               />
-              <ShoppingСart selectedServices={[{ id: 1 }]} />
+              <ShoppingСart selectedServices={[]} />
             </>
           )}
         </div>
