@@ -85,12 +85,12 @@ export default class ServiceSublist extends Component {
 
   render() {
     const sublistState = this.state;
+
     return (
       <div className="flex justify-center">
         <div
           className={
-            `bg-gray-700 shadow-xl shadow-gray-500 p-6 mb-10 sm:w-3/4 w-full transition-all duration-100 overflow-hidden rounded-xl ${
-              sublistState.isOpen ? 'h-max' : 'h-20'}`
+            `bg-gray-700 shadow-xl shadow-gray-500 p-6 mb-10 sm:w-3/4 w-full transition-all duration-100 overflow-hidden rounded-xl ${sublistState.isOpen ? 'h-max' : 'h-20'}`
           }
         >
           {sublistState.isLoading ? (
@@ -109,10 +109,9 @@ export default class ServiceSublist extends Component {
                   <AiOutlineDown
                     onClick={this.handleListOpen}
                     className={
-                        `cursor-pointer hover:text-yellow-300 transition-all duration-100 text-3xl scale-x-[1.5] ${
-                          sublistState.isOpen
-                            ? 'rotate-180'
-                            : 'rotate-0'}`
+                      `cursor-pointer hover:text-yellow-300 transition-all duration-100 text-3xl scale-x-[1.5] ${sublistState.isOpen
+                        ? 'rotate-180'
+                        : 'rotate-0'}`
                     }
                   />
                 </div>

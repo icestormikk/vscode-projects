@@ -1,37 +1,14 @@
 /* eslint-disable react/no-unused-class-component-methods */
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import Counter from './Counter';
+import React from 'react';
+import { useSelector } from 'react-redux';
+// import Counter from './Counter';
 
-export default class ShoppingСart extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedServices: props.selectedServices,
-    };
-  }
+export default function ShoppingСart() {
+  const selectedSubservices = useSelector((state) => state.shoppingCart.selectedSubservices);
 
-  addServiceToCart(service) {
-    this.selectedServices.push(service);
-  }
-
-  render() {
-    const cartState = this.state;
-
-    return (
-      cartState.selectedServices.length && (
-        <div className="fixed flex justify-center items-center bottom-0 left-0 w-full p-4 bg-[#dddddd] text-2xl text-secondary-color">
-          <Counter />
-        </div>
-      )
-    );
-  }
+  return (
+    <div className={`fixed flex justify-center items-center ${selectedSubservices.length > 0 ? 'bottom-0' : '-bottom-20'} left-0 w-full p-4 bg-[#dddddd] text-2xl text-secondary-color`}>
+      <p>{selectedSubservices.length}</p>
+    </div>
+  );
 }
-
-ShoppingСart.propTypes = {
-  selectedServices: PropTypes.arrayOf(PropTypes.shape),
-};
-
-ShoppingСart.defaultProps = {
-  selectedServices: [],
-};
