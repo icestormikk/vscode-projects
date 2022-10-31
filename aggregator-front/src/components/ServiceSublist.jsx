@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { AiOutlineDown } from 'react-icons/ai';
 import axios from 'axios';
+import { ImWarning } from 'react-icons/im';
 import Loader from './Loader';
 import SubserviceElement from './special/SubserviceElement';
+import WarningPanel from './WarningPanel';
 
 export default class ServiceSublist extends Component {
   static getDerivedStateFromProps(props, state) {
@@ -102,7 +104,13 @@ export default class ServiceSublist extends Component {
               </h1>
             ) : (
               <>
-                <div className="text-white text-2xl border-b-2 border-b-gray-400 pb-2 mb-2 flex justify-between items-center">
+                <WarningPanel
+                  colorCode="#ffdd43d7"
+                  icon={<ImWarning className="text-4xl" />}
+                  text="Предупреждение"
+                  content={<p>{`Вы можете выбрать не более ${process.env.REACT_APP_SHOPPING_CART_LIMIT} услуг`}</p>}
+                />
+                <div className="text-white text-2xl border-b-2 border-b-gray-400 pb-2 my-2 flex justify-between items-center">
                   <h1>
                     {sublistState.chosenService.title}
                   </h1>
