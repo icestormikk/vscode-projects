@@ -19,13 +19,13 @@ export default class Cube extends Component {
         <div className="cube text-5xl font-bold text-white">
           <div
             className="cube-top flex items-center justify-center"
-            style={{ backgroundColor: cubeState.colorCode }}
+            style={{ backgroundColor: `${cubeState.colorCode}` }}
           >
             <p>{cubeState.emotion}</p>
           </div>
           <div
             className="cube-front shadow-inner flex items-center justify-center"
-            style={{ backgroundColor: cubeState.colorCode }}
+            style={{ backgroundColor: `${cubeState.colorCode}` }}
           >
             <p>{cubeState.letter}</p>
           </div>
