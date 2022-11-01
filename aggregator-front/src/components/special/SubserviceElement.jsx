@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import { BiLockAlt } from 'react-icons/bi';
 import { addSubserviceToCart } from '../../store/ShoppingCartSlice';
 import SubserviceCounter from './SubserviceCounter';
 import TimeDisplay from './TimeDisplay';
@@ -16,8 +17,9 @@ export default function SubserviceElement({ subservice }) {
 
   return (
     <div className="text-xl relative flex flex-col sm:flex-row justify-between items-center bg-gray-600 duration-100 p-2 rounded-lg h-max transition-all overflow-hidden">
-      <div className={`absolute top-0 left-0 w-full h-full bg-gray-600/70 ${forbiddenServicesIDs.includes(subservice.id) ? 'flex' : 'hidden'}`}>
-        <h1>Test</h1>
+      <div className={`absolute top-0 left-0 w-full h-full text-xl text-gray-200 text-center bg-gray-700/80 ${forbiddenServicesIDs.includes(subservice.id) ? 'flex flex-col justify-center items-center' : 'hidden'}`}>
+        <h1>Вы не можете выбрать данную услугу</h1>
+        <BiLockAlt />
       </div>
       <div>
         <h2>{subservice.title}</h2>
