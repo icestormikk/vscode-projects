@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { HiOutlineShoppingBag } from 'react-icons/hi';
 import Counter from './Counter';
-import TimeDisplay from './special/TImeDisplay';
+import TimeDisplay from './special/TimeDisplay';
 
 function getRightWordForm(number) {
   if (number <= 20) {

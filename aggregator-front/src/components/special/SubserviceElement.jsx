@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { addSubserviceToCart } from '../../store/ShoppingCartSlice';
 import SubserviceCounter from './SubserviceCounter';
-import TimeDisplay from './TImeDisplay';
+import TimeDisplay from './TimeDisplay';
 
 export default function SubserviceElement({ subservice }) {
   const dispatch = useDispatch();
