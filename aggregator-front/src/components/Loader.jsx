@@ -1,27 +1,27 @@
-/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Triangle } from 'react-loader-spinner';
 
-export default function Loader(props) {
+export default function Loader({
+  size, height, width, colorCode, isOnFullScreen,
+}) {
   return (
     <div
       className={
-        `w-full ${
-          props.isOnFullScreen ? 'h-screen' : 'h-full'
+        `w-full ${isOnFullScreen ? 'h-screen' : 'h-full'
         } flex flex-col text-secondary-color justify-center items-center`
       }
     >
       <Triangle
-        height={props.height || props.size}
-        width={props.width || props.size}
-        color={props.colorCode}
+        height={height || size}
+        width={width || size}
+        color={colorCode}
         ariaLabel="triangle-loading"
         wrapperStyle={{}}
         wrapperClassName=""
         visible
       />
-      <h1 className="text-xl" style={{ color: props.colorCode }}>
+      <h1 className="text-xl text-center" style={{ color: colorCode }}>
         Загружаем данные. Подождите минутку..
       </h1>
     </div>
