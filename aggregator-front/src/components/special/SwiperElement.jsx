@@ -5,7 +5,7 @@ import { AiOutlineRight } from 'react-icons/ai';
 
 export default function SwiperElement(props) {
   return (
-    <div className="relative flex flex-col justify-end items-center max-w-full">
+    <div className="relative flex flex-col justify-end items-center max-w-full z-[-1]">
       <div className="max-h-[80vh] overflow-hidden rounded-lg">
         {props.picture}
       </div>
