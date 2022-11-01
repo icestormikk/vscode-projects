@@ -1,12 +1,9 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-console */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { addSubserviceToCart } from '../../store/ShoppingCartSlice';
 import SubserviceCounter from './SubserviceCounter';
-
-const MINUTES_IN_HOUR = 60;
+import TimeDisplay from './TImeDisplay';
 
 export default function SubserviceElement({ subservice }) {
   const dispatch = useDispatch();
@@ -36,23 +33,7 @@ export default function SubserviceElement({ subservice }) {
             RUB
           </p>
           <p className="text-2xl text-gray-300"> &#x2022; </p>
-          <p>
-            {parseInt(
-              subservice.duration / MINUTES_IN_HOUR,
-              10,
-            ) > 0
-              ? `${parseInt(
-                subservice.duration / MINUTES_IN_HOUR,
-                10,
-              )} ч `
-              : ''}
-            {parseInt(
-              subservice.duration % MINUTES_IN_HOUR,
-              10,
-            )}
-            {' '}
-            мин
-          </p>
+          <TimeDisplay durationInMins={subservice.duration} />
         </div>
       </div>
       <div>
