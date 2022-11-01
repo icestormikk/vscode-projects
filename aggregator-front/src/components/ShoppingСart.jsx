@@ -18,7 +18,7 @@ function getRightWordForm(number) {
 
 export default function ShoppingСart() {
   const selectedSubservices = useSelector((state) => state.shoppingCart.selectedSubservices);
-  const statisticsElementStyle = 'flex gap-1 border-x-[1px] border-gray-500 px-4';
+  const statisticsElementStyle = 'statsElement flex gap-1 sm:text-2xl text-base px-4 whitespace-nowrap';
 
   const lowerTotalPrice = selectedSubservices.map(
     (elem) => elem.lowerPrice,
@@ -55,6 +55,11 @@ export default function ShoppingСart() {
       </div>
       <div className={statisticsElementStyle}>
         <TimeDisplay durationInMins={totalDuration} />
+      </div>
+      <div className={statisticsElementStyle}>
+        <button type="button" className="text-xl text-gray-100 py-2 px-4 rounded-xl bg-gradient-to-r from-[#029872] to-[#09b68b]">
+          <p>Продолжить</p>
+        </button>
       </div>
     </div>
   );
