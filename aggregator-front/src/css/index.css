@@ -28,6 +28,10 @@
 }
 
 @layer components {   
+    .statsElement:not(:last-child) {
+        @apply border-r-[1px] border-gray-400
+    }
+
     .swiper-slide-active .choise-button {
         @apply visible
     } 
