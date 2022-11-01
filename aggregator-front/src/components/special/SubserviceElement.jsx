@@ -11,10 +11,17 @@ const MINUTES_IN_HOUR = 60;
 export default function SubserviceElement({ subservice }) {
   const dispatch = useDispatch();
   const allSubservices = useSelector((state) => state.shoppingCart.selectedSubservices);
+  const forbiddenServicesIDs = useSelector(
+    (state) => state.shoppingCart.totalForbiddenSubservicesIDs,
+  );
+
   const currentSubserviceCount = allSubservices.filter((elem) => elem.id === subservice.id).length;
 
   return (
-    <div className="text-xl flex flex-col sm:flex-row justify-between items-center bg-gray-600 duration-100 p-2 rounded-lg h-max transition-all">
+    <div className="text-xl relative flex flex-col sm:flex-row justify-between items-center bg-gray-600 duration-100 p-2 rounded-lg h-max transition-all overflow-hidden">
+      <div className={`absolute top-0 left-0 w-full h-full bg-gray-600/70 ${forbiddenServicesIDs.includes(subservice.id) ? 'flex' : 'hidden'}`}>
+        <h1>Test</h1>
+      </div>
       <div>
         <h2>{subservice.title}</h2>
         <p className="font-light max-w-3xl break-words">
