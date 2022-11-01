@@ -6,13 +6,12 @@ import { addSubserviceToCart, removeSubserviceFromCart } from '../../store/Shopp
 
 export default function SubserviceCounter({ subservice, count }) {
   const dispatch = useDispatch();
-  const subserviceId = subservice.id;
 
   return (
     <div className="gap-6 flex flex-row justify-center items-center text-3xl">
       <AiOutlineMinus
         className="bg-[rgb(240,105,105)] rounded-full p-2 text-black"
-        onClick={() => dispatch(removeSubserviceFromCart({ subserviceId }))}
+        onClick={() => dispatch(removeSubserviceFromCart({ subservice }))}
       />
       <p>{count}</p>
       <AiOutlinePlus
