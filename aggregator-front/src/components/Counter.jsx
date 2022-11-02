@@ -23,6 +23,6 @@ export default function Counter({ trackedValue, counterId }) {
 }
 
 Counter.propTypes = {
-  counterId: PropTypes.number.isRequired,
+  counterId: PropTypes.string.isRequired,
   trackedValue: PropTypes.number.isRequired,
 };
