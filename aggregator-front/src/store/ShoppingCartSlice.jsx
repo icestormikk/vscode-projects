@@ -1,15 +1,24 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 const shoppingCartSlice = createSlice({
   name: 'selectedSubservices',
   initialState: {
+    isVisible: false,
     selectedSubservices: [],
     totalForbiddenSubservicesIDs: [],
   },
   reducers: {
+    hide(state) {
+      state.isVisible = false;
+    },
+    show(state) {
+      state.isVisible = true;
+    },
     addSubserviceToCart(state, action) {
       if (state.selectedSubservices.length < process.env.REACT_APP_SHOPPING_CART_LIMIT) {
         const { subservice } = action.payload;
+        if (state.isVisible !== true) { state.isVisible = true; }
 
         if (!state.totalForbiddenSubservicesIDs.includes(subservice.id)) {
           state.selectedSubservices.push(subservice);
@@ -38,11 +47,13 @@ const shoppingCartSlice = createSlice({
           state.totalForbiddenSubservicesIDs.pop(id);
         }
       });
+
+      if (state.selectedSubservices.length === 0) { state.isVisible = false; }
     },
   },
 });
 
 export const {
-  addSubserviceToCart, removeSubserviceFromCart,
+  addSubserviceToCart, removeSubserviceFromCart, show, hide,
 } = shoppingCartSlice.actions;
 export default shoppingCartSlice.reducer;
