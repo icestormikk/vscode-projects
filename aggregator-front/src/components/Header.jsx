@@ -52,7 +52,7 @@ export default class Header extends Component {
               className="navbar-buttons"
             />
           )}
-          <div className="absolute z-10 left-0 lg:static w-full lg:w-max">
+          <div className="absolute z-2 left-0 lg:static w-full lg:w-max">
             <ul
               className={
                 `text-3xl lg:flex lg:items-center bg-gray-100 lg:gap-10 lg:static lg:w-auto lg:px-0 lg:pb-0 text-secondary-color px-9 pb-4 transition-all duration-75 ease-in ${headerState.isOpen

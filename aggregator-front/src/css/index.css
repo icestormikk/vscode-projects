@@ -27,7 +27,10 @@
     
 }
 
-@layer components {   
+@layer components { 
+    .swiper.swiper-cards {
+        @apply z-0
+    }  
     .statsElement:not(:last-child) {
         @apply border-r-[1px] border-gray-400
     }
