@@ -2,18 +2,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Footer(props) {
+export default function Footer({ companyName, socialMediaLinks }) {
   return (
     <div className="bg-secondary-color flex justify-center items-center p-8 text-gray-300 text-xl font-light">
       <div className="flex flex-col-reverse text-center lg:flex-row justify-between gap-8 items-center w-2/3">
-        <p>{`@2022 ${props.companyName}`}</p>
+        <p>{`@2022 ${companyName}`}</p>
         <div className="flex flex-col gap-3">
           <p>8-800-555-35-35</p>
           <p>test@testmail.com</p>
         </div>
         <div className="flex justify-center items-center gap-4">
-          {props.socialMediaLinks
-            && props.socialMediaLinks.map((link) => (
+          {socialMediaLinks
+            && socialMediaLinks.map((link) => (
               <a
                 href={link.url}
                 key={link.url}
