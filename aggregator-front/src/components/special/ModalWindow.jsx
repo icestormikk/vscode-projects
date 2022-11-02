@@ -13,8 +13,7 @@ export default function ModalWindow() {
   const dispatch = useDispatch();
 
   const selectedSubservices = useSelector((state) => state.shoppingCart.selectedSubservices);
-  const isOpen = useSelector((state) => state.shoppingCart.isCompleted);
-  const [isModalOpen, setModalOpen] = React.useState(isOpen);
+  const [isModalOpen, setModalOpen] = React.useState(false);
 
   return (
     <>
