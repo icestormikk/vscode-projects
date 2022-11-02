@@ -1,86 +1,73 @@
 import '../css/index.css';
 import PropTypes from 'prop-types';
-import { Component, React } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { AiOutlineClose } from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeHeader, openHeader } from '../store/HeaderSlice';
 
-export default class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isOpen: false,
-      links: [
-        { name: 'Услуги', url: '/services' },
-        { name: 'О нас', url: '/about' },
-        { name: 'Сертификаты', url: '/sertificates' },
-        { name: 'Контакты', url: '/contacts' },
-        { name: 'Работы', url: '/jobs' },
-      ],
-    };
-    this.handleListOpen = this.handleListOpen.bind(this);
-  }
+export default function Header({ companyName }) {
+  const dispatch = useDispatch();
+  const isOpen = useSelector((state) => state.header.isOpen);
+  const links = [
+    { name: 'Услуги', url: '/services' },
+    { name: 'О нас', url: '/about' },
+    { name: 'Сертификаты', url: '/sertificates' },
+    { name: 'Контакты', url: '/contacts' },
+    { name: 'Работы', url: '/jobs' },
+  ];
 
-  handleListOpen() {
-    this.setState((prevState) => ({
-      isOpen: !prevState.isOpen,
-    }));
-  }
-
-  render() {
-    const headerProps = this.props;
-    const headerState = this.state;
-    return (
-      <nav className="w-full bg-primary-color relative z-1">
-        <div
-          className="lg:flex relative items-center justify-between py-6 lg:px-10 px-7 "
+  return (
+    <nav className="w-full bg-primary-color relative z-1">
+      <div
+        className="lg:flex relative items-center justify-between py-6 lg:px-10 px-7 "
+      >
+        <Link
+          to="/"
+          className="font-bold text-3xl flex items-center text-secondary-color w-max"
         >
-          <Link
-            to="/"
-            className="font-bold text-3xl flex items-center text-secondary-color w-max"
+          {companyName}
+        </Link>
+        {isOpen ? (
+          <AiOutlineClose
+            onClick={() => dispatch(closeHeader())}
+            className="navbar-buttons"
+          />
+        ) : (
+          <GiHamburgerMenu
+            onClick={() => dispatch(openHeader())}
+            className="navbar-buttons"
+          />
+        )}
+        <div className="absolute z-2 left-0 lg:static w-full lg:w-max">
+          <ul
+            className={
+              `text-3xl lg:flex lg:items-center bg-gray-100 lg:gap-10 lg:static lg:w-auto lg:px-0 lg:pb-0 text-secondary-color px-9 pb-4 transition-all duration-75 ease-in ${isOpen
+                ? 'top-20 opacity-100'
+                : 'top-[-490px] lg:opacity-100 opacity-0'}`
+            }
           >
-            {headerProps.companyName}
-          </Link>
-          {headerState.isOpen ? (
-            <AiOutlineClose
-              onClick={this.handleListOpen}
-              className="navbar-buttons"
-            />
-          ) : (
-            <GiHamburgerMenu
-              onClick={this.handleListOpen}
-              className="navbar-buttons"
-            />
-          )}
-          <div className="absolute z-2 left-0 lg:static w-full lg:w-max">
-            <ul
-              className={
-                `text-3xl lg:flex lg:items-center bg-gray-100 lg:gap-10 lg:static lg:w-auto lg:px-0 lg:pb-0 text-secondary-color px-9 pb-4 transition-all duration-75 ease-in ${headerState.isOpen
-                  ? 'top-20 opacity-100'
-                  : 'top-[-490px] lg:opacity-100 opacity-0'}`
-              }
-            >
-              {headerState.links.map((link) => (
-                <li
-                  key={link.name}
-                  className={
-                    'cursor-pointer my-4 lg:my-0 before:content-[""] before:h-[2px] before:w-0 hover:before:w-full relative before:absolute before:right-0 hover:before:left-0 hover:before:right-auto before:bottom-0 before:bg-gray-800 before:transition-all before:duration-200 text-[0.8em]'
-                  }
+            {links.map((link) => (
+              <li
+                key={link.name}
+                className={
+                  'cursor-pointer my-4 lg:my-0 before:content-[""] before:h-[2px] before:w-0 hover:before:w-full relative before:absolute before:right-0 hover:before:left-0 hover:before:right-auto before:bottom-0 before:bg-gray-800 before:transition-all before:duration-200 text-[0.8em]'
+                }
+              >
+                <Link
+                  onClick={() => dispatch(closeHeader())}
+                  to={link.url}
                 >
-                  <Link
-                    onClick={this.handleListOpen}
-                    to={link.url}
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+                  {link.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
-      </nav>
-    );
-  }
+      </div>
+    </nav>
+  );
 }
 
 Header.propTypes = {
