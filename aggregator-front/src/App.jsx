@@ -7,11 +7,12 @@ import { BsWhatsapp } from 'react-icons/bs';
 import Header from './components/Header';
 import Home from './pages/Home';
 import AboutUs from './pages/AboutUs';
-import Sertificates from './pages/Sertificates';
+import Certificates from './pages/Sertificates';
 import Contacts from './pages/Contacts';
 import Services from './pages/Services';
 import Jobs from './pages/Jobs';
 import Footer from './components/Footer';
+import OrderRegistration from './pages/OrderRegistration';
 
 export default function App() {
   return (
@@ -24,10 +25,13 @@ export default function App() {
               index
               element={<Home companyName="marmalade crew" />}
             />
-            <Route path="services" element={<Services />} />
+            <Route path="services">
+              <Route index element={<Services />} />
+              <Route path="order" element={<OrderRegistration />} />
+            </Route>
             <Route path="about" element={<AboutUs />} />
             <Route path="jobs" element={<Jobs />} />
-            <Route path="sertificates" element={<Sertificates />} />
+            <Route path="sertificates" element={<Certificates />} />
             <Route path="contacts" element={<Contacts />} />
           </Route>
         </Routes>
