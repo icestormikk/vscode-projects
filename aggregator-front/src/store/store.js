@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import shopingCartReducer from './ShoppingCartSlice';
+import shoppingCartReducer from './ShoppingCartSlice';
 import headerReducer from './HeaderSlice';
 
 export default configureStore({
   reducer: {
-    shoppingCart: shopingCartReducer,
+    shoppingCart: shoppingCartReducer,
     header: headerReducer,
   },
 });
