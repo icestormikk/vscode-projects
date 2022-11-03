@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { HiOutlineShoppingBag } from 'react-icons/hi';
+import { Link } from 'react-router-dom';
 import Counter from './Counter';
 import TimeDisplay from './special/TimeDisplay';
-import ModalWindow from './special/ModalWindow';
 
 function getRightWordForm(number) {
   if (number <= 20) {
@@ -60,7 +60,9 @@ export default function ShoppingСart() {
         </div>
       </div>
       <div className={statisticsElementStyle}>
-        <ModalWindow />
+        <Link to="/services/order" className="text-xl text-gray-100 py-2 px-4 rounded-xl bg-gradient-to-r from-[#029872] to-[#09b68b] mt-2 sm:my-0">
+          <p>Продолжить</p>
+        </Link>
       </div>
     </div>
   );
