@@ -68,6 +68,15 @@ export default class ServiceSublist extends Component {
                 topPrice: 200,
                 incompatibleServicesIDs: [0],
               },
+              {
+                id: 2,
+                title: 'Стрижка 3',
+                description: 'Описание стрижки 3',
+                duration: 102,
+                lowerPrice: 400,
+                topPrice: 700,
+                incompatibleServicesIDs: [],
+              },
             ],
           }));
         })
@@ -99,19 +108,19 @@ export default class ServiceSublist extends Component {
             <Loader height={40} width={40} colorCode="#ffffff" />
           ) : (
             sublistState.subservices.length === 0 ? (
-              <h1 className="text-gray-200 text-2xl">
+              <h1 className="text-gray-200 text-xl">
                 Выберите услугу
               </h1>
             ) : (
               <>
-                <div className="text-white text-2xl border-b-2 border-b-gray-400 pb-2 my-2 flex justify-between items-center">
+                <div className="text-white text-xl border-b-2 border-b-gray-400 pb-2 my-2 flex justify-between items-center">
                   <h1>
                     {sublistState.chosenService.title}
                   </h1>
                   <AiOutlineDown
                     onClick={this.handleListOpen}
                     className={
-                      `cursor-pointer hover:text-yellow-300 transition-all duration-100 text-3xl scale-x-[1.5] ${sublistState.isOpen
+                      `cursor-pointer hover:text-yellow-300 transition-all duration-100 text-2xl scale-x-[1.5] ${sublistState.isOpen
                         ? 'rotate-180'
                         : 'rotate-0'}`
                     }

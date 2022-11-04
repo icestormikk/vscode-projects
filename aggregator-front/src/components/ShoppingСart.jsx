@@ -19,7 +19,7 @@ function getRightWordForm(number) {
 export default function ShoppingСart() {
   const isVisible = useSelector((state) => state.shoppingCart.isVisible);
   const selectedSubservices = useSelector((state) => state.shoppingCart.selectedSubservices);
-  const statisticsElementStyle = 'statsElement flex gap-1 sm:text-xl text-base px-4 whitespace-nowrap';
+  const statisticsElementStyle = 'statsElement flex gap-1 text-base px-4 whitespace-nowrap';
 
   const lowerTotalPrice = selectedSubservices.map(
     (elem) => elem.lowerPrice,
@@ -33,10 +33,10 @@ export default function ShoppingСart() {
   ).reduce((partialSum, a) => partialSum + a, 0);
 
   return (
-    <div id="#shoppingcart" className={`fixed z-20 flex flex-col sm:flex-row justify-center items-center ${isVisible ? 'bottom-0' : '-bottom-full'} left-0 w-full p-4 bg-[#dddddd] text-xl text-secondary-color transition-all duration-200`}>
+    <div id="#shoppingcart" className={`fixed z-20 flex flex-col sm:flex-row justify-center items-center ${isVisible ? 'bottom-0' : '-bottom-full'} left-0 w-full p-2 bg-[#dddddd] text-base text-secondary-color transition-all duration-200`}>
       <div className={statisticsElementStyle}>
         <div className={statisticsElementStyle}>
-          <HiOutlineShoppingBag className="text-3xl" />
+          <HiOutlineShoppingBag className="text-2xl" />
           <p>{`${selectedSubservices.length} ${getRightWordForm(selectedSubservices.length)}`}</p>
         </div>
         <div className={statisticsElementStyle}>
@@ -60,7 +60,7 @@ export default function ShoppingСart() {
         </div>
       </div>
       <div className={statisticsElementStyle}>
-        <Link to="/services/order" className="text-xl text-gray-100 py-2 px-4 rounded-xl bg-gradient-to-r from-[#029872] to-[#09b68b] mt-2 sm:my-0">
+        <Link to="/services/order" className="text-base text-gray-100 py-2 px-4 rounded-xl bg-gradient-to-r from-[#029872] to-[#09b68b] mt-2 sm:my-0">
           <p>Продолжить</p>
         </Link>
       </div>

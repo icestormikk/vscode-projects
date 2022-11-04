@@ -9,7 +9,7 @@ export default function SwiperElement(props) {
       <div className="max-h-[80vh] overflow-hidden rounded-lg">
         {props.picture}
       </div>
-      <div className="absolute bottom-0 left-0 bg-gray-800 w-full text-left text-xl sm:text-[1.5rem] max-h-min text-primary-color py-7 px-4 sm:whitespace-nowrap rounded-lg overflow-hidden flex justify-between">
+      <div className="absolute bottom-0 left-0 bg-gray-800 w-full text-left text-xl sm:text-[1.25rem] max-h-min text-primary-color py-7 px-4 sm:whitespace-nowrap rounded-lg overflow-hidden flex justify-between">
         {props.elementTitle}
         <button
           type="button"

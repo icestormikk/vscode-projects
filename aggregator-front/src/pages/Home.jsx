@@ -30,14 +30,14 @@ export default class Home extends Component {
           heightCoefficient="h-[66vh]"
           backgroundPicture={topSectionPicture}
           sectionTitle={(
-            <h1 className="text-3xl md:text-6xl font-bold leading-tight">
+            <h1 className="text-4xl font-bold leading-tight">
               Студия красоты
               <br />
               {pageState.companyName}
             </h1>
                       )}
           description={(
-            <p className="text-[#e4e6ca] font-light text-xl md:text-2xl w-full md:w-2/3 lg:w-4/5">
+            <p className="text-[#e4e6ca] font-light text-xl w-full md:w-2/3 lg:w-4/5">
               Это сеть студий красоты, куда гости приходят вместе
               с друзьями, чтобы иметь возможность общаться, в то
               время как мастера оказывают им профессиональные
@@ -56,12 +56,12 @@ export default class Home extends Component {
           heightCoefficient="h-[50vh]"
           backgroundPicture={middleSectionPicture}
           sectionTitle={(
-            <h1 className="text-3xl md:text-6xl font-bold leading-tight">
+            <h1 className="text-4xl font-bold leading-tight">
               9 лет на страже красоты
             </h1>
           )}
           description={(
-            <p className="text-[#e4e6ca] font-light text-xl md:text-2xl w-full md:w-2/3 lg:w-4/5">
+            <p className="text-[#e4e6ca] font-light text-xl w-full md:w-2/3 lg:w-4/5">
               Маникюр, брови, ресницы, волосы, депиляция, солярий
               - это все в одном месте
             </p>

@@ -16,8 +16,8 @@ export default function SubserviceElement({ subservice }) {
   const isChosen = allSelectedSubservices.some((elem) => elem.id === subservice.id);
 
   return (
-    <div className="text-xl relative flex flex-col sm:flex-row justify-between sm:items-center items-start bg-gray-600 duration-100 p-2 rounded-lg h-max transition-all overflow-hidden">
-      <div className={`absolute top-0 left-0 w-full h-full text-xl text-gray-200 text-center bg-gray-700/80 ${forbiddenServicesIDs.includes(subservice.id) ? 'flex flex-col justify-center items-center' : 'hidden'}`}>
+    <div className="text-base relative flex flex-col sm:flex-row justify-between sm:items-center items-start bg-gray-600 duration-100 p-2 rounded-lg h-max transition-all overflow-hidden">
+      <div className={`absolute top-0 left-0 w-full h-full text-base text-gray-200 text-center bg-gray-700/80 ${forbiddenServicesIDs.includes(subservice.id) ? 'flex flex-col justify-center items-center' : 'hidden'}`}>
         <h1>Вы не можете выбрать данную услугу</h1>
         <BiLockAlt />
       </div>
@@ -26,7 +26,7 @@ export default function SubserviceElement({ subservice }) {
         <p className="font-light max-w-3xl break-words">
           {subservice.description}
         </p>
-        <div className="flex flex-row justify-start items-center gap-2 sm:text-base xl:text-xl">
+        <div className="flex flex-row justify-start items-center gap-2 sm:text-base">
           <p className="h-max">
             {subservice.lowerPrice === subservice.topPrice
               ? '' : `${subservice.lowerPrice} - `}
