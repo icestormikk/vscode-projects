@@ -14,6 +14,7 @@ export default class MastersChoise extends Component {
     super(props);
     this.state = {
       isLoading: false,
+      selectedSubservices: props.selectedSubservices,
       completeStageController: props.mastersCompletedController,
       masters: [],
     };
@@ -29,9 +30,9 @@ export default class MastersChoise extends Component {
       isLoading: true,
     }));
 
-    axios.get('/api/services/orders', {
+    axios.get('http://localhost:8080/date', {
       params: {
-        masters: elementState.masters,
+        services: elementState.selectedSubservices.map((subservice) => subservice.id),
       },
     })
       .then((data) => console.log(data))
@@ -83,24 +84,23 @@ export default class MastersChoise extends Component {
       ) : (
         <div className="xl:w-1/2 lg:w-2/3 w-4/5">
           <div className="flex justify-between items-center text-gray-500 ">
-            <h1 className="my-4 text-3xl">Выбор специалистов</h1>
-            <h1 className="my-4 text-xl">1 / 3</h1>
+            <h1 className="my-4 text-2xl">Выбор специалистов</h1>
+            <h1 className="my-4 text-xl whitespace-nowrap">1 / 3</h1>
           </div>
           <div className="flex flex-col gap-4">
             {
               pageState.masters && pageState.masters.map((master) => (
                 <div key={master.id} className="block rounded-xl bg-gray-200 border-[1px] border-gray-300">
-                  <div className="h-max py-4 px-8 border-[1px] border-gray-300 rounded-xl flex gap-4 bg-gray-100 relative overflow-hidden">
-                    <div className="absolute top-0 left-0 h-screen rotate-[60deg] w-[100em] z-0 transition-all duration-100 -translate-x-2/3" style={{ backgroundColor: `${getRandomCrewColor()}` }} />
+                  <div className="h-max py-4 px-4 border-[1px] border-gray-300 rounded-xl flex gap-4 bg-gray-100 relative overflow-hidden">
                     <div className="flex gap-4 z-10 sm:flex-row flex-col">
-                      <img src={master.imageUrl} alt="master avatar" className="h-28 w-28 rounded-full border-[1px] border-gray-500 shadow-sm shadow-black" />
+                      <img src={master.imageUrl} alt="master avatar" className="h-20 w-20 rounded-full border-[1px] border-gray-500 shadow-sm shadow-black" />
                       <div className="break-all">
-                        <h1 className="text-[1.4em]">
+                        <h1 className="text-base">
                           {master.name}
                           {' '}
                           {master.surname}
                         </h1>
-                        <h2 className="text-gray-500 font-light">
+                        <h2 className="text-gray-500 italic font-extrabold" style={{ color: `${getRandomCrewColor()}` }}>
                           {master.professionName}
                         </h2>
                       </div>
@@ -117,14 +117,14 @@ export default class MastersChoise extends Component {
             }
           </div>
           <div className="flex justify-between items-center my-4">
-            <div className="bg-red-500 p-2 text-xl rounded-lg text-white">
-              <Link to="/services">
-                Отменить
-              </Link>
-            </div>
+            <Link to="/services">
+              <div className="bg-gradient-to-l from-[#e45353] to-[#e91f1f] p-2 text-base rounded-lg text-white">
+                Вернуться
+              </div>
+            </Link>
             <button
               type="button"
-              className="bg-green-500 text-xl p-2 rounded-lg text-white"
+              className="bg-gradient-to-r from-[#029872] to-[#09b68b] text-base p-2 rounded-lg text-white"
               onClick={pageState.completeStageController}
             >
               Продолжить
@@ -138,4 +138,5 @@ export default class MastersChoise extends Component {
 
 MastersChoise.propTypes = {
   mastersCompletedController: PropTypes.func.isRequired,
+  selectedSubservices: PropTypes.arrayOf(PropTypes.shape).isRequired,
 };

@@ -37,15 +37,17 @@ export default class Services extends Component {
 
   getAllServices() {
     axios
-      .get('https://www.google.com/', {
+      .get('http://localhost:8080/services', {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json;charset=UTF-8',
         },
       })
       .then((response) => {
-        // add filling the services list
-        console.log(response);
+        console.log(response.data);
+        // this.setState(() => ({
+        //   services: response.data,
+        // }));
       })
       .catch((error) => {
         console.log(error);
@@ -76,7 +78,7 @@ export default class Services extends Component {
                   <h1 className="xl:text-6xl md:text-5xl text-4xl text-gray-500">
                     Услуги
                   </h1>
-                  <h2 className="xl:text-3xl md:text-2xl text-xl text-gray-400 mt-4">
+                  <h2 className="xl:text-2xl md:text-2xl text-xl text-gray-400 mt-4">
                     Здесь можно разместить полезную
                     информацию об оказываемых услугах или
                     какую-то другую полезную информацию.
@@ -96,7 +98,7 @@ export default class Services extends Component {
                         <SwiperElement
                           picture={(
                             <img
-                              src={service.iconPictureUrl}
+                              src={service.imageUrl}
                               alt="men's haircuts"
                               className="z-[-1] object-cover overflow-hidden"
                             />
@@ -139,22 +141,22 @@ Services.defaultProps = {
     {
       id: 0,
       title: 'Женские стрижки',
-      iconPictureUrl: hairWomanPictureUrl,
+      imageUrl: hairWomanPictureUrl,
     },
     {
       id: 1,
       title: 'Мужские стрижки',
-      iconPictureUrl: hairManPictureUrl,
+      imageUrl: hairManPictureUrl,
     },
     {
       id: 2,
       title: 'Маникюр',
-      iconPictureUrl: manicurePictureUrl,
+      imageUrl: manicurePictureUrl,
     },
     {
       id: 3,
       title: 'Макияж',
-      iconPictureUrl: makeupPictureUrl,
+      imageUrl: makeupPictureUrl,
     },
   ],
   chosenService: {},
