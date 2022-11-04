@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
 const getRandomCrewColor = () => {
   const colors = [
-    '#e5087f80',
-    '#0059a580',
-    '#02987280',
-    '#fdcc0080',
+    '#e5087f',
+    '#0059a5',
+    '#029872',
+    '#fdcc00',
   ];
   return colors[Math.floor(Math.random() * colors.length)];
 };
