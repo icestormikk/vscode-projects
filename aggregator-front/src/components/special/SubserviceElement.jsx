@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { BiLockAlt } from 'react-icons/bi';
-import { addSubserviceToCart } from '../../store/ShoppingCartSlice';
+import { addSubserviceToCart } from '../../store/OrdersInfoSlice';
 import TimeDisplay from './TimeDisplay';
 import SubserviceChooser from './SubserviceChooser';
 
 export default function SubserviceElement({ subservice }) {
   const dispatch = useDispatch();
-  const allSelectedSubservices = useSelector((state) => state.shoppingCart.selectedSubservices);
+  const allSelectedSubservices = useSelector((state) => state.ordersInfo.selectedSubservices);
   const forbiddenServicesIDs = useSelector(
-    (state) => state.shoppingCart.totalForbiddenSubservicesIDs,
+    (state) => state.ordersInfo.totalForbiddenSubservicesIDs,
   );
 
   const isChosen = allSelectedSubservices.some((elem) => elem.id === subservice.id);
