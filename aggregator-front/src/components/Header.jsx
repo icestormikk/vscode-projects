@@ -44,8 +44,8 @@ export default function Header({ companyName }) {
           <ul
             className={
               `text-2xl lg:flex lg:items-center bg-gray-100 lg:gap-10 lg:static lg:w-auto lg:px-0 lg:pb-0 text-secondary-color px-9 pb-4 transition-all duration-75 ease-in ${isOpen
-                ? 'top-20 opacity-100'
-                : 'top-[-490px] lg:opacity-100 opacity-0'}`
+                ? 'top-20'
+                : 'top-[-490px] hidden'}`
             }
           >
             {links.map((link) => (
