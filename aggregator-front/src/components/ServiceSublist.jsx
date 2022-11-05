@@ -43,8 +43,18 @@ export default class ServiceSublist extends Component {
       }));
 
       axios
-        .get(`https://jsonplaceholder.typicode.com/todos/${id > 0 ? id : 1}`)
-        .then(() => {
+        .get('http://localhost:8080/services', {
+          params: {
+            subserviceId: id > 0 ? id : 1,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(`Error: ${error}`);
+        })
+        .finally(
           this.setState(() => ({
             subservices: [
               {
@@ -78,12 +88,7 @@ export default class ServiceSublist extends Component {
                 incompatibleServicesIDs: [],
               },
             ],
-          }));
-        })
-        .catch((error) => {
-          console.log(`Error: ${error}`);
-        })
-        .finally(
+          })),
           // fake timeout
           setTimeout(() => {
             this.setState(() => ({
