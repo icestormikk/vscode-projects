@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { ImCheckmark } from 'react-icons/im';
-import { removeSubserviceFromCart } from '../../store/ShoppingCartSlice';
+import { removeSubserviceFromCart } from '../../store/OrdersInfoSlice';
 
 export default function SubserviceChooser({ subservice }) {
   const dispatch = useDispatch();
