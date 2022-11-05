@@ -17,8 +17,8 @@ function getRightWordForm(number) {
 }
 
 export default function ShoppingСart() {
-  const isVisible = useSelector((state) => state.shoppingCart.isVisible);
-  const selectedSubservices = useSelector((state) => state.shoppingCart.selectedSubservices);
+  const isVisible = useSelector((state) => state.ordersInfo.isVisible);
+  const selectedSubservices = useSelector((state) => state.ordersInfo.selectedSubservices);
   const statisticsElementStyle = 'statsElement flex gap-1 text-base px-4 whitespace-nowrap';
 
   const lowerTotalPrice = selectedSubservices.map(
