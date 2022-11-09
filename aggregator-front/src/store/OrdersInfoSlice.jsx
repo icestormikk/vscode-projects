@@ -9,6 +9,7 @@ const ordersInfoSlice = createSlice({
     selectedSubservices: [],
     masters: [],
     subservicesToMasters: {},
+    subservicesToDates: {},
     totalForbiddenSubservicesIDs: [],
   },
   reducers: {
@@ -28,6 +29,7 @@ const ordersInfoSlice = createSlice({
         if (!state.totalForbiddenSubservicesIDs.includes(subservice.id)) {
           state.selectedSubservices.push(subservice);
           state.subservicesToMasters[subservice.id] = [];
+          state.subservicesToDates[subservice.id] = {};
 
           subservice.incompatibleServicesIDs.forEach(
             (id) => {
@@ -49,6 +51,7 @@ const ordersInfoSlice = createSlice({
       if (index > -1) {
         state.selectedSubservices.splice(index, 1);
         delete state.subservicesToMasters[subserviceId];
+        delete state.subservicesToDates[subserviceId];
       }
 
       action.payload.subservice.incompatibleServicesIDs.forEach((id) => {
@@ -105,6 +108,18 @@ const ordersInfoSlice = createSlice({
         }
       }
     },
+
+    setSubserviceDate(state, action) {
+      const { subserviceId } = action.payload;
+      const { timestamp } = action.payload;
+
+      if (Object.keys(state.subservicesToDates).includes(`${subserviceId}`)) {
+        state.subservicesToDates[subserviceId] = timestamp;
+      }
+    },
+    clearSubservicesToDatesObject(state) {
+      state.subservicesToDates = {};
+    },
   },
 });
 
@@ -113,5 +128,6 @@ export const {
   addSubserviceToCart, removeSubserviceFromCart,
   addMasterToSubservice, removeMasterFromSubservice,
   addMaster, replaceMaster,
+  setSubserviceDate, clearSubservicesToDatesObject,
 } = ordersInfoSlice.actions;
 export default ordersInfoSlice.reducer;
