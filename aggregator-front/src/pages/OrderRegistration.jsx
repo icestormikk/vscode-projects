@@ -9,6 +9,7 @@ import { addMaster, addMasterToSubservice } from '../store/OrdersInfoSlice';
 import masterAvatar1 from '../static/pictures/master_avatar_1.jpg';
 import masterAvatar2 from '../static/pictures/master_avatar_2.jpg';
 import masterAvatar3 from '../static/pictures/master_avatar_3.jpg';
+import UserDataForm from '../components/special/UserDataForm';
 
 export default function OrderRegistration() {
   const dispatch = useDispatch();
@@ -29,6 +30,10 @@ export default function OrderRegistration() {
     email: 'test1@test.com',
     imageProfileUrl: masterAvatar1,
     providedServiceIDs: [0],
+    availableDates: [
+      new Date(2022, 10, 8, 11, 30, 0).getTime(),
+      new Date(2022, 10, 8, 12, 30, 0).getTime(),
+    ],
   }, {
     id: 1,
     name: 'Имя',
@@ -38,6 +43,10 @@ export default function OrderRegistration() {
     email: 'test2@test.com',
     imageProfileUrl: masterAvatar2,
     providedServiceIDs: [0],
+    availableDates: [
+      new Date(2022, 10, 8, 11, 30, 0).getTime(),
+      new Date(2022, 10, 8, 13, 30, 0).getTime(),
+    ],
   }, {
     id: 2,
     name: 'Имя',
@@ -47,6 +56,10 @@ export default function OrderRegistration() {
     email: 'test3@test.com',
     imageProfileUrl: masterAvatar3,
     providedServiceIDs: [1, 2],
+    availableDates: [
+      new Date(2022, 10, 10, 11, 30, 0).getTime(),
+      new Date(2022, 10, 10, 14, 30, 0).getTime(),
+    ],
   }];
   const mastersForSubservices = [[0], [0], [1, 2]];
 
@@ -98,10 +111,13 @@ export default function OrderRegistration() {
             />
           ) : (!isDateTimeCompleted ? (
             <DateTimeChoise
+              selectedSubservices={selectedSubservices}
+              subservicesToMasters={subservicesToMasters}
+              masters={masters}
               dateTimeCompletedController={setDateTimeCompleted}
             />
           ) : (
-            <h1>DateTime section completed</h1>
+            <UserDataForm />
           ))
         )}
       </div>
