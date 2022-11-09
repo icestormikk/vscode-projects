@@ -1,13 +1,57 @@
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-/* eslint-disable react/no-unused-state */
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import PropTypes, { func } from 'prop-types';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import MasterAndServiceDisplay from './MasterAndServiceDisplay';
+import DateTimeContainer from './DateTimeContainer';
+import { groupDatesObject, toObject } from '../../datesTransformFunctions';
+import { setSubserviceDate } from '../../store/OrdersInfoSlice';
+
+export function initailizateAvailableDates(daysCount, hoursCount) {
+  const datesArray = [];
+  const startDate = new Date();
+  for (let i = 0; i < daysCount; i += 1) {
+    for (let j = 0; j < hoursCount; j += 1) {
+      datesArray.push(
+        new Date(
+          startDate.getFullYear(),
+          startDate.getMonth(),
+          startDate.getDate() + i,
+          (startDate.getHours() + j) % 24,
+        ).getTime(),
+      );
+    }
+  }
+
+  return datesArray;
+}
 
 export default function DateTimeChoise(
-  { dateTimeCompletedController, masters, selectedSubservices },
+  {
+    dateTimeCompletedController, selectedSubservices, subservicesToMasters, masters,
+  },
 ) {
-  const availableDates = [];
+  const dispatch = useDispatch();
+  const [isOneTimeMode, setOneTimeMode] = React.useState(true);
+  const [datesObject, setDatesObject] = React.useState(
+    groupDatesObject(toObject(initailizateAvailableDates(10, 8))),
+  );
+
+  useState(() => {
+    const tempDateObject = toObject(initailizateAvailableDates(10, 8));
+    setDatesObject(
+      groupDatesObject(
+        tempDateObject,
+      ),
+    );
+    const timestamp = tempDateObject.find((el) => el.isSelected === true).date.getTime();
+    selectedSubservices.forEach((el) => {
+      const subserviceId = el.id;
+      dispatch(setSubserviceDate({ subserviceId, timestamp }));
+    });
+  }, []);
 
   return (
     <>
@@ -16,8 +60,39 @@ export default function DateTimeChoise(
         <h1 className="my-4 text-xl whitespace-nowrap">2 / 3</h1>
       </div>
       <div className="w-full flex justify-center items-center">
-        <div className="p-4 border-[1px] border-gray-300 overflow-hidden w-full rounded-2xl">
-          <h1>Test</h1>
+        <div id="dateContainer" className="p-4 border-[1px] border-gray-300 w-full rounded-2xl flex flex-col gap-2">
+          <div className="flex justify-center items-center">
+            <div className=" w-max bg-gray-100 rounded-xl border-[1px] border-gray-300 flex flex-row overflow-hidden">
+              <button
+                onClick={() => setOneTimeMode(true)}
+                type="button"
+                className={`${isOneTimeMode ? 'bg-green-300' : 'bg-gray-200'} h-full p-2 duration-100 transition-colors`}
+              >
+                <span>Последовательно</span>
+              </button>
+              <button
+                onClick={() => setOneTimeMode(false)}
+                type="button"
+                className={`${!isOneTimeMode ? 'bg-green-300' : 'bg-gray-200'} h-full p-2 duration-100 transition-colors`}
+              >
+                <span>В разное время</span>
+              </button>
+            </div>
+          </div>
+          <MasterAndServiceDisplay
+            selectedSubservices={selectedSubservices}
+            subservicesToMasters={subservicesToMasters}
+            masters={masters}
+            showWithDateTimes={!isOneTimeMode}
+          />
+          {isOneTimeMode && (
+            <div id="dateContainer" className="flex flex-col gap-2">
+              <DateTimeContainer
+                initialDates={datesObject}
+                relatedSubservices={selectedSubservices}
+              />
+            </div>
+          )}
         </div>
       </div>
       <div className="flex justify-between items-center my-4">
@@ -40,6 +115,7 @@ export default function DateTimeChoise(
 
 DateTimeChoise.propTypes = {
   dateTimeCompletedController: PropTypes.func.isRequired,
-  masters: PropTypes.arrayOf(PropTypes.shape).isRequired,
   selectedSubservices: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  subservicesToMasters: PropTypes.objectOf(PropTypes.shape).isRequired,
+  masters: PropTypes.arrayOf(PropTypes.shape).isRequired,
 };
