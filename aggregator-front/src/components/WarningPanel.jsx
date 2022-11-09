@@ -5,7 +5,7 @@ export default function WarningPanel({
   colorCode, icon, header, content,
 }) {
   return (
-    <div className={`flex flex-row items-center gap-5 rounded-xl p-2 bg-[${colorCode}] text-secondary-color w-full xl:w-1/2`}>
+    <div className="flex flex-row items-center gap-5 rounded-xl p-2 text-secondary-color w-full xl:w-1/2" style={{ backgroundColor: `${colorCode}` }}>
       {icon}
       <div className="flex flex-col">
         <h1 className="text-xl font-bold">{header}</h1>
