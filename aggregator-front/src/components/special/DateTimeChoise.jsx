@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
-import PropTypes, { func } from 'prop-types';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import MasterAndServiceDisplay from './MasterAndServiceDisplay';
 import DateTimeContainer from './DateTimeContainer';
 import { groupDatesObject, toObject } from '../../datesTransformFunctions';
@@ -39,7 +38,7 @@ export default function DateTimeChoise(
     groupDatesObject(toObject(initailizateAvailableDates(10, 8))),
   );
 
-  useState(() => {
+  useEffect(() => {
     const tempDateObject = toObject(initailizateAvailableDates(10, 8));
     setDatesObject(
       groupDatesObject(
@@ -51,7 +50,7 @@ export default function DateTimeChoise(
       const subserviceId = el.id;
       dispatch(setSubserviceDate({ subserviceId, timestamp }));
     });
-  }, []);
+  }, [isOneTimeMode]);
 
   return (
     <>
@@ -71,7 +70,7 @@ export default function DateTimeChoise(
                 <span>Последовательно</span>
               </button>
               <button
-                onClick={() => setOneTimeMode(false)}
+                onClick={() => { setOneTimeMode(false); }}
                 type="button"
                 className={`${!isOneTimeMode ? 'bg-green-300' : 'bg-gray-200'} h-full p-2 duration-100 transition-colors`}
               >

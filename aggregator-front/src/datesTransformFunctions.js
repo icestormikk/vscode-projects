@@ -22,8 +22,7 @@ export function groupDatesObject(datesArray) {
     }
     groupedDates[date].timestamps.push({
       date: element.date,
-      isSelected: !groupedDates[date].timestamps.some((el) => el.isSelected)
-        && groupedDates[date].timestamps.length === 0
+      isSelected: groupedDates[date].timestamps.length === 0
         && Object.keys(groupedDates).length === 1,
     });
   });

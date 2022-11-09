@@ -1,15 +1,12 @@
-/* eslint-disable no-console */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { setSubserviceDate } from '../../store/OrdersInfoSlice';
 
 function getSelectedDateFrom(datesArrayObject) {
-  console.log(datesArrayObject);
   const selectedDateKey = Object.keys(datesArrayObject).find(
     (key) => datesArrayObject[key].isSelected === true,
   );
-  console.log(datesArrayObject[selectedDateKey]);
   return datesArrayObject[selectedDateKey];
 }
 
@@ -59,11 +56,10 @@ export default function DateTimeContainer({ initialDates, relatedSubservices }) 
   }
 
   useState(() => {
-    console.log('test');
-    const firstSelectedTime = Object.keys(initialDates).find(
+    const firstSelectedTime = Object.keys(availableDates).find(
       (key) => initialDates[key].isSelected === true,
     );
-    const time = initialDates[firstSelectedTime].timestamps.find(
+    const time = availableDates[firstSelectedTime].timestamps.find(
       (el) => el.isSelected,
     ).date.getTime();
     relatedSubservices.forEach((subservice) => {
@@ -71,7 +67,7 @@ export default function DateTimeContainer({ initialDates, relatedSubservices }) 
       const timestamp = time;
       dispatch(setSubserviceDate({ subserviceId, timestamp }));
     });
-  }, []);
+  });
 
   return (
     <>

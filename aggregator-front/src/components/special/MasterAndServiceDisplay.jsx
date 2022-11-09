@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import { FiMoreHorizontal } from 'react-icons/fi';
@@ -19,10 +19,6 @@ export default function MasterAndServiceDisplay(
 ) {
   const [isModalOpen, setModalOpen] = React.useState(false);
   const dispatch = useDispatch();
-
-  useState(() => {
-    console.log(showWithDateTimes);
-  });
 
   return (
     <>
