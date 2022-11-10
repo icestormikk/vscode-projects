@@ -20,6 +20,9 @@ export default function OrderRegistration() {
   const [isReady, setReady] = React.useState(false);
   const [isMastersCompleted, setMastersCompleted] = React.useState(false);
   const [isDateTimeCompleted, setDateTimeCompleted] = React.useState(false);
+  const [isUserFormCompleted, setUserFormCompleted] = React.useState(false);
+
+  const stagesTextStyle = 'whitespace-nowrap transition-colors duration-100';
 
   const testMasters = [{
     id: 0,
@@ -101,6 +104,13 @@ export default function OrderRegistration() {
   return (
     <div className="min-h-screen text-black flex justify-center">
       <div className="xl:w-2/5 lg:w-1/2 w-4/5">
+        <h1 className="flex md:gap-2 gap-0 justify-center items-center m-2 md:flex-row flex-col md:text-base text-xl">
+          <span className={stagesTextStyle} style={{ color: isMastersCompleted ? 'green' : 'lightgray' }}>Выбор специалистов</span>
+          <span style={{ color: isMastersCompleted ? 'green' : 'lightgray' }}>&#x2022;</span>
+          <span className={stagesTextStyle} style={{ color: isDateTimeCompleted ? 'green' : 'lightgray' }}>Выбор времени посещения</span>
+          <span style={{ color: isDateTimeCompleted ? 'green' : 'lightgray' }}>&#x2022;</span>
+          <span className={stagesTextStyle} style={{ color: isUserFormCompleted ? 'green' : 'lightgray' }}>Указание контактных данных</span>
+        </h1>
         {isReady && (
           !isMastersCompleted ? (
             <MastersChoise
@@ -117,7 +127,9 @@ export default function OrderRegistration() {
               dateTimeCompletedController={setDateTimeCompleted}
             />
           ) : (
-            <UserDataForm />
+            <UserDataForm
+              userFormCompletedController={setUserFormCompleted}
+            />
           ))
         )}
       </div>
