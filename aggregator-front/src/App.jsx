@@ -17,7 +17,7 @@ import OrderRegistration from './pages/OrderRegistration';
 export default function App() {
   return (
     <>
-      <Header companyName="marmalade crew" />
+      <Header />
       <div>
         <Routes>
           <Route path="/">
