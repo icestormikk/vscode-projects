@@ -23,7 +23,7 @@ export default function App() {
           <Route path="/">
             <Route
               index
-              element={<Home companyName="marmalade crew" />}
+              element={<Home />}
             />
             <Route path="services">
               <Route index element={<Services />} />
