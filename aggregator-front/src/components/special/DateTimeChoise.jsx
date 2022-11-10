@@ -54,28 +54,30 @@ export default function DateTimeChoise(
 
   return (
     <>
-      <div className="flex justify-between items-center text-gray-500 ">
-        <h1 className="my-4 text-2xl">Выбор времени посещения</h1>
-        <h1 className="my-4 text-xl whitespace-nowrap">2 / 3</h1>
-      </div>
       <div className="w-full flex justify-center items-center">
         <div id="dateContainer" className="p-4 border-[1px] border-gray-300 w-full rounded-2xl flex flex-col gap-2">
           <div className="flex justify-center items-center">
             <div className=" w-max bg-gray-100 rounded-xl border-[1px] border-gray-300 flex flex-row overflow-hidden">
-              <button
-                onClick={() => setOneTimeMode(true)}
-                type="button"
-                className={`${isOneTimeMode ? 'bg-green-300' : 'bg-gray-200'} h-full p-2 duration-100 transition-colors`}
-              >
-                <span>Последовательно</span>
-              </button>
-              <button
-                onClick={() => { setOneTimeMode(false); }}
-                type="button"
-                className={`${!isOneTimeMode ? 'bg-green-300' : 'bg-gray-200'} h-full p-2 duration-100 transition-colors`}
-              >
-                <span>В разное время</span>
-              </button>
+              {
+                selectedSubservices.length > 1 && (
+                  <>
+                    <button
+                      onClick={() => setOneTimeMode(true)}
+                      type="button"
+                      className={`${isOneTimeMode ? 'bg-green-500/50' : 'bg-gray-200'} h-full p-2 duration-100 transition-colors`}
+                    >
+                      <span>Последовательно</span>
+                    </button>
+                    <button
+                      onClick={() => { setOneTimeMode(false); }}
+                      type="button"
+                      className={`${!isOneTimeMode ? 'bg-green-500/50' : 'bg-gray-200'} h-full p-2 duration-100 transition-colors`}
+                    >
+                      <span>В разное время</span>
+                    </button>
+                  </>
+                )
+              }
             </div>
           </div>
           <MasterAndServiceDisplay
