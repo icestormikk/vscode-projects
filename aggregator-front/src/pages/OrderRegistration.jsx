@@ -97,6 +97,17 @@ export default function OrderRegistration() {
     console.log(subservicesToMasters);
   }
 
+  function handleDateTimeCompleted() {
+    setDateTimeCompleted(false);
+    setUserFormCompleted(false);
+  }
+
+  function handleMastersCompleted() {
+    setMastersCompleted(false);
+    setDateTimeCompleted(false);
+    setUserFormCompleted(false);
+  }
+
   useEffect(() => {
     updateState();
   }, [selectedSubservices, subservicesToMasters]);
@@ -105,9 +116,13 @@ export default function OrderRegistration() {
     <div className="min-h-screen text-black flex justify-center">
       <div className="xl:w-2/5 md:w-1/2 w-full px-2">
         <h1 className="flex md:gap-2 gap-0 justify-center items-center m-2 md:flex-row flex-col md:text-base text-xl">
-          <span className={stagesTextStyle} style={{ color: isMastersCompleted ? 'green' : 'lightgray' }}>Выбор специалистов</span>
+          <button type="button" onClick={() => handleMastersCompleted()}>
+            <span className={stagesTextStyle} style={{ color: isMastersCompleted ? 'green' : 'lightgray' }}>Выбор специалистов</span>
+          </button>
           <span style={{ color: isMastersCompleted ? 'green' : 'lightgray' }}>&#x2022;</span>
-          <span className={stagesTextStyle} style={{ color: isDateTimeCompleted ? 'green' : 'lightgray' }}>Выбор времени посещения</span>
+          <button type="button" onClick={() => handleDateTimeCompleted()}>
+            <span className={stagesTextStyle} style={{ color: isDateTimeCompleted ? 'green' : 'lightgray' }}>Выбор времени посещения</span>
+          </button>
           <span style={{ color: isDateTimeCompleted ? 'green' : 'lightgray' }}>&#x2022;</span>
           <span className={stagesTextStyle} style={{ color: isUserFormCompleted ? 'green' : 'lightgray' }}>Указание контактных данных</span>
         </h1>
