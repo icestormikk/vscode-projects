@@ -28,6 +28,9 @@
 }
 
 @layer components {
+    #dateContainer {
+        @apply mt-2
+    }
     #dateContainer::-webkit-scrollbar {
         @apply w-0
     }
@@ -48,17 +51,17 @@
         @apply visible
     } 
     .navbar-buttons {
-        @apply text-secondary-color text-2xl absolute right-8 top-6 cursor-pointer lg:hidden
+        @apply text-secondary-color text-2xl absolute right-8 top-1/2 -translate-y-1/2 cursor-pointer lg:hidden
     }
     .cube-wrapper {
-        @apply relative shadow-lg w-20 h-20 rounded-l-3xl rounded-br-3xl
+        @apply relative shadow-lg w-10 h-10 rounded-l-xl rounded-br-xl
     }
     .cube, .cube div {
         transform-style: preserve-3d;
         @apply absolute w-full h-full top-0 left-0 transition-transform duration-500 ease-in-out
     }
     .cube-front {
-        @apply rounded-l-3xl rounded-br-3xl
+        @apply rounded-l-xl rounded-br-xl
     }
     .cube-top {
         transform: translate(50%, 0) rotateY(90deg);
