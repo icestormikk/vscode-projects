@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import '../css/index.css';
 import { AiOutlineRight } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 import topSectionPicture from '../static/pictures/cosmetics_article1.jpg';
 import middleSectionPicture from '../static/pictures/beautysalon_article2.jpg';
 import HomePageSection from '../components/special/HomePageSection';
@@ -35,7 +36,7 @@ export default class Home extends Component {
               <br />
               {pageState.companyName}
             </h1>
-                      )}
+          )}
           description={(
             <p className="text-[#e4e6ca] font-light text-xl w-full md:w-2/3 lg:w-4/5">
               Это сеть студий красоты, куда гости приходят вместе
@@ -45,10 +46,10 @@ export default class Home extends Component {
             </p>
           )}
           button={(
-            <button type="button" className="flex gap-1.5 justify-center items-center text-xl text-gray-100 w-max py-4 px-8 rounded-md shadow-2xl bg-[#e00d7c] hover:bg-[#ca0a71]  duration-200 ease-in transition-all font-bolder tracking-wide">
+            <Link to="/services" className="flex gap-1.5 justify-center items-center text-xl text-gray-100 w-max py-4 px-8 rounded-md shadow-2xl bg-[#e00d7c] hover:bg-[#ca0a71]  duration-200 ease-in transition-all font-bolder tracking-wide">
               <span>Записаться</span>
               <AiOutlineRight className="mt-0.6" />
-            </button>
+            </Link>
           )}
           textside="right"
         />
