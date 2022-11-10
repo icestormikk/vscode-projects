@@ -25,10 +25,6 @@ export default function MastersChoise({
       />
     ) : (
       <>
-        <div className="flex justify-between items-center text-gray-500 ">
-          <h1 className="my-4 text-2xl">Выбор специалистов</h1>
-          <h1 className="my-4 text-xl whitespace-nowrap">1 / 3</h1>
-        </div>
         <div className="flex flex-col gap-4">
           <MasterAndServiceDisplay
             selectedSubservices={selectedSubservices}
