@@ -78,7 +78,7 @@ export default class Services extends Component {
                   <h1 className="xl:text-6xl md:text-5xl text-4xl text-gray-500">
                     Услуги
                   </h1>
-                  <h2 className="xl:text-2xl md:text-2xl text-xl text-gray-400 mt-4">
+                  <h2 className="xl:text-2xl text-xl text-gray-400 mt-4">
                     Здесь можно разместить полезную
                     информацию об оказываемых услугах или
                     какую-то другую полезную информацию.
