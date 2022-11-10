@@ -1,13 +1,13 @@
 import '../css/index.css';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeHeader, openHeader } from '../store/HeaderSlice';
+import Logo from './LogoComponent';
 
-export default function Header({ companyName }) {
+export default function Header() {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.header.isOpen);
   const links = [
@@ -27,7 +27,7 @@ export default function Header({ companyName }) {
           to="/"
           className="font-bold text-3xl flex items-center text-secondary-color w-max"
         >
-          {companyName}
+          <Logo textSizeProperty="text-3xl" />
         </Link>
         {isOpen ? (
           <AiOutlineClose
@@ -69,7 +69,3 @@ export default function Header({ companyName }) {
     </nav>
   );
 }
-
-Header.propTypes = {
-  companyName: PropTypes.string.isRequired,
-};
