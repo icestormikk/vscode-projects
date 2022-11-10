@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-console */
 import React from 'react';
@@ -8,7 +9,7 @@ import {
 } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Logo from '../LogoComponent';
 import { ContactInfoSchema } from '../../schemas/contactInfoSchema';
 import UserPhoneField from './UserPhoneField';
@@ -16,15 +17,33 @@ import { clearCart } from '../../store/OrdersInfoSlice';
 
 export default function UserDataForm() {
   const dispatch = useDispatch();
+
+  const selectedSubservices = useSelector((state) => state.ordersInfo.selectedSubservices);
+  const subservicesToMasters = useSelector((state) => state.ordersInfo.subservicesToMasters);
+  const subservicesToDates = useSelector((state) => state.ordersInfo.subservicesToDates);
+
   const navigate = useNavigate();
   const inputFieldStyle = 'rounded-md h-8 border-[1px] pl-2 border-gray-400 invalid:bg-red-300 font-light placeholder:text-sm invalid:bg-white';
   const errorStyle = 'text-red-500 text-sm';
 
+  function constructOrdersFullInfoObject() {
+    const result = [];
+    selectedSubservices.forEach((subservice) => {
+      result.push({
+        selectedSubserviceID: subservice.id,
+        masterID: subservicesToMasters[subservice.id][0].id,
+        date: subservicesToDates[subservice.id],
+      });
+    });
+    return result;
+  }
+
   function handleSubmit(values) {
-    axios.post('http://localhost:8080/orders', values)
+    const fullInfoObject = values;
+    fullInfoObject.ordersInfo = constructOrdersFullInfoObject();
+    axios.post('http://localhost:8080/orders', fullInfoObject)
       .finally(() => {
-        dispatch(clearCart());
-        navigate('/services');
+        console.log(fullInfoObject);
       });
   }
 
