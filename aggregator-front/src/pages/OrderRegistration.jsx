@@ -103,7 +103,7 @@ export default function OrderRegistration() {
 
   return (
     <div className="min-h-screen text-black flex justify-center">
-      <div className="xl:w-2/5 lg:w-1/2 w-4/5">
+      <div className="xl:w-2/5 md:w-1/2 w-full px-2">
         <h1 className="flex md:gap-2 gap-0 justify-center items-center m-2 md:flex-row flex-col md:text-base text-xl">
           <span className={stagesTextStyle} style={{ color: isMastersCompleted ? 'green' : 'lightgray' }}>Выбор специалистов</span>
           <span style={{ color: isMastersCompleted ? 'green' : 'lightgray' }}>&#x2022;</span>
