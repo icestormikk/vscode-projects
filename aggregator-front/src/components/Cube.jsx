@@ -8,7 +8,7 @@ export default class Cube extends Component {
     this.state = {
       letter: props.letter || 'A',
       colorCode: props.colorCode || '#ff0000',
-      emotion: props.emotion || ':)',
+      emotion: props.emotion || '?',
     };
   }
 
@@ -16,7 +16,7 @@ export default class Cube extends Component {
     const cubeState = this.state;
     return (
       <div className="cube-wrapper">
-        <div className="cube text-5xl font-bold text-white">
+        <div className="cube text-3xl font-bold text-white">
           <div
             className="cube-top flex items-center justify-center"
             style={{ backgroundColor: `${cubeState.colorCode}` }}
@@ -36,7 +36,12 @@ export default class Cube extends Component {
 }
 
 Cube.propTypes = {
-  letter: PropTypes.string.isRequired,
-  colorCode: PropTypes.string.isRequired,
-  emotion: PropTypes.string.isRequired,
+  letter: PropTypes.string,
+  colorCode: PropTypes.string,
+  emotion: PropTypes.objectOf(PropTypes.shape),
+};
+Cube.defaultProps = {
+  letter: 'A',
+  colorCode: '#ff0000',
+  emotion: '?',
 };
