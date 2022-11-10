@@ -1,5 +1,6 @@
 import React from 'react';
+import WorkInProgress from './WorkInProgress';
 
 export default function Jobs() {
-  return <h1>Jobs Page</h1>;
+  return <WorkInProgress />;
 }
