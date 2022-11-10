@@ -19,6 +19,14 @@ const ordersInfoSlice = createSlice({
     show(state) {
       state.isVisible = true;
     },
+    clearCart(state) {
+      state.selectedSubservices = [];
+      state.masters = [];
+      state.subservicesToMasters = [];
+      state.subservicesToDates = {};
+      state.totalForbiddenSubservicesIDs = [];
+      state.isVisible = false;
+    },
 
     addSubserviceToCart(state, action) {
       if (state.selectedSubservices.length < process.env.REACT_APP_SHOPPING_CART_LIMIT) {
@@ -124,7 +132,7 @@ const ordersInfoSlice = createSlice({
 });
 
 export const {
-  show, hide,
+  show, hide, clearCart,
   addSubserviceToCart, removeSubserviceFromCart,
   addMasterToSubservice, removeMasterFromSubservice,
   addMaster, replaceMaster,
