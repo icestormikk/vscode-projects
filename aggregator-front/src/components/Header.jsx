@@ -52,12 +52,13 @@ export default function Header() {
               <li
                 key={link.name}
                 className={
-                  'cursor-pointer my-4 lg:my-0 before:content-[""] before:h-[2px] before:w-0 hover:before:w-full relative before:absolute before:right-0 hover:before:left-0 hover:before:right-auto before:bottom-0 before:bg-gray-800 before:transition-all before:duration-200 text-xl'
+                  'cursor-pointer my-4 lg:my-0 before:content-[""] before:h-[2px] before:w-0 hover:before:w-full relative before:absolute before:right-0 hover:before:left-0 hover:before:right-auto before:bottom-0 before:bg-gray-800 before:transition-all before:duration-200 text-xl flex'
                 }
               >
                 <Link
                   onClick={() => dispatch(closeHeader())}
                   to={link.url}
+                  className="w-full"
                 >
                   {link.name}
                 </Link>
