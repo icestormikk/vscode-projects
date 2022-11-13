@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { useDispatch } from 'react-redux';
+import { AiOutlineClose } from 'react-icons/ai';
 import LostComponent from './LostComponent';
 import { replaceMaster } from '../../store/OrdersInfoSlice';
 import TimeDisplay from './TimeDisplay';
@@ -70,7 +71,9 @@ export default function MasterAndServiceDisplay(
                           >
                             <div className="flex justify-between items-center p-2">
                               <p>Выберите специалиста</p>
-                              <button type="button" onClick={() => setModalOpen(false)}>Close</button>
+                              <button type="button" onClick={() => setModalOpen(false)}>
+                                <AiOutlineClose className="text-red-600 font-extrabold text-xl" />
+                              </button>
                             </div>
                             <div>
                               {
