@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { EffectCards } from 'swiper';
+import { EffectCards, Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import axios from 'axios';
 import Loader from '../components/Loader';
@@ -86,11 +86,12 @@ export default class Services extends Component {
                 </div>
                 <div className="mx-0">
                   <Swiper
+                    navigation
                     effect="cards"
                     id="swiper-color"
                     slidesPerView={1}
                     loop
-                    modules={[EffectCards]}
+                    modules={[EffectCards, Navigation]}
                     className="xl:w-[26vw] lg:w-[34vw] sm:w-[50vw] w-[65vw] min-w-[20vw] min-h-[10vh] max-h-[80vh] rounded-lg overflow-hidden"
                   >
                     {componentState.services.map((service) => (
