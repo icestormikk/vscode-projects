@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { HiOutlineShoppingBag } from 'react-icons/hi';
@@ -43,7 +42,6 @@ export default function ShoppingСart() {
 
   function handleSubserviceDeleting(subservice) {
     dispatch(removeSubserviceFromCart({ subservice }));
-    console.log(selectedSubservices.map((el) => el.id));
     if (selectedSubservices.length === 1) { setModalOpen(false); }
   }
 
@@ -58,7 +56,7 @@ export default function ShoppingСart() {
           className="Modal"
           overlayClassName="Overlay"
         >
-          <div className="bg-[#e9e8e8] p-2 w-full absolute left-0 bottom-14 flex justify-center items-center">
+          <div className="bg-[#e9e8e8] p-2 w-full absolute left-0 sm:bottom-14 bottom-[5.2rem] flex justify-center items-center">
             <div className="max-w-min">
               {
                 selectedSubservices.map((subservice) => (
