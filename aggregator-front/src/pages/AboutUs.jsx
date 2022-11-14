@@ -1,8 +1,5 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
-import React, { useState } from 'react';
+import React from 'react';
 import { FaRegSadTear } from 'react-icons/fa';
-import Loader from '../components/Loader';
 import AddressPanel from '../components/special/AddressPanel';
 import WhatsappLink from '../components/special/WhatsappLink';
 
