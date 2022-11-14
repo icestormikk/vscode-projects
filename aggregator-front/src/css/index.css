@@ -4,12 +4,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,500;0,700;1,300&display=swap');
 
 #swiper-color .swiper-button-next,
-#swiper-color .swiper-button-prev {
+#swiper-color .swiper-button-prev,
+#swiper-color .swiper-pagination-bullets {
     color: white;
     @apply font-bold transition-all duration-100
 }
+#swiper-color-dark .swiper-button-next,
+#swiper-color-dark .swiper-button-prev,
+#swiper-color .swiper-pagination-bullets {
+    color: black;
+    @apply font-bold transition-all duration-100
+}
 #swiper-color .swiper-button-next:hover,
-#swiper-color .swiper-button-prev:hover {
+#swiper-color .swiper-button-prev:hover,
+#swiper-color .swiper-pagination-bullets {
     color: rgb(231, 231, 231)
 }
 
@@ -30,6 +38,9 @@
 @layer components {
     .moving-underline-hover-effect {
         @apply before:content-[""] before:h-[2px] before:w-0 hover:before:w-full relative before:absolute before:right-0 hover:before:left-0 hover:before:right-auto before:bottom-0 before:bg-gray-800 before:transition-all before:duration-200
+    }
+    #page-title {
+        @apply xl:text-6xl md:text-5xl text-4xl text-gray-600
     }
     #address-panel > div > p {
         @apply text-xl lg:text-2xl text-gray-700
