@@ -28,6 +28,15 @@
 }
 
 @layer components {
+    .moving-underline-hover-effect {
+        @apply before:content-[""] before:h-[2px] before:w-0 hover:before:w-full relative before:absolute before:right-0 hover:before:left-0 hover:before:right-auto before:bottom-0 before:bg-gray-800 before:transition-all before:duration-200
+    }
+    #address-panel > div > p {
+        @apply text-xl lg:text-2xl text-gray-700
+    }
+    #address-panel > div > h1 {
+        @apply text-lg lg:text-xl
+    }
     #dateContainer {
         @apply mt-2
     }
