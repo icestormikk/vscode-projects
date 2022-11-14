@@ -51,9 +51,7 @@ export default function Header() {
             {links.map((link) => (
               <li
                 key={link.name}
-                className={
-                  'cursor-pointer my-4 lg:my-0 before:content-[""] before:h-[2px] before:w-0 hover:before:w-full relative before:absolute before:right-0 hover:before:left-0 hover:before:right-auto before:bottom-0 before:bg-gray-800 before:transition-all before:duration-200 text-xl flex'
-                }
+                className="cursor-pointer my-4 lg:my-0 text-xl flex moving-underline-hover-effect"
               >
                 <Link
                   onClick={() => dispatch(closeHeader())}
