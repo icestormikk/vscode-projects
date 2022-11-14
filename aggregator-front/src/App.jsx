@@ -7,7 +7,7 @@ import { BsWhatsapp } from 'react-icons/bs';
 import Header from './components/Header';
 import Home from './pages/Home';
 import AboutUs from './pages/AboutUs';
-import Certificates from './pages/Sertificates';
+import Certificates from './pages/Certificates';
 import Contacts from './pages/Contacts';
 import Services from './pages/Services';
 import Jobs from './pages/Jobs';
