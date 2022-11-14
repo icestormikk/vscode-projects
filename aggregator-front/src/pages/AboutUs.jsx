@@ -68,7 +68,7 @@ export default function AboutUs() {
     <div className="min-h-screen text-white flex justify-center">
       <div className="w-11/12 px-4 my-20 h-full text-black ">
         <div className="text-gray-500">
-          <h1 className="xl:text-6xl md:text-5xl text-4xl text-gray-600">О нас</h1>
+          <h1 id="page-title">О нас</h1>
           <div className="xl:text-xl text-lg my-4 flex flex-col lg:w-1/2 gap-4">
             <p>
               <b>Marmalade crew </b>

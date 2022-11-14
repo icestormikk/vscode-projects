@@ -75,7 +75,7 @@ export default class Services extends Component {
             <>
               <div className="flex flex-col lg:flex-row justify-around items-center gap-8 mb-20">
                 <div className="text-center md:text-left lg:w-2/5 w-full">
-                  <h1 className="xl:text-6xl md:text-5xl text-4xl text-gray-500">
+                  <h1 id="page-title">
                     Услуги
                   </h1>
                   <h2 className="xl:text-2xl text-xl text-gray-400 mt-4">
