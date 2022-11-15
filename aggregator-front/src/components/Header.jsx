@@ -14,7 +14,7 @@ export default function Header() {
     { name: 'Услуги', url: '/services' },
     { name: 'О нас', url: '/about' },
     { name: 'Сертификаты', url: '/sertificates' },
-    { name: 'Контакты', url: '/contacts' },
+    { name: 'Наши салоны', url: '/contacts' },
     { name: 'Работы', url: '/jobs' },
   ];
 
