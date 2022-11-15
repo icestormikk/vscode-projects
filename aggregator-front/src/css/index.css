@@ -11,7 +11,7 @@
 }
 #swiper-color-dark .swiper-button-next,
 #swiper-color-dark .swiper-button-prev,
-#swiper-color .swiper-pagination-bullets {
+#swiper-color-dark .swiper-pagination-bullet {
     color: black;
     @apply font-bold transition-all duration-100
 }
@@ -40,7 +40,7 @@
         @apply before:content-[""] before:h-[2px] before:w-0 hover:before:w-full relative before:absolute before:right-0 hover:before:left-0 hover:before:right-auto before:bottom-0 before:bg-gray-800 before:transition-all before:duration-200
     }
     #page-title {
-        @apply xl:text-6xl md:text-5xl text-4xl text-gray-600
+        @apply xl:text-6xl md:text-5xl text-4xl text-gray-600 sm:text-left text-center
     }
     #address-panel > div > p {
         @apply text-xl lg:text-2xl text-gray-700
