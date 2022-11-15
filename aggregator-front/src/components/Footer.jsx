@@ -8,8 +8,8 @@ export default function Footer({ companyName, socialMediaLinks }) {
       <div className="flex flex-col-reverse text-center lg:flex-row justify-between gap-8 items-center w-2/3">
         <p>{`@2022 ${companyName}`}</p>
         <div className="flex flex-col gap-3">
-          <p>8-800-555-35-35</p>
-          <p>test@testmail.com</p>
+          <p>+7 (915) 960-81-55</p>
+          <p>marmaladerf@yandex.ru</p>
         </div>
         <div className="flex justify-center items-center gap-4">
           {socialMediaLinks
@@ -17,7 +17,9 @@ export default function Footer({ companyName, socialMediaLinks }) {
               <a
                 href={link.url}
                 key={link.url}
-                className="p-3 bg-gray-700 hover:bg-gray-600 transition-all duration-100 rounded-full text-[1.5em]"
+                id={link.id}
+                className="p-3 bg-gray-700 transition-all duration-100 rounded-full text-[1.5em]"
+                target="blank"
               >
                 {link.icon}
               </a>
