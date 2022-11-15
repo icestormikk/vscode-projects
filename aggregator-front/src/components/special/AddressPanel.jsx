@@ -13,11 +13,11 @@ export default function AddressPanel({
       <div id="address-panel" className="w-2/3 flex flex-col gap-6 text-center font-light z-0">
         <div>
           <h1>Адрес</h1>
-          <p>{address}</p>
+          {address}
         </div>
         <div>
           <h1>Телефон</h1>
-          <p>{phone}</p>
+          {phone}
         </div>
         <div className="flex justify-center items-center">
           <a
@@ -36,5 +36,5 @@ export default function AddressPanel({
 AddressPanel.propTypes = {
   address: PropTypes.objectOf(PropTypes.shape).isRequired,
   phone: PropTypes.objectOf(PropTypes.shape).isRequired,
-  locationLink: PropTypes.objectOf(PropTypes.shape).isRequired,
+  locationLink: PropTypes.string.isRequired,
 };
