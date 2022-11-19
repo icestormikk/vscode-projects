@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-console */
 import React from 'react';
@@ -23,8 +22,6 @@ export default function UserDataForm() {
   const subservicesToDates = useSelector((state) => state.ordersInfo.subservicesToDates);
 
   const navigate = useNavigate();
-  const inputFieldStyle = 'rounded-md h-8 border-[1px] pl-2 border-gray-400 invalid:bg-red-300 font-light placeholder:text-sm invalid:bg-white';
-  const errorStyle = 'text-red-500 text-sm';
 
   function constructOrdersFullInfoObject() {
     const result = [];
@@ -44,6 +41,8 @@ export default function UserDataForm() {
     axios.post('http://localhost:8080/orders', fullInfoObject)
       .finally(() => {
         console.log(fullInfoObject);
+        dispatch(clearCart());
+        navigate('/services');
       });
   }
 
@@ -72,28 +71,30 @@ export default function UserDataForm() {
         >
           {({ errors, touched }) => (
             <Form>
+              {/* Guest firstname field */}
               <label htmlFor="firstname" className="flex flex-col px-4">
-                {/* Guest firstname field */}
                 <div className="flex gap-2 text-md text-gray-500 items-center">
                   <BsFillPersonFill />
                   <span>Имя</span>
                 </div>
-                <Field name="firstname" id="firstname" className={inputFieldStyle} />
+                <Field name="firstname" id="firstname" className="input-field-special-style" />
                 {touched.firstname && errors.firstname ? (
-                  <p className={errorStyle}>{errors.firstname}</p>
+                  <p className="error-label">{errors.firstname}</p>
                 ) : null}
               </label>
+
               {/* Guest lastname field */}
               <label htmlFor="lastname" className="flex flex-col px-4">
                 <div className="flex gap-2 text-md text-gray-500 items-center">
                   <BsFillPersonFill />
                   <span>Фамилия</span>
                 </div>
-                <Field name="lastname" id="lastname" className={inputFieldStyle} />
+                <Field name="lastname" id="lastname" className="input-field-special-style" />
                 {touched.lastname && errors.lastname ? (
-                  <p className={errorStyle}>{errors.lastname}</p>
+                  <p className="error-label">{errors.lastname}</p>
                 ) : null}
               </label>
+
               {/* Field for guest's phone */}
               <label htmlFor="phone" className="flex flex-col px-4">
                 <div className="flex gap-2 mt-6 text-md text-gray-500 items-center">
@@ -102,6 +103,7 @@ export default function UserDataForm() {
                 </div>
                 <Field name="phone" component={UserPhoneField} />
               </label>
+
               {/* fields for optional comments from the user */}
               <label htmlFor="commentary" className="flex flex-col px-4">
                 <div className="flex gap-2 text-md text-gray-500 items-center">
@@ -116,7 +118,7 @@ export default function UserDataForm() {
                   maxLength={150}
                 />
                 {touched.commentary && errors.commentary ? (
-                  <p className={errorStyle}>{errors.commentary}</p>
+                  <p className="error-label">{errors.commentary}</p>
                 ) : null}
               </label>
               <input
