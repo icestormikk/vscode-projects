@@ -36,6 +36,42 @@
 }
 
 @layer components {
+    .rc-style .react-calendar__navigation {
+        @apply flex flex-row gap-2 text-xl pb-2
+    }
+    .rc-style .react-calendar__navigation__arrow {
+        @apply text-[1.6rem]
+    }
+    .rc-style .react-calendar__navigation__prev-button {
+        @apply ml-10
+    }
+    .rc-style .react-calendar__navigation__next-button {
+        @apply mr-10
+    }
+    .rc-style .react-calendar__month-view__weekdays__weekday {
+        @apply flex justify-center items-center
+    }
+    .rc-style .react-calendar__month-view__days__day--weekend {
+        @apply text-red-500
+    }
+    .rc-style .react-calendar__tile {
+        @apply h-max
+    }
+    .rc-style .react-calendar__tile abbr {
+        @apply hidden
+    }
+    .rc-style .react-calendar__tile[disabled] {
+        @apply text-gray-200
+    }
+    .rc-style .react-calendar__tile--range {
+        @apply bg-[#075ca4]/30
+    }
+    .rc-style .react-calendar__tile--rangeStart {
+        @apply bg-[#075ca4]/80 text-white
+    }
+    .rc-style .react-calendar__tile--rangeEnd {
+        @apply bg-[#075ca4]/80 text-white
+    }
     .input-field-special-style {
         @apply rounded-md h-8 border-[1px] w-full pl-2 border-gray-400 font-light placeholder:text-sm invalid:bg-white
     }
