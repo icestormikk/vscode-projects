@@ -100,7 +100,7 @@ export default class Services extends Component {
                           picture={(
                             <img
                               src={service.imageUrl}
-                              alt="men's haircuts"
+                              alt="service-type"
                               className="z-[-1] object-cover overflow-hidden"
                             />
                           )}
