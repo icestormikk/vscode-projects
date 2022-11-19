@@ -1,7 +1,9 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { SlSocialVkontakte } from 'react-icons/sl';
 import { AiOutlineInstagram, AiFillSkype } from 'react-icons/ai';
+import axios from 'axios';
 import { BsWhatsapp } from 'react-icons/bs';
 import Header from './components/Header';
 import Home from './pages/Home';
@@ -12,18 +14,29 @@ import Services from './pages/Services';
 import Jobs from './pages/Jobs';
 import Footer from './components/Footer';
 import OrderRegistration from './pages/OrderRegistration';
+import Login from './pages/Login';
 
 export default function App() {
+  useEffect(() => {
+    const handleTabClose = (event) => {
+      // Cookies ?
+    };
+
+    window.addEventListener('beforeunload', handleTabClose);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleTabClose);
+    };
+  }, []);
+
   return (
     <>
       <Header />
       <div>
         <Routes>
           <Route path="/">
-            <Route
-              index
-              element={<Home />}
-            />
+            <Route index element={<Home />} />
+            <Route path="login" element={<Login />} />
             <Route path="services">
               <Route index element={<Services />} />
               <Route path="order" element={<OrderRegistration />} />
