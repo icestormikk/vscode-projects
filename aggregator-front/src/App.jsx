@@ -15,6 +15,7 @@ import Jobs from './pages/Jobs';
 import Footer from './components/Footer';
 import OrderRegistration from './pages/OrderRegistration';
 import Login from './pages/Login';
+import AdminPanel from './pages/AdminPanel';
 
 export default function App() {
   useEffect(() => {
@@ -37,6 +38,9 @@ export default function App() {
           <Route path="/">
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
+            <Route path="administration">
+              <Route index element={<AdminPanel />} />
+            </Route>
             <Route path="services">
               <Route index element={<Services />} />
               <Route path="order" element={<OrderRegistration />} />
