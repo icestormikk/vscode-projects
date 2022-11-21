@@ -14,7 +14,7 @@ export default function HomePageSection(props) {
       <img
         src={props.backgroundPicture}
         alt=""
-        className="absolute top-0 left-0 z-[-1] h-full w-full object-none brightness-50"
+        className="absolute top-0 left-0 z-[-1] h-full w-full object-cover brightness-50"
       />
       <div
         className={
