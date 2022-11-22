@@ -18,7 +18,6 @@ export default function DateTimeContainer({ initialDates, relatedSubservices }) 
       (el) => el.isSelected === true,
     ).date,
   );
-  const sectionStyle = 'border-[1px] border-gray-300 rounded-xl p-2 flex flex-row flex-wrap justify-start gap-2';
 
   function selectDay(day) {
     const newDatesObject = {};
@@ -71,7 +70,7 @@ export default function DateTimeContainer({ initialDates, relatedSubservices }) 
 
   return (
     <>
-      <div className={sectionStyle}>
+      <div className="datetime-section-style">
         {
           Object.keys(availableDates).map((key) => {
             const dayInfo = availableDates[key];
@@ -98,7 +97,7 @@ export default function DateTimeContainer({ initialDates, relatedSubservices }) 
           })
         }
       </div>
-      <div className={sectionStyle}>
+      <div className="datetime-section-style">
         {
           getSelectedDateFrom(availableDates).timestamps.map((time) => (
             <button
