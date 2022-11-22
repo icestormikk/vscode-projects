@@ -1,11 +1,10 @@
 /* eslint-disable no-nested-ternary */
-/* eslint-disable no-console */
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { AiOutlineDown } from 'react-icons/ai';
-import axios from 'axios';
 import Loader from './Loader';
 import SubserviceElement from './special/SubserviceElement';
+import { OrdersAPI } from '../services/OrderService';
 
 export default class ServiceSublist extends Component {
   static getDerivedStateFromProps(props, state) {
@@ -36,66 +35,18 @@ export default class ServiceSublist extends Component {
   }
 
   // eslint-disable-next-line react/no-unused-class-component-methods
-  getServiceById(id) {
+  handleChosenServiceChanging(id) {
     if (id > -1) {
       this.setState(() => ({
         isLoading: true,
+        subservices: OrdersAPI.getSubservicesByServiceID(id),
       }));
 
-      axios
-        .get('http://localhost:8080/services', {
-          params: {
-            subserviceId: id > 0 ? id : 1,
-          },
-        })
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.log(`Error: ${error}`);
-        })
-        .finally(
-          this.setState(() => ({
-            subservices: [
-              {
-                id: 0,
-                title: 'Стрижка 1',
-                description: 'Описание стрижки 1',
-                // in minutes (?)
-                duration: 40,
-                // in rubles
-                lowerPrice: 100,
-                // in rubles
-                topPrice: 200,
-                incompatibleServicesIDs: [1],
-              },
-              {
-                id: 1,
-                title: 'Стрижка 2',
-                description: 'Описание стрижки 2',
-                duration: 122,
-                lowerPrice: 200,
-                topPrice: 200,
-                incompatibleServicesIDs: [0],
-              },
-              {
-                id: 2,
-                title: 'Стрижка 3',
-                description: 'Описание стрижки 3',
-                duration: 102,
-                lowerPrice: 400,
-                topPrice: 700,
-                incompatibleServicesIDs: [],
-              },
-            ],
-          })),
-          // fake timeout
-          setTimeout(() => {
-            this.setState(() => ({
-              isLoading: false,
-            }));
-          }, 1000),
-        );
+      setTimeout(() => {
+        this.setState(() => ({
+          isLoading: false,
+        }));
+      }, 1000);
     }
   }
 

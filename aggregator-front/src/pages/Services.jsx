@@ -1,19 +1,14 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { EffectCards, Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import axios from 'axios';
 import Loader from '../components/Loader';
 import '../css/index.css';
 import 'swiper/swiper-bundle.min.css';
-import hairWomanPictureUrl from '../static/pictures/hair_woman.jpg';
-import hairManPictureUrl from '../static/pictures/hair_man.jpg';
-import manicurePictureUrl from '../static/pictures/manicure.jpg';
-import makeupPictureUrl from '../static/pictures/makeup.jpg';
 import SwiperElement from '../components/special/SwiperElement';
 import ServiceSublist from '../components/ServiceSublist';
 import ShoppingСart from '../components/ShoppingСart';
+import { ServicesAPI } from '../services/ServicesService';
 
 export default class Services extends Component {
   constructor(props) {
@@ -22,8 +17,8 @@ export default class Services extends Component {
     this.sublistChild = React.createRef();
     this.state = {
       isLoading: true,
-      chosenService: props.chosenService || {},
-      services: props.services,
+      chosenService: {},
+      services: [],
     };
   }
 
@@ -31,32 +26,11 @@ export default class Services extends Component {
     this.getAllServices();
   }
 
-  componentDidUpdate() {
-    console.log(this.state);
-  }
-
   getAllServices() {
-    axios
-      .get('http://localhost:8080/services', {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json;charset=UTF-8',
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        // this.setState(() => ({
-        //   services: response.data,
-        // }));
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        this.setState({
-          isLoading: false,
-        });
-      });
+    this.setState({
+      services: ServicesAPI.getAllServices(),
+      isLoading: false,
+    });
   }
 
   render() {
@@ -106,7 +80,7 @@ export default class Services extends Component {
                           )}
                           elementTitle={<p>{service.title}</p>}
                           agreeHandler={() => {
-                            this.sublistChild.current.getServiceById(
+                            this.sublistChild.current.handleChosenServiceChanging(
                               service.id,
                             );
                             this.setState(() => ({
@@ -131,34 +105,3 @@ export default class Services extends Component {
     );
   }
 }
-
-Services.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  services: PropTypes.array,
-  chosenService: PropTypes.objectOf(PropTypes.shape),
-};
-Services.defaultProps = {
-  services: [
-    {
-      id: 0,
-      title: 'Женские стрижки',
-      imageUrl: hairWomanPictureUrl,
-    },
-    {
-      id: 1,
-      title: 'Мужские стрижки',
-      imageUrl: hairManPictureUrl,
-    },
-    {
-      id: 2,
-      title: 'Маникюр',
-      imageUrl: manicurePictureUrl,
-    },
-    {
-      id: 3,
-      title: 'Макияж',
-      imageUrl: makeupPictureUrl,
-    },
-  ],
-  chosenService: {},
-};

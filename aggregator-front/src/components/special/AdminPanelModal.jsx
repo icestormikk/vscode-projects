@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
-import axios from 'axios';
+import { OrdersAPI } from '../../services/OrderService';
 
 export default function AdminPanelModal({
   isModalOpen,
@@ -17,24 +17,10 @@ export default function AdminPanelModal({
   function handleAction(method) {
     switch (method.toLowerCase()) {
       case 'patch':
-        axios.patch(
-          'http://localhost:8080/orders',
-          {
-            params: {
-              id: serviceID,
-            },
-          },
-        );
+        OrdersAPI.updateOrder(serviceID);
         break;
       case 'delete':
-        axios.delete(
-          'http://localhost:8080/orders',
-          {
-            params: {
-              id: serviceID,
-            },
-          },
-        );
+        OrdersAPI.deleteOrder(serviceID);
         break;
       default:
         break;

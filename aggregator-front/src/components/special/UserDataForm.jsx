@@ -7,12 +7,12 @@ import {
   Field, Form, Formik,
 } from 'formik';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import Logo from '../LogoComponent';
 import { ContactInfoSchema } from '../../schemas/contactInfoSchema';
 import UserPhoneField from './UserPhoneField';
 import { clearCart } from '../../store/OrdersInfoSlice';
+import { OrdersAPI } from '../../services/OrderService';
 
 export default function UserDataForm() {
   const dispatch = useDispatch();
@@ -38,12 +38,11 @@ export default function UserDataForm() {
   function handleSubmit(values) {
     const fullInfoObject = values;
     fullInfoObject.ordersInfo = constructOrdersFullInfoObject();
-    axios.post('http://localhost:8080/orders', fullInfoObject)
-      .finally(() => {
-        console.log(fullInfoObject);
-        dispatch(clearCart());
-        navigate('/services');
-      });
+
+    OrdersAPI.sendNewOrder(fullInfoObject);
+
+    dispatch(clearCart());
+    navigate('/services');
   }
 
   return (

@@ -1,11 +1,11 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable no-console */
-import axios from 'axios';
 import React, { useState } from 'react';
 import { Calendar } from 'react-calendar';
 import { AiFillEdit, AiOutlineFire } from 'react-icons/ai';
 import { BsFillTrashFill } from 'react-icons/bs';
 import Modal from 'react-modal';
+import { OrdersAPI } from '../services/OrderService';
 import AdminPanelModal from './special/AdminPanelModal';
 
 Modal.setAppElement('#root');
@@ -31,65 +31,7 @@ export default function AllServiceEntries() {
   }
 
   useState(() => {
-    axios.get('http://localhost:8080/orders')
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setOrdersInfo([
-          {
-            id: 0,
-            serviceTitle: 'Услуга N1',
-            masterInfo: {
-              name: 'Полина',
-              surname: 'Соколова',
-              professionTitle: 'Мастер по ноготочкам',
-            },
-            clientInfo: {
-              name: 'София',
-              surname: 'Гаврилова',
-              phone: '8-800-555-35-35',
-            },
-            clientCommentary: 'Комментарий клиента',
-            date: new Date(2022, 10, 24, 15, 20),
-          },
-          {
-            id: 1,
-            serviceTitle: 'Услуга N2',
-            masterInfo: {
-              name: 'Арина',
-              surname: 'Степанова',
-              professionTitle: 'Профессиональный парикмахер',
-            },
-            clientInfo: {
-              name: 'Юрий',
-              surname: 'Королев',
-              phone: '8-800-555-35-36',
-            },
-            clientCommentary: '',
-            date: new Date(2022, 10, 24, 16, 20),
-          },
-          {
-            id: 2,
-            serviceTitle: 'Услуга N3',
-            masterInfo: {
-              name: 'Мария',
-              surname: 'Соколова',
-              professionTitle: 'Стажер-парикмахер',
-            },
-            clientInfo: {
-              name: 'Фатима',
-              surname: 'Колесникова',
-              phone: '8-800-555-35-37',
-            },
-            clientCommentary: '',
-            date: new Date(2022, 10, 27, 10),
-          },
-        ]);
-      });
+    setOrdersInfo(OrdersAPI.getAllOrders());
   }, []);
 
   return (
