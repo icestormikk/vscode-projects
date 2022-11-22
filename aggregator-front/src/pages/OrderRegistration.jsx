@@ -6,7 +6,7 @@ import DateTimeChoise from '../components/special/DateTimeChoise';
 import MastersChoise from '../components/special/MastersChoise';
 import { addMaster, addMasterToSubservice } from '../store/OrdersInfoSlice';
 import UserDataForm from '../components/special/UserDataForm';
-import { MastersAPI } from '../services/MasterService';
+import { defaultMasters, MastersAPI } from '../services/MasterService';
 
 export default function OrderRegistration() {
   const dispatch = useDispatch();
@@ -24,15 +24,25 @@ export default function OrderRegistration() {
 
     selectedSubservices.forEach((chosenSubservice) => {
       const chosenSubserviceId = chosenSubservice.id;
-      const mastersBySelectedSubservice = MastersAPI.getMastersBySubserviceID(chosenSubserviceId);
+      let mastersBySelectedSubservice;
 
-      mastersBySelectedSubservice.forEach((master) => {
-        dispatch(addMaster({ master }));
-        if (master.providedServiceIDs.includes(chosenSubserviceId)) {
-          const masterId = master.id;
-          dispatch(addMasterToSubservice({ chosenSubserviceId, masterId }));
-        }
-      });
+      MastersAPI.getMastersBySubserviceID(chosenSubserviceId)
+        .then((response) => {
+          mastersBySelectedSubservice = response.data;
+        })
+        .catch(() => {
+          mastersBySelectedSubservice = defaultMasters;
+        })
+        .finally(() => {
+          mastersBySelectedSubservice.forEach((master) => {
+            dispatch(addMaster({ master }));
+
+            if (master.providedServiceIDs.includes(chosenSubserviceId)) {
+              const masterId = master.id;
+              dispatch(addMasterToSubservice({ chosenSubserviceId, masterId }));
+            }
+          });
+        });
     });
 
     setReady(true);

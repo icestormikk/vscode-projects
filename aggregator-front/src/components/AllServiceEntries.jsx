@@ -5,7 +5,8 @@ import { Calendar } from 'react-calendar';
 import { AiFillEdit, AiOutlineFire } from 'react-icons/ai';
 import { BsFillTrashFill } from 'react-icons/bs';
 import Modal from 'react-modal';
-import { OrdersAPI } from '../services/OrderService';
+import { defaultMasters, MastersAPI } from '../services/MasterService';
+import { defaultOrders, OrdersAPI } from '../services/OrderService';
 import AdminPanelModal from './special/AdminPanelModal';
 
 Modal.setAppElement('#root');
@@ -16,6 +17,7 @@ export default function AllServiceEntries() {
 
   const [dateValue, setDateValue] = React.useState(null);
   const [ordersInfo, setOrdersInfo] = React.useState([]);
+  const [masters, setMasters] = React.useState([]);
 
   const [deletingServiceInfo, setDeletingServiceInfo] = React.useState({
     content: '',
@@ -23,7 +25,7 @@ export default function AllServiceEntries() {
   });
   const [editServiceInfo, setEditServiceInfo] = React.useState({
     content: '',
-    editServiceID: -1,
+    editingService: {},
   });
 
   function ordersByDayCount(date) {
@@ -31,7 +33,21 @@ export default function AllServiceEntries() {
   }
 
   useState(() => {
-    setOrdersInfo(OrdersAPI.getAllOrders());
+    MastersAPI.getAllMasters()
+      .then((response) => {
+        setMasters(response.data);
+      })
+      .catch(() => {
+        setMasters(defaultMasters);
+      });
+
+    OrdersAPI.getAllOrders()
+      .then((response) => {
+        setOrdersInfo(response.data);
+      })
+      .catch(() => {
+        setOrdersInfo(defaultOrders);
+      });
   }, []);
 
   return (
@@ -97,8 +113,8 @@ export default function AllServiceEntries() {
                     setEditServiceInfo({
                       content: `Запись на ${elem.date.toLocaleString('ru', {
                         month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric',
-                      })}?`,
-                      editServiceID: elem.id,
+                      })}`,
+                      editingService: elem,
                     });
                     setEditModalOpen(true);
                   }}
@@ -154,8 +170,10 @@ export default function AllServiceEntries() {
           isModalOpen={isDeleteModalOpen}
           setModalOpen={setDeleteModalOpen}
           title="Удаление записи"
-          content={(<p>{deletingServiceInfo.content}</p>)}
-          modalIcon={<AiOutlineFire className="text-red-300" />}
+          content={(
+            <p>{deletingServiceInfo.content}</p>
+          )}
+          modalIcon={<AiOutlineFire />}
           actionButtonTitle="Удалить"
           actionButtonColorCode="#f87171"
           actionMethod="delete"
@@ -166,13 +184,37 @@ export default function AllServiceEntries() {
           setModalOpen={setEditModalOpen}
           title="Изменение параметров записи"
           content={(
-            <p>{editServiceInfo.content}</p>
+            <>
+              <p className="text-xl">{editServiceInfo.content}</p>
+              <form action="" method="get" className="mt-4">
+                <label htmlFor="master-name">
+                  Сменить мастера:
+                  {' '}
+                  <select name="master-name" id="master-name" required className="h-10 border-[1px] border-gray-300">
+                    {
+                      masters.filter(
+                        (el) => el.providedServiceIDs.includes(editServiceInfo.editingService.id),
+                      ).map((el) => (
+                        <option
+                          key={el.id}
+                          value={el.name}
+                        >
+                          {el.name}
+                          {' '}
+                          {el.surname}
+                        </option>
+                      ))
+                    }
+                  </select>
+                </label>
+              </form>
+            </>
           )}
-          modalIcon={<AiFillEdit className="text-green-300" />}
+          modalIcon={<AiFillEdit />}
           actionButtonTitle="Применить"
           actionButtonColorCode="#4ade80"
           actionMethod="patch"
-          serviceID={editServiceInfo.editServiceID}
+          serviceID={editServiceInfo.editingService.id}
         />
       </div>
     </>

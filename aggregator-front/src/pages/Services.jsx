@@ -8,7 +8,7 @@ import 'swiper/swiper-bundle.min.css';
 import SwiperElement from '../components/special/SwiperElement';
 import ServiceSublist from '../components/ServiceSublist';
 import ShoppingСart from '../components/ShoppingСart';
-import { ServicesAPI } from '../services/ServicesService';
+import { defaultServices, ServicesAPI } from '../services/ServicesService';
 
 export default class Services extends Component {
   constructor(props) {
@@ -27,8 +27,19 @@ export default class Services extends Component {
   }
 
   getAllServices() {
+    ServicesAPI.getAllServices()
+      .then((response) => {
+        this.setState(() => ({
+          services: response.data,
+        }));
+      })
+      .catch(() => {
+        this.setState(() => ({
+          services: defaultServices,
+        }));
+      });
+
     this.setState({
-      services: ServicesAPI.getAllServices(),
       isLoading: false,
     });
   }

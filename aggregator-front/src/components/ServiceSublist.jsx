@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 import { AiOutlineDown } from 'react-icons/ai';
 import Loader from './Loader';
 import SubserviceElement from './special/SubserviceElement';
-import { OrdersAPI } from '../services/OrderService';
+import { ServicesAPI } from '../services/ServicesService';
+import { defaultSubservices } from '../services/OrderService';
 
 export default class ServiceSublist extends Component {
   static getDerivedStateFromProps(props, state) {
@@ -39,8 +40,19 @@ export default class ServiceSublist extends Component {
     if (id > -1) {
       this.setState(() => ({
         isLoading: true,
-        subservices: OrdersAPI.getSubservicesByServiceID(id),
       }));
+
+      ServicesAPI.getSubservicesByServiceID(id)
+        .then((response) => {
+          this.setState(() => ({
+            subservices: response.data,
+          }));
+        })
+        .catch(() => {
+          this.setState(() => ({
+            subservices: defaultSubservices,
+          }));
+        });
 
       setTimeout(() => {
         this.setState(() => ({

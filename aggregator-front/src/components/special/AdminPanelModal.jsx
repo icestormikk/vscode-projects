@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
@@ -20,7 +21,12 @@ export default function AdminPanelModal({
         OrdersAPI.updateOrder(serviceID);
         break;
       case 'delete':
-        OrdersAPI.deleteOrder(serviceID);
+        OrdersAPI.deleteOrder(serviceID)
+          .then((response) => {
+            if (response.status !== 200) {
+              console.log(response);
+            }
+          });
         break;
       default:
         break;
@@ -36,7 +42,7 @@ export default function AdminPanelModal({
       className="Modal relative p-2 text-gray-500 flex flex-col gap-8"
       overlayClassName="Overlay"
     >
-      <div className="absolute right-0 bottom-1/2  translate-y-1/2 text-[6rem] ">
+      <div className="absolute right-0 bottom-1/2 text-gray-300 translate-y-1/2 text-[6rem] ">
         {modalIcon}
       </div>
       <div className="text-2xl text-gray-700">
@@ -48,7 +54,7 @@ export default function AdminPanelModal({
       <div className="flex justify-around items-center">
         <button
           type="button"
-          className="w-max p-1 px-2 text-white rounded-md shadow-xl hover:scale-[0.95] transition-all duration-75"
+          className="w-max p-1 px-2 text-white rounded-md shadow-xl"
           style={{ backgroundColor: actionButtonColorCode }}
           onClick={() => handleAction(actionMethod, serviceID)}
         >
@@ -56,7 +62,7 @@ export default function AdminPanelModal({
         </button>
         <button
           type="button"
-          className="bg-green-400 w-max p-1 px-2 text-white rounded-md shadow-xl hover:scale-[0.95] transition-all duration-75"
+          className="bg-green-500 w-max p-1 px-2 text-white rounded-md shadow-xl"
           onClick={() => setModalOpen(false)}
         >
           Отменить
