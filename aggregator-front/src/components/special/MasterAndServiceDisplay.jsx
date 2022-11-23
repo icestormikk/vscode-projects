@@ -28,7 +28,7 @@ export default function MasterAndServiceDisplay(
           const [key, value] = entry;
           if (value.length === 0) {
             return (
-              <LostComponent />
+              <LostComponent key={key} />
             );
           }
           const currentSubservice = selectedSubservices.find(
