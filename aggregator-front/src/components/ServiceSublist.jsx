@@ -4,8 +4,7 @@ import React, { Component } from 'react';
 import { AiOutlineDown } from 'react-icons/ai';
 import Loader from './Loader';
 import SubserviceElement from './special/SubserviceElement';
-import { ServicesAPI } from '../services/ServicesService';
-import { defaultSubservices } from '../services/OrderService';
+import { defaultSubservices, ServicesAPI } from '../services/ServicesService';
 
 export default class ServiceSublist extends Component {
   static getDerivedStateFromProps(props, state) {
