@@ -239,13 +239,21 @@ export default function AllServiceEntries() {
                       ),
                     )
                   }
-                  <button
-                    type="button"
-                    className="px-2 py-[0.125rem] bg-green-400 text-white text-base my-2 rounded-sm"
-                    onClick={() => setAddModalOpen(true)}
-                  >
-                    Добавить +
-                  </button>
+                  {
+                    editOrderInfo.editingOrder.selectedSubservices
+                      && editOrderInfo.editingOrder.selectedSubservices.length
+                      >= process.env.REACT_APP_SHOPPING_CART_LIMIT ? (
+                        <i>Добавлено максимальное кол-во услуг</i>
+                      ) : (
+                        <button
+                          type="button"
+                          className="px-2 py-[0.125rem] text-white text-base my-2 rounded-sm bg-green-400"
+                          onClick={() => setAddModalOpen(true)}
+                        >
+                          Добавить +
+                        </button>
+                      )
+                  }
                   {
                     editOrderInfo.editingOrder.selectedSubservices && (
                       <AddServiceInOrderModal
@@ -263,7 +271,7 @@ export default function AllServiceEntries() {
                     )
                   }
                 </div>
-                <label htmlFor="master-name">
+                <label htmlFor="master-name" className="mt-10">
                   Сменить мастера:
                   {' '}
                   <select name="master-name" id="master-name" required className="h-10 border-[1px] border-gray-300">
