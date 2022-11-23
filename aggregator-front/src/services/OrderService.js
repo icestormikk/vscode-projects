@@ -1,35 +1,31 @@
 import axios from 'axios';
+import { defaultMasters } from './MasterService';
+import { defaultSubservices } from './ServicesService';
 
 export const defaultOrders = [{
   id: 0,
-  serviceInfo: {
-    id: 0,
-    title: 'Услуга N1',
-  },
-  masterInfo: {
-    name: 'Полина',
-    surname: 'Соколова',
-    professionTitle: 'Мастер по ноготочкам',
-  },
+  selectedSubservices: [
+    defaultSubservices[0],
+    defaultSubservices[1],
+  ],
+  masterInfo: defaultMasters[1],
   clientInfo: {
-    name: 'София',
-    surname: 'Гаврилова',
+    name: 'Александра',
+    surname: 'Королёва',
     phone: '8-800-555-35-35',
   },
   clientCommentary: 'Комментарий клиента',
   date: new Date(2022, 10, 24, 15, 20),
+  totalLowerPrice: defaultSubservices[0].lowerPrice + defaultSubservices[0].lowerPrice,
+  totalTopPrice: defaultSubservices[1].topPrice + defaultSubservices[1].topPrice,
 },
 {
   id: 1,
-  serviceInfo: {
-    id: 1,
-    title: 'Услуга N2',
-  },
-  masterInfo: {
-    name: 'Арина',
-    surname: 'Степанова',
-    professionTitle: 'Профессиональный парикмахер',
-  },
+  selectedSubservices: [
+    defaultSubservices[1],
+    defaultSubservices[2],
+  ],
+  masterInfo: defaultMasters[2],
   clientInfo: {
     name: 'Юрий',
     surname: 'Королев',
@@ -37,18 +33,15 @@ export const defaultOrders = [{
   },
   clientCommentary: '',
   date: new Date(2022, 10, 24, 16, 20),
+  totalLowerPrice: defaultSubservices[1].lowerPrice + defaultSubservices[1].lowerPrice,
+  totalTopPrice: defaultSubservices[2].topPrice + defaultSubservices[2].topPrice,
 },
 {
   id: 2,
-  service: {
-    id: 2,
-    title: 'Услуга N3',
-  },
-  masterInfo: {
-    name: 'Мария',
-    surname: 'Соколова',
-    professionTitle: 'Стажер-парикмахер',
-  },
+  selectedSubservices: [
+    defaultSubservices[2],
+  ],
+  masterInfo: defaultMasters[1],
   clientInfo: {
     name: 'Фатима',
     surname: 'Колесникова',
@@ -56,34 +49,8 @@ export const defaultOrders = [{
   },
   clientCommentary: '',
   date: new Date(2022, 10, 27, 10),
-}];
-
-export const defaultSubservices = [{
-  id: 0,
-  title: 'Стрижка 1',
-  description: 'Описание стрижки 1',
-  duration: 40,
-  lowerPrice: 100,
-  topPrice: 200,
-  incompatibleServicesIDs: [1],
-},
-{
-  id: 1,
-  title: 'Стрижка 2',
-  description: 'Описание стрижки 2',
-  duration: 122,
-  lowerPrice: 200,
-  topPrice: 200,
-  incompatibleServicesIDs: [0],
-},
-{
-  id: 2,
-  title: 'Стрижка 3',
-  description: 'Описание стрижки 3',
-  duration: 102,
-  lowerPrice: 400,
-  topPrice: 700,
-  incompatibleServicesIDs: [],
+  totalLowerPrice: defaultSubservices[2].lowerPrice + defaultSubservices[2].lowerPrice,
+  totalTopPrice: defaultSubservices[2].topPrice + defaultSubservices[2].topPrice,
 }];
 
 export const OrdersAPI = {
