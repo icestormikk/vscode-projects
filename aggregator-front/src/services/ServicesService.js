@@ -27,6 +27,37 @@ export const defaultServices = [
   },
 ];
 
+export const defaultSubservices = [{
+  id: 0,
+  serviceID: 0,
+  title: 'Стрижка 1',
+  description: 'Описание стрижки 1',
+  duration: 40,
+  lowerPrice: 100,
+  topPrice: 200,
+  incompatibleServicesIDs: [1],
+},
+{
+  id: 1,
+  serviceID: 0,
+  title: 'Стрижка 2',
+  description: 'Описание стрижки 2',
+  duration: 122,
+  lowerPrice: 200,
+  topPrice: 200,
+  incompatibleServicesIDs: [0],
+},
+{
+  id: 2,
+  serviceID: 0,
+  title: 'Стрижка 3',
+  description: 'Описание стрижки 3',
+  duration: 102,
+  lowerPrice: 400,
+  topPrice: 700,
+  incompatibleServicesIDs: [],
+}];
+
 export const ServicesAPI = {
   getAllServices() {
     return axios
@@ -36,6 +67,10 @@ export const ServicesAPI = {
           'Content-Type': 'application/json;charset=UTF-8',
         },
       });
+  },
+  getAllSubservices() {
+    return axios
+      .get('http://localhost:8080/subservices');
   },
   getSubservicesByServiceID(id) {
     return axios
