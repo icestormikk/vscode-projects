@@ -1,5 +1,6 @@
-/* eslint-disable react/no-unstable-nested-components */
+/* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-console */
+/* eslint-disable react/no-unstable-nested-components */
 import React, { useState } from 'react';
 import { Calendar } from 'react-calendar';
 import { AiFillEdit, AiOutlineFire } from 'react-icons/ai';
@@ -7,29 +8,62 @@ import { BsFillTrashFill } from 'react-icons/bs';
 import Modal from 'react-modal';
 import { defaultMasters, MastersAPI } from '../services/MasterService';
 import { defaultOrders, OrdersAPI } from '../services/OrderService';
+import { defaultServices, defaultSubservices, ServicesAPI } from '../services/ServicesService';
+import AddServiceInOrderModal from './special/AddServiceInOrderModal';
 import AdminPanelModal from './special/AdminPanelModal';
+import ChangeServiceInOrderModal from './special/ChangeServiceInOrderModal';
+import OrderInfoPanel from './special/OrderInfoPanel';
 
 Modal.setAppElement('#root');
 
 export default function AllServiceEntries() {
+  const [isAddModalOpen, setAddModalOpen] = React.useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = React.useState(false);
   const [isEditModalOpen, setEditModalOpen] = React.useState(false);
 
   const [dateValue, setDateValue] = React.useState(null);
   const [ordersInfo, setOrdersInfo] = React.useState([]);
   const [masters, setMasters] = React.useState([]);
+  const [services, setServices] = React.useState([]);
+  const [subservices, setSubservices] = React.useState([]);
 
-  const [deletingServiceInfo, setDeletingServiceInfo] = React.useState({
+  const [deletingOrderInfo, setDeletingOrderInfo] = React.useState({
     content: '',
-    deletingServiceID: -1,
+    deletingOrderID: -1,
   });
-  const [editServiceInfo, setEditServiceInfo] = React.useState({
+  const [editOrderInfo, setEditOrderInfo] = React.useState({
     content: '',
-    editingService: {},
+    editingOrder: {},
   });
 
   function ordersByDayCount(date) {
-    return ordersInfo.filter((el) => el.date.toDateString() === date.toDateString()).length;
+    return ordersInfo.filter(
+      (el) => el.date.toDateString() === date.toDateString(),
+    ).length;
+  }
+
+  function updateEditingOrder(newEditingOrder) {
+    setEditOrderInfo((prevState) => ({
+      content: prevState.content,
+      editingOrder: newEditingOrder,
+    }));
+  }
+  function addSelectedSubservice(newObject) {
+    if (editOrderInfo.editingOrder.selectedSubservices.length
+      < process.env.REACT_APP_SHOPPING_CART_LIMIT) {
+      editOrderInfo.editingOrder.selectedSubservices.push(newObject);
+      updateEditingOrder(editOrderInfo.editingOrder);
+    }
+  }
+
+  function replaceSelectedSubservice(replacingItemIndex, newObject) {
+    editOrderInfo.editingOrder.selectedSubservices[replacingItemIndex] = newObject;
+    updateEditingOrder(editOrderInfo.editingOrder);
+  }
+
+  function deleteSelectedSubservice(deletingItemIndex) {
+    editOrderInfo.editingOrder.selectedSubservices.splice(deletingItemIndex, 1);
+    updateEditingOrder(editOrderInfo.editingOrder);
   }
 
   useState(() => {
@@ -47,6 +81,22 @@ export default function AllServiceEntries() {
       })
       .catch(() => {
         setOrdersInfo(defaultOrders);
+      });
+
+    ServicesAPI.getAllServices()
+      .then((response) => {
+        setServices(response.data);
+      })
+      .catch(() => {
+        setServices(defaultServices);
+      });
+
+    ServicesAPI.getAllSubservices()
+      .then((response) => {
+        setSubservices(response.data);
+      })
+      .catch(() => {
+        setSubservices(defaultSubservices);
       });
   }, []);
 
@@ -110,11 +160,11 @@ export default function AllServiceEntries() {
                 <button
                   type="button"
                   onClick={() => {
-                    setEditServiceInfo({
+                    setEditOrderInfo({
                       content: `Запись на ${elem.date.toLocaleString('ru', {
                         month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric',
                       })}`,
-                      editingService: elem,
+                      editingOrder: JSON.parse(JSON.stringify(elem)),
                     });
                     setEditModalOpen(true);
                   }}
@@ -124,11 +174,11 @@ export default function AllServiceEntries() {
                 <button
                   type="button"
                   onClick={() => {
-                    setDeletingServiceInfo({
+                    setDeletingOrderInfo({
                       content: `Вы действительно хотите удалить запись на ${elem.date.toLocaleString('ru', {
                         month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric',
                       })}?`,
-                      deletingServiceID: elem.id,
+                      deletingOrderID: elem.id,
                     });
                     setDeleteModalOpen(true);
                   }}
@@ -137,32 +187,10 @@ export default function AllServiceEntries() {
                 </button>
               </div>
               <p className="font-normal pb-3">
-                Услуга #
+                Запись #
                 {elem.id}
               </p>
-              <div className="flex flex-col gap-1 ml-3">
-                <span>
-                  <span className="font-normal">Клиент:</span>
-                  {' '}
-                  {elem.clientInfo.name}
-                  {' '}
-                  {elem.clientInfo.surname}
-                  <span className="font-normal"> - </span>
-                  {' '}
-                  {elem.clientInfo.phone}
-                </span>
-                <span>
-                  <span className="font-normal">Мастер:</span>
-                  {' '}
-                  {elem.masterInfo.name}
-                  {' '}
-                  {elem.masterInfo.surname}
-                </span>
-                <span>
-                  <span className="font-normal">Время записи: </span>
-                  {elem.date.toLocaleTimeString('ru')}
-                </span>
-              </div>
+              <OrderInfoPanel order={elem} />
             </div>
           ))
         }
@@ -171,13 +199,13 @@ export default function AllServiceEntries() {
           setModalOpen={setDeleteModalOpen}
           title="Удаление записи"
           content={(
-            <p>{deletingServiceInfo.content}</p>
+            <p>{deletingOrderInfo.content}</p>
           )}
           modalIcon={<AiOutlineFire />}
           actionButtonTitle="Удалить"
           actionButtonColorCode="#f87171"
           actionMethod="delete"
-          serviceID={deletingServiceInfo.deletingServiceID}
+          serviceID={deletingOrderInfo.deletingOrderID}
         />
         <AdminPanelModal
           isModalOpen={isEditModalOpen}
@@ -185,15 +213,63 @@ export default function AllServiceEntries() {
           title="Изменение параметров записи"
           content={(
             <>
-              <p className="text-xl">{editServiceInfo.content}</p>
+              <p className="text-xl">{editOrderInfo.content}</p>
               <form action="" method="get" className="mt-4">
+                <span>Управление списком услуг: </span>
+                <div className="ml-10">
+                  {
+                    editOrderInfo.editingOrder.selectedSubservices
+                    && editOrderInfo.editingOrder.selectedSubservices.map(
+                      (selectedSubervice, index) => (
+                        <ChangeServiceInOrderModal
+                          key={selectedSubervice.id}
+                          subservice={selectedSubervice}
+                          serviceIndex={index}
+                          services={services}
+                          subservices={subservices.filter(
+                            (el) => (
+                              !editOrderInfo.editingOrder.selectedSubservices
+                                .map((elem) => elem.id).includes(el.id)
+                              || el.id === selectedSubervice.id
+                            ),
+                          )}
+                          onReplace={replaceSelectedSubservice}
+                          onDelete={deleteSelectedSubservice}
+                        />
+                      ),
+                    )
+                  }
+                  <button
+                    type="button"
+                    className="px-2 py-[0.125rem] bg-green-400 text-white text-base my-2 rounded-sm"
+                    onClick={() => setAddModalOpen(true)}
+                  >
+                    Добавить +
+                  </button>
+                  {
+                    editOrderInfo.editingOrder.selectedSubservices && (
+                      <AddServiceInOrderModal
+                        isOpen={isAddModalOpen}
+                        setIsOpen={setAddModalOpen}
+                        services={services}
+                        subservices={subservices.filter(
+                          (el) => (
+                            !editOrderInfo.editingOrder.selectedSubservices
+                              .map((elem) => elem.id).includes(el.id)
+                          ),
+                        )}
+                        onAdd={addSelectedSubservice}
+                      />
+                    )
+                  }
+                </div>
                 <label htmlFor="master-name">
                   Сменить мастера:
                   {' '}
                   <select name="master-name" id="master-name" required className="h-10 border-[1px] border-gray-300">
                     {
                       masters.filter(
-                        (el) => el.providedServiceIDs.includes(editServiceInfo.editingService.id),
+                        (el) => el.providedServiceIDs.includes(editOrderInfo.editingOrder.id),
                       ).map((el) => (
                         <option
                           key={el.id}
@@ -214,7 +290,7 @@ export default function AllServiceEntries() {
           actionButtonTitle="Применить"
           actionButtonColorCode="#4ade80"
           actionMethod="patch"
-          serviceID={editServiceInfo.editingService.id}
+          serviceID={editOrderInfo.editingOrder.id || -1}
         />
       </div>
     </>
