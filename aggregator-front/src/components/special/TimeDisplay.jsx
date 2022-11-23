@@ -8,14 +8,14 @@ export default function TimeDisplay({ durationInMins }) {
   const minutes = parseInt(durationInMins % MINUTES_IN_HOUR, 10);
 
   return (
-    <p>
+    <span>
       {hours > 0
         ? `${hours} ч `
         : ''}
       {minutes > 0
         ? `${minutes} мин`
         : ''}
-    </p>
+    </span>
   );
 }
 
