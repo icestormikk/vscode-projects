@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import PropTypes from 'prop-types';
 import MasterInfoPanel from './MasterInfoPanel';
@@ -12,9 +13,9 @@ export default function OrderInfoPanel(
       <span className="font-normal">Выбранные услуги</span>
       <div className="ml-10 flex flex-col gap-1 mb-4">
         {
-          order.selectedSubservices.map((elem) => (
-            <span key={elem.id} className="flex items-center">
-              <SubserviceInfoPanel subservice={elem} />
+          order.ordersInfo.map((elem, index) => (
+            <span key={index} className="flex items-center">
+              <SubserviceInfoPanel subservice={elem.selectedSubservice} />
             </span>
           ))
         }
@@ -24,13 +25,27 @@ export default function OrderInfoPanel(
         <ClientInfo client={order.clientInfo} />
       </span>
       <span>
-        <span className="font-normal">Мастер:</span>
-        <MasterInfoPanel master={order.masterInfo} />
+        <span className="font-normal">Задействованные мастера:</span>
+        <div className="ml-10 flex flex-col">
+          {
+            order.ordersInfo.map((elem) => (
+              <MasterInfoPanel key={elem.master.id} master={elem.master} />
+            ))
+          }
+        </div>
       </span>
       <span>
         <span className="font-normal">Время записи: </span>
-        {order.date.toLocaleTimeString('ru')}
+        {new Date(order.date).toLocaleTimeString('ru')}
       </span>
+      {
+        (order.clientCommentary !== '') && (
+          <span>
+            <span className="font-normal">Примечание от клиента: </span>
+            {order.clientCommentary}
+          </span>
+        )
+      }
     </div>
   );
 }

@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-no-bind */
-/* eslint-disable no-console */
 /* eslint-disable react/no-unstable-nested-components */
 import React, { useState } from 'react';
 import { Calendar } from 'react-calendar';
@@ -29,7 +28,7 @@ export default function AllServiceEntries() {
 
   const [deletingOrderInfo, setDeletingOrderInfo] = React.useState({
     content: '',
-    deletingOrderID: -1,
+    deletingOrder: {},
   });
   const [editOrderInfo, setEditOrderInfo] = React.useState({
     content: '',
@@ -38,7 +37,7 @@ export default function AllServiceEntries() {
 
   function ordersByDayCount(date) {
     return ordersInfo.filter(
-      (el) => el.date.toDateString() === date.toDateString(),
+      (el) => new Date(el.date).toDateString() === new Date(date).toDateString(),
     ).length;
   }
 
@@ -48,21 +47,34 @@ export default function AllServiceEntries() {
       editingOrder: newEditingOrder,
     }));
   }
-  function addSelectedSubservice(newObject) {
-    if (editOrderInfo.editingOrder.selectedSubservices.length
+
+  function addSelectedSubservice(newSelectedSubservice) {
+    if (editOrderInfo.editingOrder.ordersInfo.length
       < process.env.REACT_APP_SHOPPING_CART_LIMIT) {
-      editOrderInfo.editingOrder.selectedSubservices.push(newObject);
+      editOrderInfo.editingOrder.ordersInfo.push({
+        selectedSubservice: newSelectedSubservice,
+        master: masters.filter((master) => master.providedServiceIDs
+          .includes(newSelectedSubservice.id))[0],
+      });
+
       updateEditingOrder(editOrderInfo.editingOrder);
     }
   }
 
   function replaceSelectedSubservice(replacingItemIndex, newObject) {
-    editOrderInfo.editingOrder.selectedSubservices[replacingItemIndex] = newObject;
+    editOrderInfo.editingOrder
+      .ordersInfo[replacingItemIndex].selectedSubservice = newObject;
     updateEditingOrder(editOrderInfo.editingOrder);
   }
 
   function deleteSelectedSubservice(deletingItemIndex) {
-    editOrderInfo.editingOrder.selectedSubservices.splice(deletingItemIndex, 1);
+    editOrderInfo.editingOrder.ordersInfo.splice(deletingItemIndex, 1);
+    updateEditingOrder(editOrderInfo.editingOrder);
+  }
+
+  function replaceSelectedMaster(replacingItemIndex, newMaster) {
+    editOrderInfo.editingOrder
+      .ordersInfo[replacingItemIndex].master = newMaster;
     updateEditingOrder(editOrderInfo.editingOrder);
   }
 
@@ -152,8 +164,8 @@ export default function AllServiceEntries() {
         }
         {
           dateValue !== null && ordersInfo.filter(
-            (el) => el.date.getTime() > dateValue[0].getTime()
-              && el.date.getTime() < dateValue[1].getTime(),
+            (el) => el.date > dateValue[0].getTime()
+              && el.date < dateValue[1].getTime(),
           ).map((elem) => (
             <div key={elem.id} className="ordered-service-panel font-light text-base border-[1px] border-gray-300 w-full xl:w-2/3 2xl:w-1/2 p-2 rounded-xl relative overflow-hidden shadow-md">
               <div className="ordered-service-controller w-max h-max text-[#075ca4] font-bold text-xl flex gap-4 p-4">
@@ -161,7 +173,7 @@ export default function AllServiceEntries() {
                   type="button"
                   onClick={() => {
                     setEditOrderInfo({
-                      content: `Запись на ${elem.date.toLocaleString('ru', {
+                      content: `Запись на ${new Date(elem.date).toLocaleString('ru', {
                         month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric',
                       })}`,
                       editingOrder: JSON.parse(JSON.stringify(elem)),
@@ -175,10 +187,10 @@ export default function AllServiceEntries() {
                   type="button"
                   onClick={() => {
                     setDeletingOrderInfo({
-                      content: `Вы действительно хотите удалить запись на ${elem.date.toLocaleString('ru', {
+                      content: `Вы действительно хотите удалить запись на ${new Date(elem.date).toLocaleString('ru', {
                         month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric',
                       })}?`,
-                      deletingOrderID: elem.id,
+                      deletingOrder: elem,
                     });
                     setDeleteModalOpen(true);
                   }}
@@ -205,7 +217,8 @@ export default function AllServiceEntries() {
           actionButtonTitle="Удалить"
           actionButtonColorCode="#f87171"
           actionMethod="delete"
-          serviceID={deletingOrderInfo.deletingOrderID}
+          actionObject={deletingOrderInfo.deletingOrder}
+          setOrders={setOrdersInfo}
         />
         <AdminPanelModal
           isModalOpen={isEditModalOpen}
@@ -218,31 +231,39 @@ export default function AllServiceEntries() {
                 <span>Управление списком услуг: </span>
                 <div className="ml-10">
                   {
-                    editOrderInfo.editingOrder.selectedSubservices
-                    && editOrderInfo.editingOrder.selectedSubservices.map(
-                      (selectedSubervice, index) => (
+                    editOrderInfo.editingOrder.ordersInfo
+                    && editOrderInfo.editingOrder.ordersInfo.map(
+                      (order, index) => (
                         <ChangeServiceInOrderModal
-                          key={selectedSubervice.id}
-                          subservice={selectedSubervice}
+                          // eslint-disable-next-line react/no-array-index-key
+                          key={index}
+                          subservice={order.selectedSubservice}
                           serviceIndex={index}
                           services={services}
                           subservices={subservices.filter(
                             (el) => (
-                              !editOrderInfo.editingOrder.selectedSubservices
-                                .map((elem) => elem.id).includes(el.id)
-                              || el.id === selectedSubervice.id
+                              !editOrderInfo.editingOrder.ordersInfo
+                                .map((elem) => elem.selectedSubservice.id).includes(el.id)
+                              || el.id === order.selectedSubservice.id
                             ),
                           )}
-                          onReplace={replaceSelectedSubservice}
+                          masters={
+                            masters.filter((master) => master.providedServiceIDs
+                              .includes(order.selectedSubservice.id))
+                          }
+                          selectedMaster={order.master}
+                          onReplaceMaster={replaceSelectedMaster}
+                          onReplaceSubservice={replaceSelectedSubservice}
                           onDelete={deleteSelectedSubservice}
                         />
                       ),
                     )
                   }
                   {
-                    editOrderInfo.editingOrder.selectedSubservices
-                      && editOrderInfo.editingOrder.selectedSubservices.length
-                      >= process.env.REACT_APP_SHOPPING_CART_LIMIT ? (
+                    editOrderInfo.editingOrder.ordersInfo
+                      && editOrderInfo.editingOrder.ordersInfo.map(
+                        (el) => el.selectedSubservice,
+                      ).length >= process.env.REACT_APP_SHOPPING_CART_LIMIT ? (
                         <i>Добавлено максимальное кол-во услуг</i>
                       ) : (
                         <button
@@ -255,15 +276,15 @@ export default function AllServiceEntries() {
                       )
                   }
                   {
-                    editOrderInfo.editingOrder.selectedSubservices && (
+                    editOrderInfo.editingOrder.ordersInfo && (
                       <AddServiceInOrderModal
                         isOpen={isAddModalOpen}
                         setIsOpen={setAddModalOpen}
                         services={services}
                         subservices={subservices.filter(
                           (el) => (
-                            !editOrderInfo.editingOrder.selectedSubservices
-                              .map((elem) => elem.id).includes(el.id)
+                            !editOrderInfo.editingOrder.ordersInfo
+                              .map((elem) => elem.selectedSubservice.id).includes(el.id)
                           ),
                         )}
                         onAdd={addSelectedSubservice}
@@ -271,26 +292,6 @@ export default function AllServiceEntries() {
                     )
                   }
                 </div>
-                <label htmlFor="master-name" className="mt-10">
-                  Сменить мастера:
-                  {' '}
-                  <select name="master-name" id="master-name" required className="h-10 border-[1px] border-gray-300">
-                    {
-                      masters.filter(
-                        (el) => el.providedServiceIDs.includes(editOrderInfo.editingOrder.id),
-                      ).map((el) => (
-                        <option
-                          key={el.id}
-                          value={el.name}
-                        >
-                          {el.name}
-                          {' '}
-                          {el.surname}
-                        </option>
-                      ))
-                    }
-                  </select>
-                </label>
               </form>
             </>
           )}
@@ -298,7 +299,8 @@ export default function AllServiceEntries() {
           actionButtonTitle="Применить"
           actionButtonColorCode="#4ade80"
           actionMethod="patch"
-          serviceID={editOrderInfo.editingOrder.id || -1}
+          actionObject={editOrderInfo.editingOrder}
+          setOrders={setOrdersInfo}
         />
       </div>
     </>

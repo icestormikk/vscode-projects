@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable no-console */
 import React from 'react';
 import { BsFillPersonFill, BsFillTelephoneFill } from 'react-icons/bs';
 import { FaComment } from 'react-icons/fa';
