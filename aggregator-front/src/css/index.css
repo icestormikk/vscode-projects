@@ -134,7 +134,7 @@
         @apply bg-black/70 fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center
     }
     .Modal {
-        @apply bg-white h-max md:w-2/3 xl:w-1/3 w-full mx-1 rounded-xl overflow-hidden
+        @apply bg-white h-max md:w-2/3 xl:w-1/3 w-full mx-1 rounded-xl overflow-hidden min-w-min
     }
     .swiper.swiper-cards {
         @apply z-0
