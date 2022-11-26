@@ -81,6 +81,9 @@ export default function AllOrderEntries({
 
   return (
     <>
+      <div className="text-center text-xl py-2 border-b-[1px] border-b-gray-300">
+        <h1>Изменение или удаление заказов</h1>
+      </div>
       <div className="p-2 w-full flex flex-col justify-center items-center border-b-[1px] border-b-gray-300">
         <Calendar
           onChange={(date) => setDateValue(date)}
