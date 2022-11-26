@@ -38,10 +38,11 @@ export default function UserDataForm() {
     const fullInfoObject = values;
     fullInfoObject.ordersInfo = constructOrdersFullInfoObject();
 
-    OrdersAPI.sendNewOrder(fullInfoObject);
-
-    dispatch(clearCart());
-    navigate('/services');
+    OrdersAPI.sendNewOrder(fullInfoObject)
+      .finally(() => {
+        dispatch(clearCart());
+        navigate('/services');
+      });
   }
 
   return (
