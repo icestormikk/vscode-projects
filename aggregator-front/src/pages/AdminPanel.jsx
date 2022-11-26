@@ -3,7 +3,9 @@
 import React, { useState } from 'react';
 import { AiFillSetting, AiOutlineCalendar } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
+import { BsPersonLinesFill } from 'react-icons/bs';
 import { useDispatch } from 'react-redux';
+import AllMastersEntries from '../components/AllMastersEntries';
 import AllOrderEntries from '../components/AllOrderEntries';
 import AllServiceEntries from '../components/AllServiceEntries';
 import { defaultMasters, MastersAPI } from '../services/MasterService';
@@ -29,6 +31,12 @@ export default function AdminPanel() {
       title: 'Управление услугами',
       icon: <BiImageAdd className="text-3xl" />,
       element: <AllServiceEntries />,
+    },
+    {
+      id: 2,
+      title: 'Управление мастерами',
+      icon: <BsPersonLinesFill />,
+      element: <AllMastersEntries />,
     },
   ];
 
@@ -96,7 +104,7 @@ export default function AdminPanel() {
                 ? (
                   <div className="w-full flex flex-col justify-center items-center gap-2 text-lg h-80">
                     <AiFillSetting className="text-[5rem]" />
-                    <h1 className="text-center">С большой силой приходит и большая ответственность</h1>
+                    <h1 className="text-center text-[1.6rem]">With great power comes great responsibility</h1>
                   </div>
                 )
                 : chosenElement
