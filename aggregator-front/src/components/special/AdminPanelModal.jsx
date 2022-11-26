@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import { OrdersAPI } from '../../services/OrderService';
@@ -58,6 +58,10 @@ export default function AdminPanelModal({
     setModalOpen(false);
     setErrorMessage(null);
   }
+
+  useEffect(() => {
+    setErrorMessage(null);
+  }, [isModalOpen]);
 
   return (
     <Modal
