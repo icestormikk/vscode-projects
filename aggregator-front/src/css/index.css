@@ -36,6 +36,21 @@
 }
 
 @layer components {
+    .edit-services-container {
+        @apply px-2 w-5/6 flex flex-row justify-between bg-white hover:bg-gray-100 duration-75 transition-all text-gray-600
+    }
+    .edit-services-container:hover .edit-services-buttons {
+        @apply flex
+    }
+    .edit-services-buttons {
+        @apply justify-between items-center gap-4 hidden
+    }
+    .admin-panel-menu {
+        @apply w-full h-full px-2 py-1 hover:bg-[#075ca4] hover:text-white transition-all duration-100 text-secondary-color text-2xl flex justify-center items-center gap-1 border-r-[1px] border-r-gray-300
+    }
+    .admin-panel-menu:last-child {
+        @apply border-0
+    }
     .order-stages-style {
         @apply whitespace-nowrap transition-colors duration-100
     }
@@ -94,7 +109,7 @@
         @apply bg-[#075ca4]/80 text-white
     }
     .input-field-special-style {
-        @apply rounded-md h-8 border-[1px] w-full pl-2 border-gray-400 font-light placeholder:text-sm invalid:bg-white
+        @apply rounded-md h-8 border-[1px] w-max pl-2 border-gray-400 font-light placeholder:text-sm invalid:bg-white flex flex-col
     }
     .error-label {
         @apply text-red-500 text-sm
