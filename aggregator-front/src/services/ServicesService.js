@@ -58,10 +58,13 @@ export const defaultSubservices = [{
   incompatibleServicesIDs: [],
 }];
 
+const servicesPath = 'http://localhost:8080/services';
+const subservicesPath = 'http://localhost:8080/subservices';
+
 export const ServicesAPI = {
   getAllServices() {
     return axios
-      .get('http://localhost:8080/services', {
+      .get(`${servicesPath}`, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json;charset=UTF-8',
@@ -70,14 +73,46 @@ export const ServicesAPI = {
   },
   getAllSubservices() {
     return axios
-      .get('http://localhost:8080/subservices');
+      .get(`${subservicesPath}`);
   },
   getSubservicesByServiceID(id) {
     return axios
-      .get('http://localhost:8080/services', {
+      .get(`${servicesPath}`, {
         params: {
           subserviceId: id > -1 ? id : 1,
         },
       });
+  },
+  updateService(service) {
+    return axios
+      .patch(`${servicesPath}`, service);
+  },
+  updateSubservice(subservice) {
+    return axios
+      .patch(`${subservicesPath}`, subservice);
+  },
+  deleteService(service) {
+    return axios
+      .delete(`${servicesPath}`, {
+        params: {
+          id: service.id,
+        },
+      });
+  },
+  deleteSubservice(subservice) {
+    return axios
+      .delete(`${subservicesPath}`, {
+        params: {
+          id: subservice.id,
+        },
+      });
+  },
+  sendNewService(service) {
+    return axios
+      .post(`${servicesPath}`, service);
+  },
+  sendNewSubservice(subservice) {
+    return axios
+      .post(`${subservicesPath}`, subservice);
   },
 };
