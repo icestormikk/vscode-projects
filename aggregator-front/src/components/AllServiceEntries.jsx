@@ -24,10 +24,10 @@ export default function AllServiceEntries() {
 
   return (
     <>
-      <div className="text-center text-xl py-2">
+      <div className="text-center text-xl py-2 border-b-[1px] border-b-gray-300">
         <h1>Изменение параметров услуг и их разделов</h1>
       </div>
-      <div className="w-full min-h-full text-xl flex sm:flex-row flex-col justify-center items-start border-t-[1px] border-t-gray-300">
+      <div className="w-full min-h-full text-xl flex sm:flex-row flex-col justify-center items-start">
         <div className="p-2 w-full h-full flex flex-col border-r-[1px] border-r-gray-300">
           <h1 className="text-secondary-color mb-2">Все разделы услуг</h1>
           <div className="ml-10 flex flex-col gap-2">
@@ -77,7 +77,7 @@ export default function AllServiceEntries() {
             }
           </div>
         </div>
-        <div className="p-2 w-full flex flex-col">
+        <div className="p-2 w-full flex flex-col border-l-[1px] border-l-gray-300">
           <h1 className="text-secondary-color mb-2">Все услуги</h1>
           {
             services && services.map((service) => (
