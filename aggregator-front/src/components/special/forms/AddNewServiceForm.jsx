@@ -80,7 +80,7 @@ export default function AddNewServiceForm({
             }
           </div>
           <div className="flex justify-center items-center">
-            <input type="submit" value="Применить изменения" className="cursor-pointer px-2 py-1 bg-green-500 rounded-lg w-max text-white" />
+            <input type="submit" value="Добавить" className="cursor-pointer px-2 py-1 bg-green-500 rounded-lg w-max text-white" />
           </div>
         </form>
       </div>

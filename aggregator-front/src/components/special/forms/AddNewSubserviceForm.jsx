@@ -169,7 +169,7 @@ export default function AddNewSubserviceForm({
                 <input
                   type="submit"
                   className="cursor-pointer px-2 py-1 bg-green-500 rounded-lg w-max text-white"
-                  value="Записаться"
+                  value="Добавить"
                 />
               </div>
             </Form>
