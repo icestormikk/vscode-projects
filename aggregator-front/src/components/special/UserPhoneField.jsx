@@ -30,7 +30,7 @@ export default function UserPhoneField(props) {
         onChange={(phone) => onValueChange(phone)}
         specialLabel=""
         country="ru"
-        inputClass="text-sm h-8 font-light rounded-md border-[1px] border-gray-400"
+        inputClass="text-base h-8 font-light rounded-md border-[1px] border-gray-400"
       />
       <div className="text-red-500 text-sm">
         {isError && getIn(errors, name)}
