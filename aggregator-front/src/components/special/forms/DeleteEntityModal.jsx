@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import Modal from 'react-modal';
 import { ServicesAPI } from '../../../services/ServicesService';
-import { removeService, removeSubservice } from '../../../store/AdminEntitiesSlice';
+import { removeMaster, removeService, removeSubservice } from '../../../store/AdminEntitiesSlice';
+import { MastersAPI } from '../../../services/MasterService';
 
 export default function DeleteEntityModal({
   isModalOpen, setModalOpen, entity,
@@ -40,6 +41,20 @@ export default function DeleteEntityModal({
           .finally(() => {
             const selectedSubservice = entity;
             dispatch(removeSubservice({ selectedSubservice }));
+            setModalOpen(false);
+          });
+        break;
+      case 'masters':
+        MastersAPI.deleteMaster(entity)
+          .then(() => {
+            setModalOpen(false);
+          })
+          .catch((error) => {
+            setErrorMessage(`Не удалось провести удаление: ${error.message}`);
+          })
+          .finally(() => {
+            const removingMaster = entity;
+            dispatch(removeMaster({ removingMaster }));
             setModalOpen(false);
           });
         break;
