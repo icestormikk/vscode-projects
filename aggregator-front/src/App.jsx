@@ -10,7 +10,7 @@ import AboutUs from './pages/AboutUs';
 import Certificates from './pages/Certificates';
 import OurSalons from './pages/OurSalons';
 import Services from './pages/Services';
-import Jobs from './pages/Jobs';
+import OurWorks from './pages/OurWorks';
 import Footer from './components/Footer';
 import OrderRegistration from './pages/OrderRegistration';
 import Login from './pages/Login';
@@ -46,7 +46,7 @@ export default function App() {
               <Route path="order" element={<OrderRegistration />} />
             </Route>
             <Route path="about" element={<AboutUs />} />
-            <Route path="jobs" element={<Jobs />} />
+            <Route path="jobs" element={<OurWorks />} />
             <Route path="sertificates" element={<Certificates />} />
             <Route path="contacts" element={<OurSalons />} />
           </Route>
