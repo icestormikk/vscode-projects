@@ -64,7 +64,7 @@ const subservicesPath = 'http://localhost:8080/subservices';
 export const ServicesAPI = {
   getAllServices() {
     return axios
-      .get(`${servicesPath}`, {
+      .get(servicesPath, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json;charset=UTF-8',
@@ -73,11 +73,11 @@ export const ServicesAPI = {
   },
   getAllSubservices() {
     return axios
-      .get(`${subservicesPath}`);
+      .get(subservicesPath);
   },
   getSubservicesByServiceID(id) {
     return axios
-      .get(`${servicesPath}`, {
+      .get(servicesPath, {
         params: {
           subserviceId: id > -1 ? id : 1,
         },
@@ -85,15 +85,15 @@ export const ServicesAPI = {
   },
   updateService(service) {
     return axios
-      .patch(`${servicesPath}`, service);
+      .patch(servicesPath, service);
   },
   updateSubservice(subservice) {
     return axios
-      .patch(`${subservicesPath}`, subservice);
+      .patch(subservicesPath, subservice);
   },
   deleteService(service) {
     return axios
-      .delete(`${servicesPath}`, {
+      .delete(servicesPath, {
         params: {
           id: service.id,
         },
@@ -101,7 +101,7 @@ export const ServicesAPI = {
   },
   deleteSubservice(subservice) {
     return axios
-      .delete(`${subservicesPath}`, {
+      .delete(subservicesPath, {
         params: {
           id: subservice.id,
         },
@@ -109,10 +109,10 @@ export const ServicesAPI = {
   },
   sendNewService(service) {
     return axios
-      .post(`${servicesPath}`, service);
+      .post(servicesPath, service);
   },
   sendNewSubservice(subservice) {
     return axios
-      .post(`${subservicesPath}`, subservice);
+      .post(subservicesPath, subservice);
   },
 };

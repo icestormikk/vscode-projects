@@ -45,16 +45,38 @@ export const defaultMasters = [{
   ],
 }];
 
+const masterPath = 'http://localhost:8080/masters';
+
 export const MastersAPI = {
   getAllMasters() {
     return axios
-      .get('http://localhost:8080/masters');
+      .get(masterPath);
   },
   getMastersBySubserviceID(id) {
-    return axios.get('http://localhost:8080/masters', {
+    return axios.get(masterPath, {
       params: {
         serviceId: id,
       },
     });
+  },
+  updateMaster(master) {
+    return axios
+      .patch(masterPath, master);
+  },
+  deleteMaster(master) {
+    return axios
+      .delete(masterPath, {
+        params: {
+          id: master.id,
+        },
+      });
+  },
+  sendNewMaster(master) {
+    return axios
+      .post(masterPath, {
+        params: {
+          id: master.id,
+        },
+      });
   },
 };
