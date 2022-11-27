@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { SlSocialVkontakte } from 'react-icons/sl';
 import { AiOutlineInstagram, AiFillSkype } from 'react-icons/ai';
-import axios from 'axios';
 import { BsWhatsapp } from 'react-icons/bs';
 import Header from './components/Header';
 import Home from './pages/Home';
@@ -16,6 +15,7 @@ import Footer from './components/Footer';
 import OrderRegistration from './pages/OrderRegistration';
 import Login from './pages/Login';
 import AdminPanel from './pages/AdminPanel';
+import NotFound from './pages/NotFound';
 
 export default function App() {
   useEffect(() => {
@@ -50,6 +50,7 @@ export default function App() {
             <Route path="sertificates" element={<Certificates />} />
             <Route path="contacts" element={<OurSalons />} />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
       <Footer
