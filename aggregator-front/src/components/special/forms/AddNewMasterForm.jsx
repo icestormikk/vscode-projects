@@ -42,15 +42,12 @@ export default function AddNewMasterForm({
     values.availableDates = masterAvailableDates;
     MastersAPI.sendNewMaster(values)
       .then(() => {
+        const master = values;
+        dispatch(addMaster({ master }));
         setModalOpen(false);
       })
       .catch((error) => {
         setErrorMessage(`Не удалось добавить объект: ${error.message}`);
-      })
-      .finally(() => {
-        const master = values;
-        dispatch(addMaster({ master }));
-        setModalOpen(false);
       });
   }
 

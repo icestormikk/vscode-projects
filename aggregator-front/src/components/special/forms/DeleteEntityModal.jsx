@@ -18,44 +18,34 @@ export default function DeleteEntityModal({
       case 'services':
         ServicesAPI.deleteService(entity)
           .then(() => {
+            const selectedService = entity;
+            dispatch(removeService({ selectedService }));
             setModalOpen(false);
           })
           .catch((error) => {
             setErrorMessage(`Не удалось провести удаление: ${error.message}`);
-          })
-          .finally(() => {
-            // stub
-            const selectedService = entity;
-            dispatch(removeService({ selectedService }));
-            setModalOpen(false);
           });
         break;
       case 'subservices':
         ServicesAPI.deleteSubservice(entity)
           .then(() => {
+            const selectedSubservice = entity;
+            dispatch(removeSubservice({ selectedSubservice }));
             setModalOpen(false);
           })
           .catch((error) => {
             setErrorMessage(`Не удалось провести удаление: ${error.message}`);
-          })
-          .finally(() => {
-            const selectedSubservice = entity;
-            dispatch(removeSubservice({ selectedSubservice }));
-            setModalOpen(false);
           });
         break;
       case 'masters':
         MastersAPI.deleteMaster(entity)
           .then(() => {
+            const removingMaster = entity;
+            dispatch(removeMaster({ removingMaster }));
             setModalOpen(false);
           })
           .catch((error) => {
             setErrorMessage(`Не удалось провести удаление: ${error.message}`);
-          })
-          .finally(() => {
-            const removingMaster = entity;
-            dispatch(removeMaster({ removingMaster }));
-            setModalOpen(false);
           });
         break;
       default:

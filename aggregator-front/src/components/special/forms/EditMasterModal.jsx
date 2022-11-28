@@ -47,15 +47,12 @@ export default function EditMasterModal({
 
     MastersAPI.updateMaster(newObject)
       .then(() => {
+        const updatingMaster = newObject;
+        dispatch(updateMaster({ updatingMaster }));
         setModalOpen(false);
       })
       .catch((error) => {
         setErrorMessage(`Не удалось провести обновление: ${error.message}`);
-      })
-      .finally(() => {
-        const updatingMaster = newObject;
-        dispatch(updateMaster({ updatingMaster }));
-        setModalOpen(false);
       });
   }
 
@@ -252,11 +249,6 @@ export default function EditMasterModal({
             </Form>
           )}
         </Formik>
-        {
-          errorMessage && (
-            <span className="text-red-500">{errorMessage}</span>
-          )
-        }
       </div>
     </Modal>
   );

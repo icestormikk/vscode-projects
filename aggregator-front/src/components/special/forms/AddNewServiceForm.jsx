@@ -27,15 +27,11 @@ export default function AddNewServiceForm({
 
     ServicesAPI.sendNewService(event.target)
       .then(() => {
+        dispatch(addService({ newService }));
         setModalOpen(false);
       })
       .catch((error) => {
         setErrorMessage(`Не удалось добавить раздел: ${error.message}`);
-      })
-      .finally(() => {
-        // stub
-        dispatch(addService({ newService }));
-        setModalOpen(false);
       });
   }
 

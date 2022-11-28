@@ -29,14 +29,11 @@ export default function EditServiceModal({
 
     ServicesAPI.updateService(newObject)
       .then(() => {
-        setModalOpen(false);
-      }).catch((error) => {
-        setErrorMessage(`Не удалось провести обновление: ${error.message}`);
-      }).finally(() => {
-        // stub
         const updatingService = newObject;
         dispatch(updateService({ updatingService }));
         setModalOpen(false);
+      }).catch((error) => {
+        setErrorMessage(`Не удалось провести обновление: ${error.message}`);
       });
   }
 
@@ -72,7 +69,7 @@ export default function EditServiceModal({
           </label>
           <label htmlFor="serviceCardImageUrl">
             <p>Изображение на карточке: </p>
-            <input type="file" name="serviceCardImage" id="serviceCardImage" required />
+            <input type="file" name="serviceCardImage" id="serviceCardImage" />
             <p className="text-gray-400">
               Примечание: настоятельно рекомендуется использовать
               изображения с вертикальной ориентацией

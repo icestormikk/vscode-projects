@@ -25,15 +25,12 @@ export default function EditSubserviceModal({
 
     ServicesAPI.updateSubservice(updatedSubservice)
       .then(() => {
+        const updatingSubservice = updatedSubservice;
+        dispatch(updateSubservice({ updatingSubservice }));
         setModalOpen(false);
       })
       .catch((error) => {
         setErrorMessage(`Не удалось провести обновление: ${error.message}`);
-      })
-      .finally(() => {
-        const updatingSubservice = updatedSubservice;
-        dispatch(updateSubservice({ updatingSubservice }));
-        setModalOpen(false);
       });
   }
 

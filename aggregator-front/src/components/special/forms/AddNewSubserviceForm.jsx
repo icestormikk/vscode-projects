@@ -28,15 +28,12 @@ export default function AddNewSubserviceForm({
 
     ServicesAPI.sendNewSubservice(newSubservice)
       .then(() => {
-        isModalOpen(true);
-      })
-      .catch((error) => {
-        setErrorMessage(`Не удалось добавить услугу: ${error.message}`);
-      })
-      .finally(() => {
         const subservice = newSubservice;
         dispatch(addSubservice({ subservice }));
         setModalOpen(false);
+      })
+      .catch((error) => {
+        setErrorMessage(`Не удалось добавить услугу: ${error.message}`);
       });
   }
 
