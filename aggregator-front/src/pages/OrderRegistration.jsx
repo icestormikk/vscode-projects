@@ -1,12 +1,13 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-console */
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DateTimeChoise from '../components/special/DateTimeChoise';
 import MastersChoise from '../components/special/MastersChoise';
 import { addMaster, addMasterToSubservice } from '../store/OrdersInfoSlice';
 import UserDataForm from '../components/special/UserDataForm';
 import { defaultMasters, MastersAPI } from '../services/MasterService';
+import LostComponent from '../components/special/LostComponent';
 
 export default function OrderRegistration() {
   const dispatch = useDispatch();
@@ -22,6 +23,10 @@ export default function OrderRegistration() {
   function updateState() {
     setReady(false);
 
+    if (selectedSubservices.length === 0) {
+      return;
+    }
+
     selectedSubservices.forEach((chosenSubservice) => {
       const chosenSubserviceId = chosenSubservice.id;
       let mastersBySelectedSubservice;
@@ -29,6 +34,15 @@ export default function OrderRegistration() {
       MastersAPI.getMastersBySubserviceID(chosenSubserviceId)
         .then((response) => {
           mastersBySelectedSubservice = response.data;
+
+          mastersBySelectedSubservice.forEach((master) => {
+            dispatch(addMaster({ master }));
+
+            if (master.providedServiceIDs.includes(chosenSubserviceId)) {
+              const masterId = master.id;
+              dispatch(addMasterToSubservice({ chosenSubserviceId, masterId }));
+            }
+          });
         })
         .catch(() => {
           mastersBySelectedSubservice = defaultMasters;
@@ -59,9 +73,9 @@ export default function OrderRegistration() {
     setUserFormCompleted(false);
   }
 
-  useEffect(() => {
+  useState(() => {
     updateState();
-  }, [selectedSubservices, subservicesToMasters]);
+  }, []);
 
   return (
     <div className="min-h-screen text-black flex justify-center">
@@ -77,7 +91,7 @@ export default function OrderRegistration() {
           <span style={{ color: isDateTimeCompleted ? 'green' : 'lightgray' }}>&#x2022;</span>
           <span className="order-stages-style" style={{ color: isUserFormCompleted ? 'green' : 'lightgray' }}>Указание контактных данных</span>
         </h1>
-        {isReady && (
+        {isReady ? (
           !isMastersCompleted ? (
             <MastersChoise
               mastersCompletedController={setMastersCompleted}
@@ -97,6 +111,8 @@ export default function OrderRegistration() {
               userFormCompletedController={setUserFormCompleted}
             />
           ))
+        ) : (
+          <LostComponent />
         )}
       </div>
     </div>

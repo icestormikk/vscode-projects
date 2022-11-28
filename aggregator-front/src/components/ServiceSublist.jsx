@@ -5,6 +5,7 @@ import { AiOutlineDown } from 'react-icons/ai';
 import Loader from './Loader';
 import SubserviceElement from './special/SubserviceElement';
 import { defaultSubservices, ServicesAPI } from '../services/ServicesService';
+import LostComponent from './special/LostComponent';
 
 export default class ServiceSublist extends Component {
   static getDerivedStateFromProps(props, state) {
@@ -94,14 +95,20 @@ export default class ServiceSublist extends Component {
                   />
                 </div>
                 <div className="flex flex-col gap-4">
-                  {sublistState.subservices.map(
-                    (subservice) => (
-                      <SubserviceElement
-                        key={subservice.id}
-                        subservice={subservice}
-                      />
-                    ),
-                  )}
+                  {
+                    sublistState.subservices.length === 0 ? (
+                      <LostComponent />
+                    ) : (
+                      sublistState.subservices.map(
+                        (subservice) => (
+                          <SubserviceElement
+                            key={subservice.id}
+                            subservice={subservice}
+                          />
+                        ),
+                      )
+                    )
+                  }
                 </div>
               </>
             )

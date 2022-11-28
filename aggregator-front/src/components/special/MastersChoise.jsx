@@ -9,6 +9,7 @@ export default function MastersChoise({
   mastersCompletedController, selectedSubservices, subservicesToMasters, masters,
 }) {
   const [isLoading, setLoading] = React.useState(true);
+  const [isError, setIsError] = React.useState(false);
 
   useState(() => {
     setLoading(false);
@@ -29,12 +30,14 @@ export default function MastersChoise({
             selectedSubservices={selectedSubservices}
             subservicesToMasters={subservicesToMasters}
             masters={masters}
+            setErrorController={setIsError}
             isFewMasters
           />
         </div>
         <ControllersButtonsPanel
           addressToComeback="/services"
           nextStageAction={mastersCompletedController}
+          isErrorState={isError}
         />
       </>
     )

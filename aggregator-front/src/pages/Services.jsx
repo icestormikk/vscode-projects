@@ -9,6 +9,7 @@ import SwiperElement from '../components/special/SwiperElement';
 import ServiceSublist from '../components/ServiceSublist';
 import ShoppingСart from '../components/ShoppingСart';
 import { defaultServices, ServicesAPI } from '../services/ServicesService';
+import LostComponent from '../components/special/LostComponent';
 
 export default class Services extends Component {
   constructor(props) {
@@ -70,38 +71,44 @@ export default class Services extends Component {
                   </h2>
                 </div>
                 <div className="mx-0">
-                  <Swiper
-                    navigation
-                    effect="cards"
-                    id="swiper-color"
-                    slidesPerView={1}
-                    loop
-                    modules={[EffectCards, Navigation]}
-                    className="xl:w-[26vw] lg:w-[34vw] sm:w-[50vw] w-[65vw] min-w-[20vw] min-h-[10vh] max-h-[80vh] rounded-lg overflow-hidden"
-                  >
-                    {componentState.services.map((service) => (
-                      <SwiperSlide key={service.id}>
-                        <SwiperElement
-                          picture={(
-                            <img
-                              src={service.imageUrl}
-                              alt="service-type"
-                              className="z-[-1] object-cover overflow-hidden"
+                  {
+                    componentState.services.length === 0 ? (
+                      <LostComponent />
+                    ) : (
+                      <Swiper
+                        navigation
+                        effect="cards"
+                        id="swiper-color"
+                        slidesPerView={1}
+                        loop
+                        modules={[EffectCards, Navigation]}
+                        className="xl:w-[26vw] lg:w-[34vw] sm:w-[50vw] w-[65vw] min-w-[20vw] min-h-[10vh] max-h-[80vh] rounded-lg overflow-hidden"
+                      >
+                        {componentState.services.map((service) => (
+                          <SwiperSlide key={service.id}>
+                            <SwiperElement
+                              picture={(
+                                <img
+                                  src={service.imageUrl}
+                                  alt="service-type"
+                                  className="z-[-1] object-cover overflow-hidden"
+                                />
+                              )}
+                              elementTitle={<p>{service.title}</p>}
+                              agreeHandler={() => {
+                                this.sublistChild.current.handleChosenServiceChanging(
+                                  service.id,
+                                );
+                                this.setState(() => ({
+                                  chosenService: service,
+                                }));
+                              }}
                             />
-                          )}
-                          elementTitle={<p>{service.title}</p>}
-                          agreeHandler={() => {
-                            this.sublistChild.current.handleChosenServiceChanging(
-                              service.id,
-                            );
-                            this.setState(() => ({
-                              chosenService: service,
-                            }));
-                          }}
-                        />
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
+                          </SwiperSlide>
+                        ))}
+                      </Swiper>
+                    )
+                  }
                 </div>
               </div>
               <ServiceSublist

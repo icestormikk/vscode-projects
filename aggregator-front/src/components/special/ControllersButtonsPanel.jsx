@@ -2,7 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-export default function ControllersButtonsPanel({ addressToComeback, nextStageAction }) {
+export default function ControllersButtonsPanel({
+  addressToComeback, nextStageAction, isErrorState,
+}) {
   return (
     <div className="flex justify-between items-center my-4">
       <Link to={addressToComeback}>
@@ -10,13 +12,17 @@ export default function ControllersButtonsPanel({ addressToComeback, nextStageAc
           Вернуться
         </div>
       </Link>
-      <button
-        type="button"
-        className="bg-gradient-to-r from-[#029872] to-[#09b68b] text-base p-2 rounded-lg text-white"
-        onClick={nextStageAction}
-      >
-        Продолжить
-      </button>
+      {
+        !isErrorState && (
+          <button
+            type="button"
+            className="bg-gradient-to-r from-[#029872] to-[#09b68b] text-base p-2 rounded-lg text-white"
+            onClick={nextStageAction}
+          >
+            Продолжить
+          </button>
+        )
+      }
     </div>
   );
 }
@@ -24,4 +30,5 @@ export default function ControllersButtonsPanel({ addressToComeback, nextStageAc
 ControllersButtonsPanel.propTypes = {
   addressToComeback: PropTypes.string.isRequired,
   nextStageAction: PropTypes.func.isRequired,
+  isErrorState: PropTypes.bool.isRequired,
 };

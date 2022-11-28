@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import MasterAndServiceDisplay from './MasterAndServiceDisplay';
 import DateTimeContainer from './DateTimeContainer';
 import { groupDatesObject, toObject } from '../../datesTransformFunctions';
 import { setSubserviceDate } from '../../store/OrdersInfoSlice';
+import ControllersButtonsPanel from './ControllersButtonsPanel';
 
 export function initailizateAvailableDates(daysCount, hoursCount) {
   const datesArray = [];
@@ -37,6 +37,7 @@ export default function DateTimeChoise(
   const [datesObject, setDatesObject] = React.useState(
     groupDatesObject(toObject(initailizateAvailableDates(10, 8))),
   );
+  const [isError, setIsError] = React.useState(false);
 
   useEffect(() => {
     const tempDateObject = toObject(initailizateAvailableDates(10, 8));
@@ -85,6 +86,7 @@ export default function DateTimeChoise(
             subservicesToMasters={subservicesToMasters}
             masters={masters}
             showWithDateTimes={!isOneTimeMode}
+            setErrorController={setIsError}
           />
           {isOneTimeMode && (
             <div id="dateContainer" className="flex flex-col gap-2">
@@ -96,20 +98,11 @@ export default function DateTimeChoise(
           )}
         </div>
       </div>
-      <div className="flex justify-between items-center my-4">
-        <Link to="/services">
-          <div className="bg-gradient-to-l from-[#e45353] to-[#e91f1f] p-2 text-base rounded-lg text-white">
-            Вернуться
-          </div>
-        </Link>
-        <button
-          type="button"
-          className="bg-gradient-to-r from-[#029872] to-[#09b68b] text-base p-2 rounded-lg text-white"
-          onClick={dateTimeCompletedController}
-        >
-          Продолжить
-        </button>
-      </div>
+      <ControllersButtonsPanel
+        addressToComeback="/services"
+        nextStageAction={dateTimeCompletedController}
+        isErrorState={isError}
+      />
     </>
   );
 }
