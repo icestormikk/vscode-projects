@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React, { Component } from 'react';
 import { EffectCards, Navigation } from 'swiper';
@@ -33,12 +34,12 @@ export default class Services extends Component {
         this.setState(() => ({
           services: response.data,
         }));
-      })
-      .catch(() => {
-        this.setState(() => ({
-          services: defaultServices,
-        }));
       });
+    // .catch(() => {
+    //   this.setState(() => ({
+    //     services: defaultServices,
+    //   }));
+    // });
 
     this.setState({
       isLoading: false,
