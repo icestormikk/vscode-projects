@@ -1,18 +1,37 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
-const adminInfoSlice = createSlice({
+const userInfoSlice = createSlice({
   name: 'userInfoSlice',
   initialState: {
-    username: '',
+    userInfo: {
+      username: '',
+      phone: '',
+      email: '',
+      roles: [],
+    },
     isLoggedIn: false,
   },
   reducers: {
-    setLoggedIn(state, action) {
-      state.isLoggedIn = action.payload;
+    login(state, action) {
+      const { user } = action.payload;
+
+      if (Object.hasOwn(user, 'password')) {
+        delete user.password;
+      }
+      if (Object.hasOwn(user, 'confirmPassword')) {
+        delete user.confirmPassword;
+      }
+
+      Object.assign(state.userInfo, user);
+      state.isLoggedIn = true;
+    },
+    logout(state) {
+      state.username = '';
+      state.roles = [];
     },
   },
 });
 
-export const { setLoggedIn } = adminInfoSlice.actions;
-export default adminInfoSlice.reducer;
+export const { login, logout } = userInfoSlice.actions;
+export default userInfoSlice.reducer;
