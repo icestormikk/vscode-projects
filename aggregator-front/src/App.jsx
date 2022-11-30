@@ -1,6 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import {
+  Navigate, Outlet, Route, Routes, useLocation,
+} from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { SlSocialVkontakte } from 'react-icons/sl';
 import { AiOutlineInstagram, AiFillSkype } from 'react-icons/ai';
 import { BsWhatsapp } from 'react-icons/bs';
@@ -16,8 +20,33 @@ import OrderRegistration from './pages/OrderRegistration';
 import Login from './pages/Login';
 import AdminPanel from './pages/AdminPanel';
 import NotFound from './pages/NotFound';
+import Registration from './pages/Registration';
+
+function ProtectedRoute({
+  isAllowed,
+  redirectPath = '/login',
+  redirectingMessage,
+  childrenComponent,
+}) {
+  if (isAllowed) {
+    return childrenComponent;
+  }
+
+  const location = useLocation();
+  return (
+    <Navigate
+      to={redirectPath}
+      state={
+        { prev: location, message: redirectingMessage }
+      }
+      replace
+    />
+  );
+}
 
 export default function App() {
+  const currentUser = useSelector((state) => state.users);
+
   useEffect(() => {
     const handleTabClose = (event) => {
       // Cookies ?
@@ -38,7 +67,17 @@ export default function App() {
           <Route path="/">
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
-            <Route path="administration">
+            <Route path="registration" element={<Registration />} />
+            <Route
+              path="administration"
+              element={(
+                <ProtectedRoute
+                  isAllowed={currentUser.userInfo.roles.includes('user')}
+                  redirectingMessage="Данная страница доступна только авторизированным пользователям.
+                  Пожалуйста, войдите в систему."
+                />
+              )}
+            >
               <Route index element={<AdminPanel />} />
             </Route>
             <Route path="services">
@@ -81,3 +120,15 @@ export default function App() {
     </>
   );
 }
+
+ProtectedRoute.propTypes = {
+  isAllowed: PropTypes.bool.isRequired,
+  redirectPath: PropTypes.string,
+  redirectingMessage: PropTypes.string.isRequired,
+  childrenComponent: PropTypes.objectOf(PropTypes.shape),
+};
+
+ProtectedRoute.defaultProps = {
+  redirectPath: '/login',
+  childrenComponent: <Outlet />,
+};
