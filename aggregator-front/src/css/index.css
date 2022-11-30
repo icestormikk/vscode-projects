@@ -162,7 +162,7 @@
         @apply visible
     } 
     .navbar-buttons {
-        @apply text-secondary-color text-2xl absolute right-8 top-1/2 -translate-y-1/2 cursor-pointer lg:hidden
+        @apply text-secondary-color text-2xl absolute right-8 top-1/2 -translate-y-1/2 cursor-pointer xl:hidden
     }
     .cube-wrapper {
         @apply relative shadow-lg w-10 h-10 rounded-l-xl rounded-br-xl
