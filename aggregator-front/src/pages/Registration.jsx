@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { Field, Formik, Form } from 'formik';
@@ -5,6 +6,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../components/LogoComponent';
+import PasswordDescription from '../components/PasswordDescription';
 import UserPhoneField from '../components/special/UserPhoneField';
 import { userInfoRegistrationSchema } from '../schemas/userInfoSchema';
 import { UsersAPI } from '../services/UserService';
@@ -17,15 +19,12 @@ export default function Registration() {
 
   function handleRegistation(values) {
     UsersAPI.registerUser(values)
-      .then(() => {
+      .then((response) => {
+        const user = response.data;
+        dispatch(login({ user }));
         navigator('/');
       })
       .catch((error) => {
-        // stub, dont use in production!
-        const user = values;
-        user.roles = ['user'];
-        dispatch(login({ user }));
-
         setErrorMessage(`Не удалось провести регистрацию: ${error.message}`);
       });
   }
@@ -44,7 +43,8 @@ export default function Registration() {
             </div>
             <Formik
               initialValues={{
-                username: '',
+                firstname: '',
+                lastname: '',
                 email: '',
                 phone: '',
                 password: '',
@@ -56,24 +56,35 @@ export default function Registration() {
               {({ errors, touched }) => (
                 <>
                   <Form className="flex flex-col gap-2">
-                    <label htmlFor="username" className="flex flex-col">
-                      <span>Имя пользователя</span>
-                      <Field name="username" id="username" className="input-field-special-style w-full" />
-                      {touched.username && errors.username ? (
-                        <p className="error-label">{errors.username}</p>
+                    <label htmlFor="firstname" className="flex flex-col">
+                      <span>Имя</span>
+                      <Field name="firstname" id="firstname" className="input-field-special-style w-full" />
+                      {touched.firstname && errors.firstname ? (
+                        <p className="error-label">{errors.firstname}</p>
                       ) : null}
                     </label>
-                    <label htmlFor="username" className="flex flex-col">
+
+                    <label htmlFor="lastname" className="flex flex-col">
+                      <span>Фамилия</span>
+                      <Field name="lastname" id="lastname" className="input-field-special-style w-full" />
+                      {touched.lastname && errors.lastname ? (
+                        <p className="error-label">{errors.lastname}</p>
+                      ) : null}
+                    </label>
+
+                    <label htmlFor="email" className="flex flex-col">
                       <span>Адрес электронной почты</span>
                       <Field type="email" name="email" id="email" className="input-field-special-style w-full" />
                       {touched.email && errors.email ? (
                         <p className="error-label">{errors.email}</p>
                       ) : null}
                     </label>
+
                     <label htmlFor="phone">
                       <span>Контактный телефон</span>
                       <Field name="phone" component={UserPhoneField} />
                     </label>
+
                     <label htmlFor="password">
                       <span>Пароль</span>
                       <Field type="password" name="password" id="password" className="input-field-special-style w-full" />
@@ -81,20 +92,9 @@ export default function Registration() {
                         <p className="error-label">{errors.password}</p>
                       ) : null}
                     </label>
-                    <ul className="list-disc my-4">
-                      Пароль должен соответствовать следующим требованиям:
-                      <div className="ml-4">
-                        <li>
-                          Не менее 8 символов
-                        </li>
-                        <li>
-                          Наличие букв в верхнем и нижнем регистре
-                        </li>
-                        <li>
-                          Наличие хотя бы одной цифры и особого символа (@$!%*?&)
-                        </li>
-                      </div>
-                    </ul>
+
+                    <PasswordDescription />
+
                     <label htmlFor="password">
                       <span>Повторите пароль</span>
                       <Field type="password" name="confirmPassword" id="confirmPassword" className="input-field-special-style w-full" />
@@ -102,6 +102,7 @@ export default function Registration() {
                         <p className="error-label">{errors.confirmPassword}</p>
                       ) : null}
                     </label>
+
                     <div className="flex flex-col justify-center text-center mt-4">
                       {
                         errorMessage && (
