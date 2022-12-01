@@ -9,8 +9,11 @@ const PASSWORD_REGEX = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\
 // one special character:
 
 export const userInfoRegistrationSchema = Yup.object().shape({
-  username: Yup.string()
-    .min(2, 'Имя администратора должно содержать не менее двух символов')
+  firstname: Yup.string()
+    .min(2, 'Имя пользователя должна содержать не менее двух символов')
+    .required(requiredFieldMessage),
+  lastname: Yup.string()
+    .min(2, 'Фамилия пользователя должна содержать не менее двух символов')
     .required(requiredFieldMessage),
   email: Yup.string()
     .email('Укажите корректный адрес электронной почты')
