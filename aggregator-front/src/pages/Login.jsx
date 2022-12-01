@@ -1,15 +1,33 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from '../components/LogoComponent';
+import PasswordDescription from '../components/PasswordDescription';
 import { userInfoLoginSchema } from '../schemas/userInfoSchema';
+import { UsersAPI } from '../services/UserService';
+import { login } from '../store/UserInfoSlice';
 
 export default function Login() {
-  // eslint-disable-next-line no-unused-vars
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { state } = useLocation();
   const { message } = state || '';
+
+  const [errorMessage, setErrorMessage] = React.useState(null);
+
+  function handleLogin(values) {
+    UsersAPI.verifyUser(values)
+      .then((response) => {
+        const user = response.data;
+        dispatch(login({ user }));
+        navigate(state ? state.prev : '/');
+      })
+      .catch((error) => {
+        setErrorMessage(`Не удалось пройти авторизацию: ${error.response ? 'Неверные данные' : 'нет доступа к серверу'}`);
+      });
+  }
 
   return (
     <div className="min-h-screen text-white flex justify-center">
@@ -34,7 +52,7 @@ export default function Login() {
                 password: '',
               }}
               validationSchema={userInfoLoginSchema}
-              onSubmit={(values) => console.log(values)}
+              onSubmit={(values) => handleLogin(values)}
             >
               {({ errors, touched }) => (
                 <Form className="flex flex-col gap-2">
@@ -47,16 +65,24 @@ export default function Login() {
                   </label>
                   <label htmlFor="password">
                     <p>Пароль</p>
-                    <Field name="password" id="password" className="input-field-special-style w-full" />
+                    <Field type="password" name="password" id="password" className="input-field-special-style w-full" />
                     {touched.password && errors.password ? (
                       <p className="error-label">{errors.password}</p>
                     ) : null}
                   </label>
-                  <input
-                    type="submit"
-                    className="w-full p-1 bg-gradient-to-r from-[#029872] to-[#09b68b] text-white mt-10 text-lg rounded-lg"
-                    value="Войти"
-                  />
+                  <PasswordDescription />
+                  <div className="flex flex-col justify-center text-center mt-4">
+                    {
+                      errorMessage && (
+                        <span className="text-red-500">{errorMessage}</span>
+                      )
+                    }
+                    <input
+                      type="submit"
+                      className="w-full p-1 bg-gradient-to-r from-[#029872] to-[#09b68b] text-white mt-10 text-lg rounded-lg cursor-pointer"
+                      value="Войти"
+                    />
+                  </div>
                 </Form>
               )}
             </Formik>
