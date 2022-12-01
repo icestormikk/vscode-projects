@@ -5,7 +5,9 @@ const userInfoSlice = createSlice({
   name: 'userInfoSlice',
   initialState: {
     userInfo: {
-      username: '',
+      id: -1,
+      firstname: '',
+      lastname: '',
       phone: '',
       email: '',
       roles: [],
@@ -27,8 +29,14 @@ const userInfoSlice = createSlice({
       state.isLoggedIn = true;
     },
     logout(state) {
-      state.username = '';
-      state.roles = [];
+      state.userInfo = {
+        firstname: '',
+        lastname: '',
+        phone: '',
+        email: '',
+        roles: [],
+      };
+      state.isLoggedIn = false;
     },
   },
 });
