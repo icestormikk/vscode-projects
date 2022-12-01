@@ -16,9 +16,15 @@ import { OrdersAPI } from '../../services/OrderService';
 export default function UserDataForm() {
   const dispatch = useDispatch();
 
+  const currentUser = useSelector((state) => state.users);
   const selectedSubservices = useSelector((state) => state.ordersInfo.selectedSubservices);
   const subservicesToMasters = useSelector((state) => state.ordersInfo.subservicesToMasters);
   const subservicesToDates = useSelector((state) => state.ordersInfo.subservicesToDates);
+  const [errorMessage, setErrorMessage] = React.useState(null);
+
+  const firstnameValue = currentUser.userInfo.firstname || '';
+  const lastnameValue = currentUser.userInfo.lastname || '';
+  const phoneValue = currentUser.userInfo.phone || '';
 
   const navigate = useNavigate();
 
@@ -39,9 +45,12 @@ export default function UserDataForm() {
     fullInfoObject.ordersInfo = constructOrdersFullInfoObject();
 
     OrdersAPI.sendNewOrder(fullInfoObject)
-      .finally(() => {
+      .then(() => {
         dispatch(clearCart());
         navigate('/services');
+      })
+      .catch((error) => {
+        setErrorMessage(`Не удалось оформить запись: ${error.message}`);
       });
   }
 
@@ -58,9 +67,9 @@ export default function UserDataForm() {
         <h1 className="text-center p-2 text-xl">Контактная информация</h1>
         <Formik
           initialValues={{
-            firstname: '',
-            lastname: '',
-            phone: '',
+            firstname: firstnameValue,
+            lastname: lastnameValue,
+            phone: phoneValue,
             commentary: '',
           }}
           validationSchema={ContactInfoSchema}
@@ -69,14 +78,14 @@ export default function UserDataForm() {
           }}
         >
           {({ errors, touched }) => (
-            <Form>
+            <Form className="text-gray-500">
               {/* Guest firstname field */}
               <label htmlFor="firstname" className="flex flex-col px-4">
-                <div className="flex gap-2 text-md text-gray-500 items-center">
+                <div className="flex gap-2 text-md items-center">
                   <BsFillPersonFill />
                   <span>Имя</span>
                 </div>
-                <Field name="firstname" id="firstname" className="input-field-special-style" />
+                <Field type="text" name="firstname" id="firstname" className="input-field-special-style" defaultValue={firstnameValue} />
                 {touched.firstname && errors.firstname ? (
                   <p className="error-label">{errors.firstname}</p>
                 ) : null}
@@ -84,7 +93,7 @@ export default function UserDataForm() {
 
               {/* Guest lastname field */}
               <label htmlFor="lastname" className="flex flex-col px-4">
-                <div className="flex gap-2 text-md text-gray-500 items-center">
+                <div className="flex gap-2 text-md items-center">
                   <BsFillPersonFill />
                   <span>Фамилия</span>
                 </div>
@@ -96,7 +105,7 @@ export default function UserDataForm() {
 
               {/* Field for guest's phone */}
               <label htmlFor="phone" className="flex flex-col px-4">
-                <div className="flex gap-2 mt-6 text-md text-gray-500 items-center">
+                <div className="flex gap-2 mt-6 text-md items-center">
                   <BsFillTelephoneFill />
                   <span>Номер телефона</span>
                 </div>
@@ -105,7 +114,7 @@ export default function UserDataForm() {
 
               {/* fields for optional comments from the user */}
               <label htmlFor="commentary" className="flex flex-col px-4">
-                <div className="flex gap-2 text-md text-gray-500 items-center">
+                <div className="flex gap-2 text-md items-center">
                   <FaComment />
                   <span>Комментарий</span>
                 </div>
@@ -120,11 +129,18 @@ export default function UserDataForm() {
                   <p className="error-label">{errors.commentary}</p>
                 ) : null}
               </label>
-              <input
-                type="submit"
-                className="w-full p-1 bg-gradient-to-r from-[#029872] to-[#09b68b] text-white mt-10 text-lg"
-                value="Записаться"
-              />
+              <div className="flex flex-col justify-center items-center mt-10">
+                {
+                  errorMessage && (
+                    <span className="text-red-500">{errorMessage}</span>
+                  )
+                }
+                <input
+                  type="submit"
+                  className="w-full p-1 bg-gradient-to-r from-[#029872] to-[#09b68b] text-white text-lg"
+                  value="Записаться"
+                />
+              </div>
             </Form>
           )}
         </Formik>
